@@ -19,13 +19,11 @@ namespace UzunTec.WinUI.Controls
         [Browsable(false)]
         public new Color BackColor { get; }
 
-
-        [Browsable(false)]
-        public new FormBorderStyle BorderStyle { get; private set; }
+        [Browsable(false), ReadOnly(true)]
+        public new BorderStyle BorderStyle { get; }
 
         [Browsable(false)]
         public new Color ForeColor { get; }
-
 
         [Browsable(false)]
         public new Size MinimumSize { get; set; }
@@ -121,7 +119,8 @@ namespace UzunTec.WinUI.Controls
             this.InternalPadding = new Padding(5);
             this._showHint = true;
             this.Size = new Size(200, 50);
-          
+            base.BorderStyle = BorderStyle.None;
+
             // Theme
             this.Font = this.ThemeScheme.ControlTextFont;
             this.TextColor = this.ThemeScheme.ControlTextColor;
@@ -140,18 +139,13 @@ namespace UzunTec.WinUI.Controls
             this.BackgroundColorLight = this.ThemeScheme.ControlBackgroundColorLight;
             this.DisabledBackgroundColorDark = this.ThemeScheme.DisabledControlBackgroundColorDark;
             this.DisabledBackgroundColorLight = this.ThemeScheme.DisabledControlBackgroundColorLight;
-
-          
-
         }
-
 
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
             base.AutoSize = false;
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
-            base.BorderStyle = System.Windows.Forms.BorderStyle.None;
 
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
             LostFocus += (sender, args) => { MouseHovered = false; this.Invalidate(); };
@@ -188,7 +182,7 @@ namespace UzunTec.WinUI.Controls
             availableRectangle = availableRectangle.ApplyPadding(0, 0, 0, ClientRectangle.Bottom - lineY);
 
             if (this.hasHint && (Focused || !string.IsNullOrWhiteSpace(this.Text)))
-                {
+            {
                 Brush hintBrush = Enabled ? Focused ? highlightBrush
                     : new SolidBrush(this.HintColor)
                     : new SolidBrush(this.DisabledHintColor);
@@ -197,7 +191,6 @@ namespace UzunTec.WinUI.Controls
                 RectangleF hintRect = new RectangleF(this._internalPadding.Left, this._internalPadding.Top, hintSize.Width, hintSize.Height);
                 g.DrawString(this._placeholderHintText, this.HintFont, hintBrush, hintRect);
                 availableRectangle = availableRectangle.ApplyPadding(0, hintSize.Height, 0, 0);
-
             }
 
             if (!string.IsNullOrWhiteSpace(this.Text))

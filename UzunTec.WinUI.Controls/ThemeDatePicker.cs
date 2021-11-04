@@ -22,10 +22,8 @@ namespace UzunTec.WinUI.Controls
         [Browsable(false)]
         public new Color ForeColor { get; }
 
-
         [Browsable(false)]
         public new Size MinimumSize { get; set; }
-
 
         [Category("Theme"), DefaultValue(typeof(Font), "Segoe UI; 15pt")]
         public new Font Font { get => this._textFont; set { this._textFont = value; this.Invalidate(); } }
@@ -115,7 +113,6 @@ namespace UzunTec.WinUI.Controls
         [Category("Z-Custom"), DefaultValue(true)]
         public Padding InternalPadding { get => this._internalPadding; set { this._internalPadding = value; this.Invalidate(); } }
         private Padding _internalPadding;
-
 
 
         //-> Other Values
@@ -211,10 +208,10 @@ namespace UzunTec.WinUI.Controls
             Brush textBrush = Enabled ? new SolidBrush(this.TextColor) : new SolidBrush(this.DisabledTextColor);
 
             // Draw Botom line base
-            Brush lineBrush = (droppedDown || Focused) ? highlightBrush : textBrush;
-            float lineHeight = (droppedDown || Focused) ? LINE_BOTTOM_HEIGHT : FOCUSED_LINE_BOTTOM_HEIGHT;
-            float lineY = ClientRectangle.Bottom - lineHeight - LINE_BOTTOM_PADDING;
-            g.FillRectangle(lineBrush, 0, lineY, this.Width,  lineHeight);
+            Brush lineBrush = Focused ? highlightBrush : textBrush;
+            float lineHeight = Focused ? FOCUSED_LINE_BOTTOM_HEIGHT : LINE_BOTTOM_HEIGHT;
+            float lineY = ClientRectangle.Bottom - lineHeight - (Focused ? 0 : LINE_BOTTOM_PADDING);
+            g.FillRectangle(lineBrush, 0, lineY, this.Width, lineHeight);
             availableRectangle = availableRectangle.ApplyPadding(0, 0, 0, ClientRectangle.Bottom - lineY);
 
             // TODO: Icon on Left
@@ -235,20 +232,20 @@ namespace UzunTec.WinUI.Controls
                 iconRect.Top + (iconRect.Height - this.calendarIcon.Height) / 2);
 
 
+            if (this.hasHint && (Focused || !string.IsNullOrWhiteSpace(this.Text)))
+            {
+                Brush hintBrush = Enabled ? Focused ? highlightBrush
+                    : new SolidBrush(this.HintColor)
+                    : new SolidBrush(this.DisabledHintColor);
+
+                SizeF hintSize = g.MeasureString(this._placeholderHintText, this.HintFont, this.Width);
+                RectangleF hintRect = new RectangleF(this._internalPadding.Left, this._internalPadding.Top, hintSize.Width, hintSize.Height);
+                g.DrawString(this._placeholderHintText, this.HintFont, hintBrush, hintRect);
+                availableRectangle = availableRectangle.ApplyPadding(0, hintSize.Height, 0, 0);
+            }
+
             if (!string.IsNullOrWhiteSpace(this.Text))
             {
-                if (this.hasHint)
-                {
-                    Brush hintBrush = Enabled ? (droppedDown || Focused) ? highlightBrush
-                        : new SolidBrush(this.HintColor)
-                        : new SolidBrush(this.DisabledHintColor);
-
-                    SizeF hintSize = g.MeasureString(this._placeholderHintText, this.HintFont, this.Width);
-                    RectangleF hintRect = new RectangleF(this._internalPadding.Left, this._internalPadding.Top, hintSize.Width, hintSize.Height);
-                    g.DrawString(this._placeholderHintText, this.HintFont, hintBrush, hintRect);
-                    availableRectangle = availableRectangle.ApplyPadding(0, hintSize.Height, 0, 0);
-               }
-
                 g.Clip = new Region(availableRectangle);
                 g.DrawString(this.Text, this._textFont, textBrush, availableRectangle);
                 g.ResetClip();
