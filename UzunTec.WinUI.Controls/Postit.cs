@@ -87,19 +87,19 @@ namespace UzunTec.WinUI.Controls
         {
             Graphics g = pevent.Graphics;
 
-            Rectangle rectHeader = new Rectangle(0, 0, this.Width, this._headerSize);
+            RectangleF rectHeader = new RectangleF(0, 0, this.Width, this._headerSize);
             Brush brushHeader = new LinearGradientBrush(rectHeader, this._headerColorDark, this._headerColorLight, LinearGradientMode.Vertical);
             g.FillRectangle(brushHeader, rectHeader);
 
             Brush brushHeaderText = new SolidBrush(this._headerTextColor);
-            Rectangle headerClientRect = rectHeader.ApplyPadding(this.Padding);
+            RectangleF headerClientRect = rectHeader.ApplyPadding(this.Padding);
             g.DrawString(this._headerText, this._headerFont, brushHeaderText, headerClientRect);
 
-            Rectangle bodyRectangle = new Rectangle(0, this._headerSize, this.Width, this.Height - this._headerSize);
+            RectangleF bodyRectangle = new RectangleF(0, this._headerSize, this.Width, this.Height - this._headerSize);
             Brush backgroundBrush = new SolidBrush(this.BackColor);
             g.FillRectangle(backgroundBrush, bodyRectangle);
 
-            Rectangle bodyClientRectangle = bodyRectangle.ApplyPadding(this.Padding);
+            RectangleF bodyClientRectangle = bodyRectangle.ApplyPadding(this.Padding);
             Brush brushText = new SolidBrush(this.ForeColor);
             g.DrawString(this._text, this._textFont, brushText, bodyClientRectangle);
 

@@ -5,24 +5,24 @@ namespace UzunTec.WinUI.Utils
 {
     public static class SizingExtensions
     {
-        public static Rectangle ApplyPadding(this Rectangle rect, int padding)
+        public static RectangleF ApplyPadding(this RectangleF rect, int padding)
         {
             return ApplyPadding(rect, padding, padding, padding, padding);
         }
 
-        public static Rectangle ApplyPadding(this Rectangle rect, int paddingHoriz, int paddingVert)
+        public static RectangleF ApplyPadding(this RectangleF rect, float paddingHoriz, float paddingVert)
         {
             return ApplyPadding(rect, paddingHoriz, paddingVert, paddingHoriz, paddingVert);
         }
 
-        public static Rectangle ApplyPadding(this Rectangle rect, Padding padding)
+        public static RectangleF ApplyPadding(this RectangleF rect, Padding padding)
         {
             return ApplyPadding(rect, padding.Left, padding.Top, padding.Right, padding.Bottom);
         }
 
-        public static Rectangle ApplyPadding(this Rectangle rect, int paddingLeft, int paddingTop, int paddingRight, int paddingBottom)
+        public static RectangleF ApplyPadding(this RectangleF rect, float paddingLeft, float paddingTop, float paddingRight, float paddingBottom)
         {
-            Rectangle output = new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
+            RectangleF output = new RectangleF(rect.X, rect.Y, rect.Width, rect.Height);
             output.X += paddingLeft;
             output.Y += paddingTop;
             output.Width -= paddingLeft + paddingRight;

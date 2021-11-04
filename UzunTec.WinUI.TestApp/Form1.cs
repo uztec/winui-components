@@ -16,5 +16,10 @@ namespace UzunTec.WinUI.TestApp
         {
             InitializeComponent();
         }
+
+        private void datePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
