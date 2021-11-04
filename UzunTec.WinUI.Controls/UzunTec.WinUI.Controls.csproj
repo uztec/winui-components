@@ -37,10 +37,10 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatePicker.cs">
+    <Compile Include="ThemeTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="DatePicker2.cs">
+    <Compile Include="ThemeDatePicker.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="EnhancedFlowLayoutPanel.cs">

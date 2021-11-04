@@ -29,14 +29,14 @@ namespace UzunTec.WinUI.Controls
         {
             this.FormBackgroundColor = Color.FromArgb(240, 240, 240);
 
-            this.ControlTextColor = Color.FromArgb(255 * 0x100000 + 0x2f3542);
-            this.DisabledControlTextColor = Color.FromArgb(255 * 0x100000 + 0x858f9a);
+            this.ControlTextColor = Color.Black;
+            this.DisabledControlTextColor = Color.DarkGray;
 
-            this.ControlHintTextColor = Color.FromArgb(255 * 0x100000 + 0x858f9a);
-            this.DisableControlHintTextColor = Color.FromArgb(255 * 0x100000 + 0x858f9a);
-            this.ControlPlaceholderColor = Color.FromArgb(255 * 0x100000 + 0x858f9a);
+            this.ControlHintTextColor = Color.DarkGray;
+            this.DisableControlHintTextColor = Color.Gray;
+            this.ControlPlaceholderColor = Color.FromArgb(200, Color.DarkGray);
 
-            this.ControlHighlightColor = Color.FromArgb(255 * 0x100000 +  0x74ad50);
+            this.ControlHighlightColor = Color.Purple;
 
             this.ControlBackgroundColorDark = Color.FromArgb(220, 220, 220);
             this.ControlBackgroundColorLight = Color.FromArgb(240, 240, 240);
@@ -46,7 +46,6 @@ namespace UzunTec.WinUI.Controls
             this.ControlTextFont = new Font("Segoe UI", 15);
             this.ControlHintFont = new Font("Segoe UI", 7);
             this.ControlPlaceholderFont = new Font("Segoe UI", 15);
-
         }
 
         /*
