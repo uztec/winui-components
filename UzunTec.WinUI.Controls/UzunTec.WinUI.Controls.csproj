@@ -37,6 +37,12 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ThemeAutoCompleteBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ThemeNumericTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ThemeTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
