@@ -42,6 +42,10 @@
     <Compile Include="GradientPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include=".cs" />
+    <Compile Include="Interfaces\IThemeControl.cs" />
+    <Compile Include="Interfaces\IThemeControlWithBackground.cs" />
+    <Compile Include="Interfaces\IThemeControlWithHint.cs" />
     <Compile Include="ThemeBaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,7 +77,6 @@
     <Compile Include="EnhancedFlowLayoutPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="IThemeControl.cs" />
     <Compile Include="Postit.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -8,7 +8,7 @@ using UzunTec.WinUI.Utils;
 
 namespace UzunTec.WinUI.Controls
 {
-    public class ThemeTextBox : RichTextBox, IThemeControl
+    public class ThemeTextBox : RichTextBox, IThemeControlWithHint
     {
         private const int LINE_BOTTOM_HEIGHT = 1;
         private const int FOCUSED_LINE_BOTTOM_HEIGHT = 2;
@@ -163,6 +163,7 @@ namespace UzunTec.WinUI.Controls
             g.Clear(Parent.BackColor);
 
             RectangleF availableRectangle = new RectangleF(ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, ClientRectangle.Height).ApplyPadding(this._internalPadding);
+
 
             Brush backgroundBrush = Enabled ?
                             (Focused || MouseHovered) ? new LinearGradientBrush(ClientRectangle, this.FocusedBackgroundColorDark, this.FocusedBackgroundColorLight, LinearGradientMode.Vertical)
