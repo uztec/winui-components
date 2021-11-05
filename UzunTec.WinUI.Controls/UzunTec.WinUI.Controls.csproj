@@ -54,11 +54,16 @@
     <Compile Include="ThemeDataGridView.Designer.cs">
       <DependentUpon>ThemeDataGridView.cs</DependentUpon>
     </Compile>
-    <Compile Include="ThemeDataGridView2.cs" />
-    <Compile Include="ThemeDataGridView2.Designer.cs">
-      <DependentUpon>ThemeDataGridView2.cs</DependentUpon>
-    </Compile>
     <Compile Include="ThemeSchemeLightBlue.cs" />
+    <Compile Include="ThemeAutoCompleteBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ThemeComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ThemeNumericTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ThemeTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
