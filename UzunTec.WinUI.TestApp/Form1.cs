@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace UzunTec.WinUI.TestApp
@@ -15,11 +8,12 @@ namespace UzunTec.WinUI.TestApp
         public Form1()
         {
             InitializeComponent();
+            //this.themeComboBox1.DataSource = new[] { 1, 2, 3, 4, 5 };
+            //this.themeComboBox2.DataSource = new[] { 1, 2, 3, 4, 5 };
+            //this.comboBox1.DataSource = new[] { 1, 2, 3, 4, 5 };
+            //this.comboBox2.DataSource = new[] { 1, 2, 3, 4, 5 };
+            //this.comboBox3.DataSource = new[] { 1, 2, 3, 4, 5 };
         }
 
-        private void datePicker1_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
