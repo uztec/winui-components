@@ -40,6 +40,9 @@
     <Compile Include="ThemeAutoCompleteBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ThemeComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ThemeNumericTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
