@@ -33,10 +33,32 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GradientPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ThemeBaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ThemeBaseForm.Designer.cs">
+      <DependentUpon>ThemeBaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ThemeDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ThemeDataGridView.Designer.cs">
+      <DependentUpon>ThemeDataGridView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ThemeDataGridView2.cs" />
+    <Compile Include="ThemeDataGridView2.Designer.cs">
+      <DependentUpon>ThemeDataGridView2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ThemeSchemeLightBlue.cs" />
     <Compile Include="ThemeTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -70,6 +92,9 @@
     <Content Include="Resources\calendarWhite.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ThemeBaseForm.resx">
+      <DependentUpon>ThemeBaseForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

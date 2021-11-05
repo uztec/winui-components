@@ -4,18 +4,25 @@ namespace UzunTec.WinUI.Controls
 {
     public class ThemeScheme
     {
+        public Color PrimaryColor { get; set; }
+        public Color PrimaryLightColor { get; set; }
+        public Color SecondaryColor { get; set; }
         public Color FormBackgroundColor { get; set; }
+        public Color FormBackgroundDarkColor { get; set; }
         public Color ControlTextColor { get; set; }
+        public Color ControlTextLightColor { get; set; }
         public Color ControlBackgroundColorLight { get; set; }
         public Color ControlBackgroundColorDark { get; set; }
         public Color ControlHighlightColor { get; set; }
         public Color ControlHintTextColor { get; set; }
         public Color ControlPlaceholderColor { get; set; }
+        public Color FormTitleBarColor { get; set; }
 
         #region Fonts
         public Font ControlTextFont { get; set; }
         public Font ControlHintFont { get; set; }
         public Font ControlPlaceholderFont { get; set; }
+        public Font FormTitleBarFont { get; set; }
         #endregion
 
         #region Control if disabled
@@ -27,9 +34,16 @@ namespace UzunTec.WinUI.Controls
 
         public ThemeScheme()
         {
+            this.PrimaryColor = Color.FromArgb(240, 240, 240);
+            this.PrimaryLightColor = Color.FromArgb(240, 240, 240); //new
+
+            this.SecondaryColor = Color.FromArgb(240, 240, 240); //new
+
             this.FormBackgroundColor = Color.FromArgb(240, 240, 240);
+            this.FormBackgroundDarkColor = Color.FromArgb(240, 240, 240); //new
 
             this.ControlTextColor = Color.Black;
+            this.ControlTextLightColor = Color.Black; //new
             this.DisabledControlTextColor = Color.DarkGray;
 
             this.ControlHintTextColor = Color.DarkGray;

@@ -13,7 +13,7 @@ namespace UzunTec.WinUI.Controls
 
         private ThemeSchemeManager()
         {
-            this.themeScheme = new ThemeScheme();
+            this.themeScheme = new ThemeSchemeLightBlue();
         }
 
         public ThemeScheme GetTheme()
