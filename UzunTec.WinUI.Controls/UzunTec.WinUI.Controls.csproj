@@ -42,7 +42,7 @@
     <Compile Include="GradientPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include=".cs" />
+    <Compile Include="Helpers\DrawingHelper.cs" />
     <Compile Include="Interfaces\IThemeControl.cs" />
     <Compile Include="Interfaces\IThemeControlWithBackground.cs" />
     <Compile Include="Interfaces\IThemeControlWithHint.cs" />
