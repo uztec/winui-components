@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace UzunTec.WinUI.Controls
@@ -14,7 +9,7 @@ namespace UzunTec.WinUI.Controls
     public partial class ThemeBaseForm : Form
     {
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public string TextTitle { get => this.lblTitle.Text;  set { this.lblTitle.Text = value; } }
+        public string TextTitle { get => this.lblTitle.Text; set => this.lblTitle.Text = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "LightYellow")]
         public Color HeaderColorDark { get => this.panelHeader.BackColor; set { this.panelHeader.BackColor = value; this.Invalidate(); } }
@@ -29,13 +24,13 @@ namespace UzunTec.WinUI.Controls
         public new Font Font { get => this.lblTitle.Font; set { this.lblTitle.Font = value; this.Invalidate(); } }
 
         [Category("Theme"), DefaultValue(typeof(Color), "True")]
-        public bool ShowClose { get => btnClose.Visible; set { btnClose.Visible = value; } }
+        public bool ShowClose { get => btnClose.Visible; set => btnClose.Visible = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "True")]
-        public bool ShowMaximize { get => btnMaximize.Visible; set { btnMaximize.Visible = value; } }
+        public bool ShowMaximize { get => btnMaximize.Visible; set => btnMaximize.Visible = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "True")]
-        public bool ShowMinimize { get => btnMinimize.Visible; set { btnMinimize.Visible = value; } }
+        public bool ShowMinimize { get => btnMinimize.Visible; set => btnMinimize.Visible = value; }
 
         [Browsable(false)]
         public ThemeScheme ThemeScheme => ThemeSchemeManager.Instance.GetTheme();
@@ -54,6 +49,7 @@ namespace UzunTec.WinUI.Controls
             this.HeaderTextColor = this.ThemeScheme.ControlTextLightColor;
             this.panelTitle.BackColor = this.ThemeScheme.PrimaryColor;
             this.panelHeader.BackColor = this.ThemeScheme.SecondaryColor;
+            this.BackColor = this.ThemeScheme.FormBackgroundColor;
         }
 
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
@@ -64,7 +60,7 @@ namespace UzunTec.WinUI.Controls
         public const int CB_SETCUEBANNER = 0x1703;
         public const int EM_SETCUEBANNER = 0x1501;
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        public static extern Int32 SendMessage(IntPtr hWnd, int msg, int wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
+        public static extern int SendMessage(IntPtr hWnd, int msg, int wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
 
         private void btnClose_Click(object sender, EventArgs e)
         {
@@ -80,9 +76,13 @@ namespace UzunTec.WinUI.Controls
         private void btnMaximize_Click(object sender, EventArgs e)
         {
             if (WindowState == FormWindowState.Normal)
+            {
                 this.WindowState = FormWindowState.Maximized;
+            }
             else
+            {
                 this.WindowState = FormWindowState.Normal;
+            }
         }
 
         private void btnMinimize_Click(object sender, EventArgs e)
@@ -93,9 +93,13 @@ namespace UzunTec.WinUI.Controls
         private void panelTitle_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (WindowState == FormWindowState.Normal)
+            {
                 this.WindowState = FormWindowState.Maximized;
+            }
             else
+            {
                 this.WindowState = FormWindowState.Normal;
+            }
         }
     }
 }
