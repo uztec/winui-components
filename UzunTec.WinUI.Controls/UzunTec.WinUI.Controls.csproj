@@ -59,6 +59,7 @@
     <Compile Include="ThemeDataGridView.Designer.cs">
       <DependentUpon>ThemeDataGridView.cs</DependentUpon>
     </Compile>
+    <Compile Include="ThemeSchemeDarkBlue.cs" />
     <Compile Include="ThemeSchemeLightBlue.cs" />
     <Compile Include="ThemeAutoCompleteBox.cs">
       <SubType>Component</SubType>
