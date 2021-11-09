@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using UzunTec.WinUI.Controls.Interfaces;
 using UzunTec.WinUI.Utils;
 
 namespace UzunTec.WinUI.Controls
 {
-    public class ThemeComboBox : ComboBox , IThemeControl
+    public class ThemeComboBox : ComboBox, IThemeControlWithHint
     {
         private const int LINE_BOTTOM_HEIGHT = 1;
         private const int FOCUSED_LINE_BOTTOM_HEIGHT = 2;
@@ -147,17 +143,17 @@ namespace UzunTec.WinUI.Controls
             this.DisabledBackgroundColorLight = this.ThemeScheme.DisabledControlBackgroundColorLight;
         }
 
-    protected override void OnCreateControl()
-    {
-        base.OnCreateControl();
-        base.AutoSize = false;
-        this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+        protected override void OnCreateControl()
+        {
+            base.OnCreateControl();
+            base.AutoSize = false;
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
 
-        SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
-        LostFocus += (sender, args) => { MouseHovered = false; this.Invalidate(); };
-        GotFocus += (sender, args) => this.Invalidate();
-        MouseEnter += (sender, args) => { MouseHovered = true; this.Invalidate(); };
-        MouseLeave += (sender, args) => { MouseHovered = false; this.Invalidate(); };
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
+            LostFocus += (sender, args) => { MouseHovered = false; this.Invalidate(); };
+            GotFocus += (sender, args) => this.Invalidate();
+            MouseEnter += (sender, args) => { MouseHovered = true; this.Invalidate(); };
+            MouseLeave += (sender, args) => { MouseHovered = false; this.Invalidate(); };
 
             MeasureItem += CustomMeasureItem;
             DrawItem += CustomDrawItem;
@@ -165,7 +161,7 @@ namespace UzunTec.WinUI.Controls
             DrawMode = DrawMode.OwnerDrawVariable;
             this.UpdateRects();
 
-    }
+        }
 
         private void UpdateRects()
         {
@@ -178,22 +174,25 @@ namespace UzunTec.WinUI.Controls
 
         private void CustomDrawItem(object sender, DrawItemEventArgs e)
         {
-            if (e.Index < 0 || e.Index >= Items.Count || !Focused) return;
+            if (e.Index < 0 || e.Index >= Items.Count || !Focused)
+            {
+                return;
+            }
 
             Graphics g = e.Graphics;
 
             // Background
-            Brush backgroundBrush = e.State.HasFlag(DrawItemState.Focus) ? (Brush) new LinearGradientBrush(e.Bounds, this.SelectionColorDark, this.SelectionColorLight, LinearGradientMode.Vertical)
+            Brush backgroundBrush = e.State.HasFlag(DrawItemState.Focus) ? (Brush)new LinearGradientBrush(e.Bounds, this.SelectionColorDark, this.SelectionColorLight, LinearGradientMode.Vertical)
                     : new SolidBrush(this.BackgroundColorLight);
             g.FillRectangle(backgroundBrush, e.Bounds);
 
-            string text = this.GetItemText(this.Items[e.Index]); 
+            string text = this.GetItemText(this.Items[e.Index]);
 
             g.DrawString(text, this.Font, new SolidBrush(this.TextColor),
                 new Point(e.Bounds.Location.X + 14, e.Bounds.Location.Y));
 
             e.DrawFocusRectangle();
-            
+
         }
 
 

@@ -28,51 +28,50 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.datePicker1 = new UzunTec.WinUI.Controls.DatePicker();
+            this.themeTextBox1 = new UzunTec.WinUI.Controls.ThemeTextBox();
             this.SuspendLayout();
             // 
-            // datePicker1
+            // themeTextBox1
             // 
-            this.datePicker1.BackgroundColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.datePicker1.BackgroundColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.datePicker1.CustomFormat = "dd-MMM-yyyy";
-            this.datePicker1.DisabledBackgroundColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.datePicker1.DisabledBackgroundColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
-            this.datePicker1.DisabledHintColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(143)))), ((int)(((byte)(154)))));
-            this.datePicker1.DisabledTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(143)))), ((int)(((byte)(154)))));
-            this.datePicker1.FocusedBackgroundColorDark = System.Drawing.Color.Empty;
-            this.datePicker1.FocusedBackgroundColorLight = System.Drawing.Color.Empty;
-            this.datePicker1.Font = new System.Drawing.Font("Segoe UI", 15F);
-            this.datePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.datePicker1.HighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(173)))), ((int)(((byte)(80)))));
-            this.datePicker1.HintColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(143)))), ((int)(((byte)(154)))));
-            this.datePicker1.HintFont = new System.Drawing.Font("Segoe UI", 7F);
-            this.datePicker1.InternalPadding = new System.Windows.Forms.Padding(5);
-            this.datePicker1.Location = new System.Drawing.Point(340, 76);
-            this.datePicker1.MinimumSize = new System.Drawing.Size(0, 0);
-            this.datePicker1.Name = "datePicker1";
-            this.datePicker1.PlaceholderColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(143)))), ((int)(((byte)(154)))));
-            this.datePicker1.PlaceholderFont = new System.Drawing.Font("Segoe UI", 15F);
-            this.datePicker1.PlaceholderHintText = "Data de Entrega:";
-            this.datePicker1.Size = new System.Drawing.Size(200, 50);
-            this.datePicker1.TabIndex = 0;
-            this.datePicker1.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(53)))), ((int)(((byte)(66)))));
+            this.themeTextBox1.BackgroundColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(230)))));
+            this.themeTextBox1.BackgroundColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(234)))), ((int)(((byte)(234)))), ((int)(((byte)(238)))));
+            this.themeTextBox1.DisabledBackgroundColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.themeTextBox1.DisabledBackgroundColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.themeTextBox1.DisabledHintColor = System.Drawing.Color.FromArgb(((int)(((byte)(133)))), ((int)(((byte)(143)))), ((int)(((byte)(154)))));
+            this.themeTextBox1.DisabledTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(133)))), ((int)(((byte)(143)))), ((int)(((byte)(154)))));
+            this.themeTextBox1.FocusedBackgroundColorDark = System.Drawing.Color.Empty;
+            this.themeTextBox1.FocusedBackgroundColorLight = System.Drawing.Color.Empty;
+            this.themeTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.themeTextBox1.HighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(116)))), ((int)(((byte)(173)))), ((int)(((byte)(80)))));
+            this.themeTextBox1.HintColor = System.Drawing.Color.FromArgb(((int)(((byte)(133)))), ((int)(((byte)(143)))), ((int)(((byte)(154)))));
+            this.themeTextBox1.HintFont = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold);
+            this.themeTextBox1.InternalPadding = new System.Windows.Forms.Padding(5);
+            this.themeTextBox1.Location = new System.Drawing.Point(297, 134);
+            this.themeTextBox1.Name = "themeTextBox1";
+            this.themeTextBox1.PlaceholderColor = System.Drawing.Color.FromArgb(((int)(((byte)(133)))), ((int)(((byte)(143)))), ((int)(((byte)(154)))));
+            this.themeTextBox1.PlaceholderFont = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.themeTextBox1.PlaceholderHintText = "12312312";
+            this.themeTextBox1.Size = new System.Drawing.Size(200, 50);
+            this.themeTextBox1.TabIndex = 0;
+            this.themeTextBox1.Text = "23112312";
+            this.themeTextBox1.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(53)))), ((int)(((byte)(66)))));
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(706, 272);
-            this.Controls.Add(this.datePicker1);
+            this.Controls.Add(this.themeTextBox1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
 
         }
 
+
         #endregion
 
-        private Controls.DatePicker datePicker1;
+        private Controls.ThemeTextBox themeTextBox1;
     }
 }
 

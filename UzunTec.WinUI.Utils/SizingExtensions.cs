@@ -37,5 +37,39 @@ namespace UzunTec.WinUI.Utils
             output.Y += padding.Top;
             return output;
         }
+
+        public static RectangleF ToRectF(this Rectangle rect)
+        {
+            return new RectangleF(rect.X, rect.Y, rect.Width, rect.Height);
+        }
+
+        public static Rectangle ToRect(this RectangleF rect, bool round = false)
+        {
+            return (round) ? new Rectangle(Point.Round(rect.Location), Size.Round(rect.Size))
+                : new Rectangle(Point.Ceiling(rect.Location), Size.Ceiling(rect.Size));
+        }
+
+
+        public static PointF GetAlignmentPoint(this RectangleF rect, SizeF objSize, ContentAlignment alignment)
+        {
+            float offsetX = rect.Width - objSize.Width;
+            float offsetY = rect.Height - objSize.Height;
+            switch (alignment)
+            {
+                case ContentAlignment.TopLeft: return rect.Location;     // Default
+                case ContentAlignment.TopCenter: return rect.ApplyPadding(offsetX / 2, 0).Location;
+                case ContentAlignment.TopRight: return rect.ApplyPadding(offsetX, 0).Location;
+
+                case ContentAlignment.MiddleLeft: return rect.ApplyPadding(0, offsetY / 2).Location;
+                case ContentAlignment.MiddleCenter: return rect.ApplyPadding(offsetX / 2, offsetY / 2).Location;
+                case ContentAlignment.MiddleRight: return rect.ApplyPadding(offsetX, offsetY / 2).Location;
+
+                case ContentAlignment.BottomLeft: return rect.ApplyPadding(0, offsetY).Location;
+                case ContentAlignment.BottomCenter: return rect.ApplyPadding(offsetX / 2, offsetY).Location;
+                case ContentAlignment.BottomRight: return rect.ApplyPadding(offsetX, offsetY).Location;
+            }
+
+            return rect.Location;
+        }
     }
 }

@@ -4,15 +4,14 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using UzunTec.WinUI.Controls.Helpers;
+using UzunTec.WinUI.Controls.Interfaces;
 using UzunTec.WinUI.Utils;
 
 namespace UzunTec.WinUI.Controls
 {
-    public class ThemeTextBox : RichTextBox, IThemeControl
+    public class ThemeTextBox : RichTextBox, IThemeControlWithHint
     {
-        private const int LINE_BOTTOM_HEIGHT = 1;
-        private const int FOCUSED_LINE_BOTTOM_HEIGHT = 2;
-        private const int LINE_BOTTOM_PADDING = 1;
 
         private bool hasHint;
 
@@ -112,6 +111,8 @@ namespace UzunTec.WinUI.Controls
         public Padding InternalPadding { get => this._internalPadding; set { this._internalPadding = value; this.Invalidate(); } }
         private Padding _internalPadding;
 
+        private RectangleF textRect;
+
         public ThemeTextBox()
         {
             // Control Defaults
@@ -146,64 +147,43 @@ namespace UzunTec.WinUI.Controls
             base.OnCreateControl();
             base.AutoSize = false;
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
-
-            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
             LostFocus += (sender, args) => { MouseHovered = false; this.Invalidate(); };
             GotFocus += (sender, args) => this.Invalidate();
             MouseEnter += (sender, args) => { MouseHovered = true; this.Invalidate(); };
             MouseLeave += (sender, args) => { MouseHovered = false; this.Invalidate(); };
 
             this.UpdateRects();
+            this.SetTextRect(this.textRect);
 
         }
+
+      
 
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
             g.Clear(Parent.BackColor);
 
-            RectangleF availableRectangle = new RectangleF(ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, ClientRectangle.Height).ApplyPadding(this._internalPadding);
-
-            Brush backgroundBrush = Enabled ?
-                            (Focused || MouseHovered) ? new LinearGradientBrush(ClientRectangle, this.FocusedBackgroundColorDark, this.FocusedBackgroundColorLight, LinearGradientMode.Vertical)
-                            : new LinearGradientBrush(ClientRectangle, this.BackgroundColorDark, this.BackgroundColorLight, LinearGradientMode.Vertical)
-                            : new LinearGradientBrush(ClientRectangle, this.DisabledBackgroundColorDark, this.DisabledBackgroundColorLight, LinearGradientMode.Vertical);
-
-            g.FillRectangle(backgroundBrush, ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, ClientRectangle.Height - LINE_BOTTOM_PADDING);
-
-            Brush highlightBrush = new SolidBrush(this.HighlightColor);
-            Brush textBrush = Enabled ? new SolidBrush(this.TextColor) : new SolidBrush(this.DisabledTextColor);
-
-            // Draw Botom line base
-            Brush lineBrush = Focused ? highlightBrush : textBrush;
-            float lineHeight = Focused ? FOCUSED_LINE_BOTTOM_HEIGHT : LINE_BOTTOM_HEIGHT;
-            float lineY = ClientRectangle.Bottom - lineHeight - (Focused ? 0 : LINE_BOTTOM_PADDING);
-            g.FillRectangle(lineBrush, 0, lineY, this.Width, lineHeight);
-            availableRectangle = availableRectangle.ApplyPadding(0, 0, 0, ClientRectangle.Bottom - lineY);
+            g.FillBackground(this);
+            g.DrawBottomLine(this);
 
             if (this.hasHint && (Focused || !string.IsNullOrWhiteSpace(this.Text)))
             {
-                Brush hintBrush = Enabled ? Focused ? highlightBrush
-                    : new SolidBrush(this.HintColor)
-                    : new SolidBrush(this.DisabledHintColor);
-
-                SizeF hintSize = g.MeasureString(this._placeholderHintText, this.HintFont, this.Width);
-                RectangleF hintRect = new RectangleF(this._internalPadding.Left, this._internalPadding.Top, hintSize.Width, hintSize.Height);
-                g.DrawString(this._placeholderHintText, this.HintFont, hintBrush, hintRect);
-                availableRectangle = availableRectangle.ApplyPadding(0, hintSize.Height, 0, 0);
+                g.DrawHint(this);
             }
 
+            Brush textBrush = ThemeSchemeManager.Instance.GetTextBrush(this);
             if (!string.IsNullOrWhiteSpace(this.Text))
             {
-                g.Clip = new Region(availableRectangle);
-                g.DrawString(this.Text, this.Font, textBrush, availableRectangle);
+                g.Clip = new Region(this.textRect);
+                g.DrawString(this.Text, this.Font, textBrush, this.textRect);
                 g.ResetClip();
             }
             else if (!string.IsNullOrWhiteSpace(this._placeholderHintText) && !Focused)
             {
                 Brush placeHolderBrush = Enabled ? new SolidBrush(this.PlaceholderColor) : textBrush;
-                g.Clip = new Region(availableRectangle);
-                g.DrawString(this._placeholderHintText, this.PlaceholderFont, placeHolderBrush, availableRectangle);
+                g.Clip = new Region(this.textRect);
+                g.DrawString(this._placeholderHintText, this.PlaceholderFont, placeHolderBrush, this.textRect);
                 g.ResetClip();
             }
         }
@@ -238,29 +218,32 @@ namespace UzunTec.WinUI.Controls
             base.OnSelectionChanged(e);
             Invalidate();
         }
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            
+            // TODO: Update rects on resize
+            //this.UpdateRects();
+            //Invalidate();
 
-        private void UpdateRects(bool RedefineTextField = true)
+        }
+        private void UpdateRects()
         {
             Graphics g = Graphics.FromHwnd(this.Handle);
 
-            RectangleF availableRectangle = new RectangleF(ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, ClientRectangle.Height).ApplyPadding(this._internalPadding);
-
-            float lineHeight = Focused ? FOCUSED_LINE_BOTTOM_HEIGHT : LINE_BOTTOM_HEIGHT;
-            float lineY = ClientRectangle.Bottom - lineHeight - (Focused ? 0 : LINE_BOTTOM_PADDING);
-            availableRectangle = availableRectangle.ApplyPadding(0, 0, 0, ClientRectangle.Bottom - lineY);
-
-            SizeF hintSize = g.MeasureString(this._placeholderHintText, this.HintFont, this.Width);
-            RectangleF hintRect = new RectangleF(this._internalPadding.Left, this._internalPadding.Top, hintSize.Width, hintSize.Height);
-            availableRectangle = availableRectangle.ApplyPadding(0, hintSize.Height, 0, 0);
-
-            if (RedefineTextField)
-            {
-                RECT rc = new RECT(availableRectangle);
-                SendMessage(Handle, EM_SETRECT, 0, ref rc);
-            }
+            this.textRect = new RectangleF(
+                ClientRectangle.X + this._internalPadding.Left,
+                ClientRectangle.Y + this._internalPadding.Top + (this.hasHint ? this.GetHintRect(g).Height : 0),
+                ClientRectangle.Width - this._internalPadding.Horizontal,
+                this.GetBottomLineRect().Y - this._internalPadding.Vertical);
 
         }
 
+        private void SetTextRect(RectangleF rect)
+        {
+            RECT rc = new RECT(rect.ApplyPadding(4, 0, 0, 0));
+            SendMessage(Handle, EM_SETRECT, 0, ref rc);
+        }
 
         [DllImport(@"User32.dll", EntryPoint = @"SendMessage", CharSet = CharSet.Auto)]
         private static extern int SendMessage(IntPtr hWnd, uint msg, int wParam, ref RECT lParam);

@@ -33,15 +33,20 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ThemeButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="GradientPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Helpers\DrawingHelper.cs" />
+    <Compile Include="Interfaces\IThemeControl.cs" />
+    <Compile Include="Interfaces\IThemeControlWithBackground.cs" />
+    <Compile Include="Interfaces\IThemeControlWithHint.cs" />
     <Compile Include="ThemeBaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,7 +78,6 @@
     <Compile Include="EnhancedFlowLayoutPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="IThemeControl.cs" />
     <Compile Include="Postit.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -87,12 +91,6 @@
     <Compile Include="ThemeSchemeManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UzunTec.WinUI.Utils\UzunTec.WinUI.Utils.csproj">
-      <Project>{4526f2d3-340f-4809-bd5c-1e3edb1053b2}</Project>
-      <Name>UzunTec.WinUI.Utils</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Resources\calendarDark.png" />
     <Content Include="Resources\calendarWhite.png" />
   </ItemGroup>
@@ -104,6 +102,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UzunTec.WinUI.Utils\UzunTec.WinUI.Utils.csproj">
+      <Project>{4526f2d3-340f-4809-bd5c-1e3edb1053b2}</Project>
+      <Name>UzunTec.WinUI.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
