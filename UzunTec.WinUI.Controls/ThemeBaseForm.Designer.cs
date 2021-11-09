@@ -132,11 +132,11 @@ namespace UzunTec.WinUI.Controls
             // 
             this.lblTitle.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Roboto", 16F);
+            this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.lblTitle.Location = new System.Drawing.Point(18, 11);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(69, 27);
+            this.lblTitle.Size = new System.Drawing.Size(69, 26);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "TITLE";
             this.lblTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelMovable_MouseDown);

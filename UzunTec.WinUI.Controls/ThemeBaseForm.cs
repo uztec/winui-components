@@ -17,6 +17,13 @@ namespace UzunTec.WinUI.Controls
         [Category("Theme"), DefaultValue(typeof(Color), "LightYellow")]
         public Color HeaderColorLight { get => this.panelTitle.BackColor; set { this.panelTitle.BackColor = value; this.Invalidate(); } }
 
+        [Category("Theme"), DefaultValue(typeof(int), "47")]
+        public int HeaderPanelHeight { get => this.panelHeader.Height; set { this.panelHeader.Height = value; this.Invalidate(); } }
+
+        [Category("Theme"), DefaultValue(typeof(Padding), "3; 3; 3; 3;")]
+        public new Padding Padding { get => this._internalPadding; set { this._internalPadding = value; this.Invalidate(); } }
+        private Padding _internalPadding;
+
         [Category("Theme"), DefaultValue(typeof(Color), "Black")]
         public Color HeaderTextColor { get => this.lblTitle.ForeColor; set { this.lblTitle.ForeColor = value; this.Invalidate(); } }
 
@@ -50,6 +57,12 @@ namespace UzunTec.WinUI.Controls
             this.panelTitle.BackColor = this.ThemeScheme.PrimaryColor;
             this.panelHeader.BackColor = this.ThemeScheme.SecondaryColor;
             this.BackColor = this.ThemeScheme.FormBackgroundColor;
+        }
+
+        protected override void OnCreateControl()
+        {
+            base.Padding = new Padding(0);
+            base.OnCreateControl();
         }
 
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
