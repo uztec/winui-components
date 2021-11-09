@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using UzunTec.WinUI.Controls.Interfaces;
+using UzunTec.WinUI.Utils;
 
 namespace UzunTec.WinUI.Controls.Helpers
 {
@@ -13,14 +14,24 @@ namespace UzunTec.WinUI.Controls.Helpers
 
         internal static void FillBackground(this Graphics g, IThemeControlWithBackground ctrl)
         {
+            FillBackground(g, ctrl, ctrl.ClientRectangle);
+        }
+        internal static void FillBackground(this Graphics g, IThemeControlWithBackground ctrl, bool lineBottom)
+        {
+            FillBackground(g, ctrl, ctrl.ClientRectangle, lineBottom);
+        }
+        internal static void FillBackground(this Graphics g, IThemeControlWithBackground ctrl, RectangleF bgRect, bool lineBottom = true)
+        {
 
             Brush backgroundBrush = ctrl.Enabled ?
                             (ctrl.Focused || ctrl.MouseHovered) ? themeManager.GetFocusedBackgroundBrush(ctrl)
                             : themeManager.GetBackgroundBrush(ctrl)
                             : themeManager.GetDisabledBackgroundBrush(ctrl);
 
-            RectangleF bgRect = ctrl.ClientRectangle;
-            bgRect.Height -= LINE_BOTTOM_PADDING;
+            if (lineBottom)
+            {
+                bgRect.Height -= LINE_BOTTOM_PADDING;
+            }
             g.FillRectangle(backgroundBrush, bgRect);
         }
 
@@ -39,8 +50,13 @@ namespace UzunTec.WinUI.Controls.Helpers
 
         internal static void DrawHint(this Graphics g, IThemeControlWithHint ctrl)
         {
-            Brush hintBrush = themeManager.GetHintBrush(ctrl);
             RectangleF hintRect = GetHintRect(ctrl, g);
+            DrawHint(g, ctrl, hintRect);
+        }
+
+        internal static void DrawHint(this Graphics g, IThemeControlWithHint ctrl, RectangleF hintRect)
+        {
+            Brush hintBrush = themeManager.GetHintBrush(ctrl);
             g.DrawString(ctrl.PlaceholderHintText, ctrl.HintFont, hintBrush, hintRect);
         }
 
@@ -49,5 +65,28 @@ namespace UzunTec.WinUI.Controls.Helpers
             SizeF hintSize = g.MeasureString(ctrl.PlaceholderHintText, ctrl.HintFont, ctrl.ClientRectangle.Width);
             return new RectangleF(ctrl.InternalPadding.Left, ctrl.InternalPadding.Top, hintSize.Width, hintSize.Height);
         }
+
+        internal static void DrawText(this Graphics g, string text, Font font, Brush textBrush, RectangleF rect, ContentAlignment alignment = ContentAlignment.TopLeft)
+        {
+            SizeF textSize = g.MeasureString(text, font, rect.Size);
+            DrawText(g, text, font, textBrush, rect, textSize, alignment);
+        }
+
+        internal static void DrawText(this Graphics g, string text, Font font, Brush textBrush, RectangleF rect, SizeF textSize, ContentAlignment alignment = ContentAlignment.TopLeft)
+        {
+            g.Clip = new Region(rect);
+            if (alignment != ContentAlignment.TopLeft)
+            {
+                PointF textPoint = rect.GetAlignmentPoint(textSize, alignment);
+                g.DrawString(text, font, textBrush, textPoint);
+            }
+            else
+            {
+                g.DrawString(text, font, textBrush, rect);
+            }
+            g.ResetClip();
+        }
+
+
     }
 }
