@@ -147,16 +147,17 @@ namespace UzunTec.WinUI.Controls
             base.OnCreateControl();
             base.AutoSize = false;
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
-
-            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
             LostFocus += (sender, args) => { MouseHovered = false; this.Invalidate(); };
             GotFocus += (sender, args) => this.Invalidate();
             MouseEnter += (sender, args) => { MouseHovered = true; this.Invalidate(); };
             MouseLeave += (sender, args) => { MouseHovered = false; this.Invalidate(); };
 
             this.UpdateRects();
+            this.SetTextRect(this.textRect);
 
         }
+
+      
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -217,8 +218,16 @@ namespace UzunTec.WinUI.Controls
             base.OnSelectionChanged(e);
             Invalidate();
         }
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            
+            // TODO: Update rects on resize
+            //this.UpdateRects();
+            //Invalidate();
 
-        private void UpdateRects(bool RedefineTextField = true)
+        }
+        private void UpdateRects()
         {
             Graphics g = Graphics.FromHwnd(this.Handle);
 
@@ -228,13 +237,13 @@ namespace UzunTec.WinUI.Controls
                 ClientRectangle.Width - this._internalPadding.Horizontal,
                 this.GetBottomLineRect().Y - this._internalPadding.Vertical);
 
-            if (RedefineTextField)
-            {
-                RECT rc = new RECT(this.textRect.ApplyPadding(4,0,0,0));
-                SendMessage(Handle, EM_SETRECT, 0, ref rc);
-            }
         }
 
+        private void SetTextRect(RectangleF rect)
+        {
+            RECT rc = new RECT(rect.ApplyPadding(4, 0, 0, 0));
+            SendMessage(Handle, EM_SETRECT, 0, ref rc);
+        }
 
         [DllImport(@"User32.dll", EntryPoint = @"SendMessage", CharSet = CharSet.Auto)]
         private static extern int SendMessage(IntPtr hWnd, uint msg, int wParam, ref RECT lParam);

@@ -12,7 +12,6 @@ namespace UzunTec.WinUI.Controls
 {
     public class ThemeButton : Button, IThemeControlWithBackground
     {
-
         public bool ReverseTextColor { get; set; }
         public bool ShowBackground { get; set; }
 

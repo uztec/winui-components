@@ -1,22 +1,15 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using UzunTec.WinUI.Controls.Helpers;
 using UzunTec.WinUI.Controls.Interfaces;
 using UzunTec.WinUI.Utils;
 
 namespace UzunTec.WinUI.Controls
 {
-    public class ThemeDatePicker : DateTimePicker, IThemeControl
+    public class ThemeDatePicker : DateTimePicker, IThemeControlWithHint
     {
-
-        private const int LINE_BOTTOM_HEIGHT = 1;
-        private const int FOCUSED_LINE_BOTTOM_HEIGHT = 2;
-        private const int LINE_BOTTOM_PADDING = 1;
-
-        private bool hasHint;
-
         [Browsable(false)]
         public new Color BackColor { get; }
 
@@ -27,8 +20,9 @@ namespace UzunTec.WinUI.Controls
         public new Size MinimumSize { get; set; }
 
         [Category("Theme"), DefaultValue(typeof(Font), "Segoe UI; 15pt")]
-        public new Font Font { get => this._textFont; set { this._textFont = value; this.Invalidate(); } }
+        public new Font Font { get => this._textFont; set { this._textFont = value; this.UpdateRects();  this.Invalidate(); } }
         private Font _textFont;
+        
         public new Size Size { get => base.Size; set { base.MinimumSize = value; base.Size = value; this.Invalidate(); } }
 
 
@@ -92,6 +86,7 @@ namespace UzunTec.WinUI.Controls
             {
                 _placeholderHintText = value;
                 hasHint = this._showHint && !string.IsNullOrEmpty(_placeholderHintText);
+                this.UpdateRects();
                 Invalidate();
             }
         }
@@ -105,6 +100,7 @@ namespace UzunTec.WinUI.Controls
             {
                 _showHint = value;
                 hasHint = this._showHint && !string.IsNullOrEmpty(_placeholderHintText);
+                this.UpdateRects();
                 Invalidate();
             }
         }
@@ -112,18 +108,24 @@ namespace UzunTec.WinUI.Controls
 
 
         [Category("Z-Custom"), DefaultValue(true)]
-        public Padding InternalPadding { get => this._internalPadding; set { this._internalPadding = value; this.Invalidate(); } }
+        public Padding InternalPadding { get => this._internalPadding; set { this._internalPadding = value; this.UpdateRects(); this.Invalidate(); } }
         private Padding _internalPadding;
+
+
+        [Category("Z-Custom"), DefaultValue(typeof(ContentAlignment), "MiddleCenter")]
+        public ContentAlignment TextAlign { get => this._textAlign; set { this._textAlign = value; this.Invalidate(); } }
+        private ContentAlignment _textAlign;
 
 
         //-> Other Values
         private bool droppedDown = false;
         private Image calendarIcon = Properties.Resources.calendarWhite;
-        private RectangleF iconRect;
+        private RectangleF iconRect, textRect, hintRect;
+        private bool hasHint;
 
         //Constructor
         public ThemeDatePicker()
-        {           
+        {
             // Control Defaults
             base.MinimumSize = new Size(1, 1);
             base.Font = new Font(FontFamily.GenericSansSerif, 28);       // To Adjust the Height
@@ -132,7 +134,8 @@ namespace UzunTec.WinUI.Controls
             this.Format = DateTimePickerFormat.Custom;
             this.CustomFormat = "dd-MMM-yyyy";
             this.PlaceholderHintText = "";
-            this.InternalPadding = new Padding(5);
+            this._internalPadding = new Padding(5);
+            this._textAlign = ContentAlignment.MiddleCenter;
             this._showHint = true;
 
             // Theme
@@ -153,12 +156,6 @@ namespace UzunTec.WinUI.Controls
             this.BackgroundColorLight = this.ThemeScheme.ControlBackgroundColorLight;
             this.DisabledBackgroundColorDark = this.ThemeScheme.DisabledControlBackgroundColorDark;
             this.DisabledBackgroundColorLight = this.ThemeScheme.DisabledControlBackgroundColorLight;
-
-            LostFocus += (sender, args) => MouseHovered = false;
-            GotFocus += (sender, args) => this.Invalidate();
-            MouseEnter += (sender, args) => { MouseHovered = true; this.Invalidate(); };
-            MouseLeave += (sender, args) => { MouseHovered = false; this.Invalidate(); };
-  
         }
 
         protected override void OnInvalidated(InvalidateEventArgs e)
@@ -196,69 +193,64 @@ namespace UzunTec.WinUI.Controls
             Graphics g = e.Graphics;
             g.Clear(Parent.BackColor);
 
-            RectangleF availableRectangle = new RectangleF(ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, ClientRectangle.Height).ApplyPadding(this._internalPadding);
-            
-            Brush backgroundBrush = Enabled ?
-                            (Focused || MouseHovered) ? new LinearGradientBrush(ClientRectangle, this.FocusedBackgroundColorDark, this.FocusedBackgroundColorLight, LinearGradientMode.Vertical)
-                            : new LinearGradientBrush(ClientRectangle, this.BackgroundColorDark, this.BackgroundColorLight, LinearGradientMode.Vertical)
-                            : new LinearGradientBrush(ClientRectangle, this.DisabledBackgroundColorDark, this.DisabledBackgroundColorLight, LinearGradientMode.Vertical);
+            g.FillBackground(this);
+            g.DrawBottomLine(this);
 
-            g.FillRectangle(backgroundBrush, ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, ClientRectangle.Height - LINE_BOTTOM_PADDING);
+            if (this.hasHint && (Focused || !string.IsNullOrWhiteSpace(this.Text)))
+            {
+                g.DrawHint(this);
+            }
 
-            Brush highlightBrush = new SolidBrush(this.HighlightColor);
-            Brush textBrush = Enabled ? new SolidBrush(this.TextColor) : new SolidBrush(this.DisabledTextColor);
-
-            // Draw Botom line base
-            Brush lineBrush = Focused ? highlightBrush : textBrush;
-            float lineHeight = Focused ? FOCUSED_LINE_BOTTOM_HEIGHT : LINE_BOTTOM_HEIGHT;
-            float lineY = ClientRectangle.Bottom - lineHeight - (Focused ? 0 : LINE_BOTTOM_PADDING);
-            g.FillRectangle(lineBrush, 0, lineY, this.Width, lineHeight);
-            availableRectangle = availableRectangle.ApplyPadding(0, 0, 0, ClientRectangle.Bottom - lineY);
-
-            // TODO: Icon on Left
-            int iconRectWidth =  this.calendarIcon.Width + this._internalPadding.Horizontal;
-            this.iconRect = new RectangleF(ClientRectangle.Right - iconRectWidth, 0, iconRectWidth, ClientRectangle.Height);
-
-           // g.FillRectangle(Brushes.Red, iconRect);
-            availableRectangle = availableRectangle.ApplyPadding(0, 0, this.iconRect.Width - this._internalPadding.Right, 0);
+            Brush textBrush = ThemeSchemeManager.Instance.GetTextBrush(this);
+            if (!string.IsNullOrWhiteSpace(this.Text))
+            {
+                g.Clip = new Region(this.textRect);
+                g.DrawText(this.Text, this.Font, textBrush, this.textRect, this._textAlign);
+                g.ResetClip();
+            }
 
             if (droppedDown == true)
             {
                 SolidBrush openIconBrush = new SolidBrush(Color.FromArgb(50, 64, 64, 64));
-                g.FillRectangle(openIconBrush, iconRect);
+                g.FillRectangle(openIconBrush, this.iconRect);
             }
+
             //Draw icon
-            g.DrawImage(calendarIcon, 
-                iconRect.Left + (iconRect.Width - this.calendarIcon.Width) / 2,
-                iconRect.Top + (iconRect.Height - this.calendarIcon.Height) / 2);
+            g.DrawImage(calendarIcon, this.iconRect.GetAlignmentPoint(this.calendarIcon.Size, ContentAlignment.MiddleCenter));
+        }
 
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+            this.UpdateRects();
+        }
 
-            if (this.hasHint && (Focused || !string.IsNullOrWhiteSpace(this.Text)))
+        protected override void OnCreateControl()
+        {
+            base.OnCreateControl();
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+            LostFocus += (sender, args) => { MouseHovered = false; this.Invalidate(); };
+            GotFocus += (sender, args) => this.Invalidate();
+            MouseEnter += (sender, args) => { MouseHovered = true; this.Invalidate(); };
+            MouseLeave += (sender, args) => { MouseHovered = false; this.Invalidate(); };
+
+            this.UpdateRects();
+        }
+        private void UpdateRects()
+        {
+            Graphics g = Graphics.FromHwnd(this.Handle);
+
+            RectangleF clientRect = this.ClientRectangle.ToRectF().ApplyPadding(this._internalPadding);
+            float iconRectWidth = this.calendarIcon.Width + this._internalPadding.Horizontal;
+            this.iconRect = clientRect.ApplyPadding(clientRect.Width - iconRectWidth, 0,0,0);
+            this.textRect = clientRect.ApplyPadding(0, 0, iconRectWidth, 0);
+
+            if (this.hasHint)
             {
-                Brush hintBrush = Enabled ? Focused ? highlightBrush
-                    : new SolidBrush(this.HintColor)
-                    : new SolidBrush(this.DisabledHintColor);
-
-                SizeF hintSize = g.MeasureString(this._placeholderHintText, this.HintFont, this.Width);
-                RectangleF hintRect = new RectangleF(this._internalPadding.Left, this._internalPadding.Top, hintSize.Width, hintSize.Height);
-                g.DrawString(this._placeholderHintText, this.HintFont, hintBrush, hintRect);
-                availableRectangle = availableRectangle.ApplyPadding(0, hintSize.Height, 0, 0);
+                this.hintRect = this.GetHintRect(g);
+                this.textRect = this.textRect.ApplyPadding(0, this.hintRect.Height, 0, 0);
             }
-
-            if (!string.IsNullOrWhiteSpace(this.Text))
-            {
-                g.Clip = new Region(availableRectangle);
-                g.DrawString(this.Text, this._textFont, textBrush, availableRectangle);
-                g.ResetClip();
-
-            }
-            else if (string.IsNullOrWhiteSpace(this._placeholderHintText) && !(droppedDown || Focused))
-            {
-                Brush placeHolderBrush = Enabled ? new SolidBrush(this.PlaceholderColor) : textBrush;
-                g.Clip = new Region(availableRectangle);
-                g.DrawString(this._placeholderHintText, this.PlaceholderFont, placeHolderBrush, availableRectangle);
-                g.ResetClip();
-            }
+            this.textRect = this.textRect.ApplyPadding(0, 0, 0, this.ClientRectangle.Height - this.GetBottomLineRect().Y);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
