@@ -74,6 +74,8 @@ namespace UzunTec.WinUI.Controls
             this.HighlightColor = this.ThemeScheme.ControlHighlightColor;
             this.BackgroundColorDark = this.ThemeScheme.ControlBackgroundColorDark;
             this.BackgroundColorLight = this.ThemeScheme.ControlBackgroundColorLight;
+            this.FocusedBackgroundColorDark = this.ThemeScheme.ControlBackgroundColorLight;
+            this.FocusedBackgroundColorLight = this.ThemeScheme.ControlBackgroundColorLight;
             this.DisabledBackgroundColorDark = this.ThemeScheme.DisabledControlBackgroundColorDark;
             this.DisabledBackgroundColorLight = this.ThemeScheme.DisabledControlBackgroundColorLight;
         }
@@ -105,9 +107,6 @@ namespace UzunTec.WinUI.Controls
 
             RectangleF textRect = buttonRect;
             SizeF textSize = g.MeasureString(this.Text, this.Font, buttonRect.Size);
-
-            float textPlusImageHeight = textSize.Height + this.Image.Height;
-            float textPlusImageWidth = textSize.Width + this.Image.Width;
 
             if (this.Image != null)
             {
