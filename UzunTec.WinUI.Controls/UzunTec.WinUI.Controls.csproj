@@ -37,6 +37,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InternalContracts\SideIconData.cs" />
     <Compile Include="ThemeButton.cs">
       <SubType>Component</SubType>
     </Compile>
