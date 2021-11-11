@@ -1,129 +1,243 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using UzunTec.WinUI.Controls.InternalContracts;
 using UzunTec.WinUI.Utils;
 
 namespace UzunTec.WinUI.Controls
 {
     public class Postit : Control
     {
-        
+
         private Color _headerColorDark;
         [Category("Custom"), DefaultValue(typeof(Color), "LightYellow")]
-        public Color HeaderColorDark { get => this._headerColorDark; set { this._headerColorDark = value; this.Invalidate(); } }
+        public Color HeaderColorDark { get => _headerColorDark; set { _headerColorDark = value; Invalidate(); } }
 
         private Color _headerColorLight;
         [Category("Custom"), DefaultValue(typeof(Color), "LightYellow")]
-        public Color HeaderColorLight { get => this._headerColorLight; set { this._headerColorLight = value; this.Invalidate(); } }
+        public Color HeaderColorLight { get => _headerColorLight; set { _headerColorLight = value; Invalidate(); } }
 
         private Color _headerTextColor;
         [Category("Custom"), DefaultValue(typeof(Color), "Black")]
-        public Color HeaderTextColor { get => this._headerTextColor; set { this._headerTextColor = value; this.Invalidate(); } }
+        public Color HeaderTextColor { get => _headerTextColor; set { _headerTextColor = value; Invalidate(); } }
 
         private Color _dateColor;
         [Category("Custom"), DefaultValue(typeof(Color), "Black")]
-        public Color DateColor { get => this._dateColor; set { this._dateColor = value; this.Invalidate(); } }
+        public Color DateColor { get => _dateColor; set { _dateColor = value; Invalidate(); } }
 
         public int _headerSize;
         [Category("Custom"), DefaultValue(40)]
-        public int HeaderSize { get => this._headerSize; set { this._headerSize = Math.Max(value, 10); this.Invalidate(); } }
+        public int HeaderSize { get => _headerSize; set { _headerSize = Math.Max(value, 10); Invalidate(); } }
 
 
         private Font _headerFont;
         [Category("Custom"), DefaultValue(typeof(Font), "Arial; 14pt")]
-        public Font HeaderFont { get => this._headerFont; set { this._headerFont = value; this.Invalidate(); } }
+        public Font HeaderFont { get => _headerFont; set { _headerFont = value; Invalidate(); } }
 
         private Font _dateFont;
         [Category("Custom"), DefaultValue(typeof(Font), "Comic Sans MS; 9pt; style=Bold")]
-        public Font DateFont { get => this._dateFont; set { this._dateFont = value; this.Invalidate(); } }
+        public Font DateFont { get => _dateFont; set { _dateFont = value; Invalidate(); } }
 
         private Font _textFont;
         [Category("Custom"), DefaultValue(typeof(Font), "Modern No. 20; 12pt; style=Italic")]
-        public override Font Font { get => this._textFont; set { this._textFont = value; this.Invalidate(); } }
+        public override Font Font { get => _textFont; set { _textFont = value; Invalidate(); } }
 
 
         private string _text;
         [Category("Custom"), DefaultValue("")]
-        public override string Text { get => this._text; set { this._text = value; this.Invalidate(); } }
+        public override string Text { get => _text; set { _text = value; Invalidate(); } }
 
         public string _headerText;
         [Category("Custom"), DefaultValue(typeof(string), "Title")]
-        public string HeaderText { get => this._headerText; set { this._headerText = value; this.Invalidate(); } }
+        public string HeaderText { get => _headerText; set { _headerText = value; Invalidate(); } }
 
         private DateTime? _date;
         [Category("Custom")]
-        public DateTime? Date { get => this._date; set { this._date = value; this.Invalidate(); } }
+        public DateTime? Date { get => _date; set { _date = value; Invalidate(); } }
 
         public string _dateFormat;
         [Category("Custom"), DefaultValue(typeof(string), "dd-MMM-yyyy")]
-        public string DateFormat { get => this._dateFormat; set { this._dateFormat = value; this.Invalidate(); } }
+        public string DateFormat { get => _dateFormat; set { _dateFormat = value; Invalidate(); } }
+
+        public int _iconMargin;
+        [Category("Custom"), DefaultValue(5)]
+        public int IconMargin { get => _iconMargin; set { _iconMargin = value; Invalidate(); } }
+
+
+        private RectangleF headerRect, headerClientRect, bodyRect, textRect, dateRect, iconsRect;
+        private readonly Dictionary<string, SideIconData> icons;
+        public EventHandler<string> IconClick;
 
 
         public Postit()
         {
-            this._headerColorDark = Color.LightYellow;
-            this._headerColorLight = Color.LightYellow;
-            this._headerTextColor = Color.Black;
-            this._headerFont = new Font("Arial", 13);
-            this._headerText = "Title";
-            this._headerSize = 53;
+            icons = new Dictionary<string, SideIconData>();
 
-            this._date = DateTime.Today;
-            this._dateFont = new Font("Comic Sans MS", 9);
-            this._dateFormat = "dd-MMM-yyyy";
-            this._dateColor = Color.Black;
+            _headerColorDark = Color.LightYellow;
+            _headerColorLight = Color.LightYellow;
+            _headerTextColor = Color.Black;
+            _headerFont = new Font("Arial", 13);
+            _headerText = "Title";
+            _headerSize = 53;
 
-            this._textFont = new Font("Modern No. 20", 12, FontStyle.Italic);
+            _date = DateTime.Today;
+            _dateFont = new Font("Comic Sans MS", 9);
+            _dateFormat = "dd-MMM-yyyy";
+            _dateColor = Color.Black;
 
-            this.BackColor = Color.LightYellow;
-            this.Size = new Size(250, 200);
-            this.Padding = new Padding(10, 10, 3, 3);
-            
+            _textFont = new Font("Modern No. 20", 12, FontStyle.Italic);
+
+            BackColor = Color.LightYellow;
+            Size = new Size(250, 200);
+            Padding = new Padding(10, 10, 3, 3);
+            _iconMargin = 5;
+
+        }
+
+        public void AddIcon(string key, Image icon)
+        {
+            icons.Add(key, new SideIconData { image = icon });
+            UpdateRects();
+        }
+
+        public void RemoveIcon(string key)
+        {
+            icons.Remove(key);
+            UpdateRects();
+        }
+
+        public void ClearIcons()
+        {
+            icons.Clear();
+            UpdateRects();
+        }
+
+        protected override void OnCreateControl()
+        {
+            base.OnCreateControl();
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+
+            UpdateRects();
+        }
+
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+            UpdateRects();
+        }
+
+
+        private void UpdateRects()
+        {
+            headerRect = new RectangleF(0, 0, Width, _headerSize);
+            headerClientRect = headerRect.ApplyPadding(Padding);
+            bodyRect = new RectangleF(0, _headerSize, Width, Height - _headerSize);
+            textRect = bodyRect.ApplyPadding(Padding);
+
+            string date = _date?.ToString(_dateFormat);
+            if (date != null)
+            {
+                SizeF sizeDate = CreateGraphics().MeasureString(date, _dateFont);
+                dateRect = new RectangleF(headerClientRect.Right - sizeDate.Width,
+                                        headerClientRect.Bottom - sizeDate.Height,
+                                        sizeDate.Width,
+                                        sizeDate.Height);
+            }
+
+            float iconHeight = 0;
+            float iconWidth = 0;
+
+            foreach (SideIconData iconData in icons.Values)
+            {
+                iconWidth += iconData.image.Width + _iconMargin;
+                if (iconData.image.Height > iconHeight)
+                {
+                    iconHeight = iconData.image.Height;
+                }
+            }
+
+            iconsRect = new RectangleF(textRect.Right - iconWidth, textRect.Bottom - iconHeight, iconWidth, iconHeight);
+            RectangleF iconDrawRect = iconsRect;
+
+            foreach (SideIconData iconData in icons.Values)
+            {
+                PointF iconPoint = iconDrawRect.GetAlignmentPoint(iconData.image.Size, ContentAlignment.BottomLeft);
+                iconData.rect = new RectangleF(iconPoint, iconData.image.Size);
+                iconDrawRect = iconDrawRect.ApplyPadding(iconData.image.Width + IconMargin, 0, 0, 0);
+            }
+
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
         {
             Graphics g = pevent.Graphics;
 
-            RectangleF rectHeader = new RectangleF(0, 0, this.Width, this._headerSize);
-            Brush brushHeader = new LinearGradientBrush(rectHeader, this._headerColorDark, this._headerColorLight, LinearGradientMode.Vertical);
-            g.FillRectangle(brushHeader, rectHeader);
+            Brush brushHeader = new LinearGradientBrush(headerRect, _headerColorDark, _headerColorLight, LinearGradientMode.Vertical);
+            g.FillRectangle(brushHeader, headerRect);
 
-            Brush brushHeaderText = new SolidBrush(this._headerTextColor);
-            RectangleF headerClientRect = rectHeader.ApplyPadding(this.Padding);
-            g.DrawString(this._headerText, this._headerFont, brushHeaderText, headerClientRect);
+            Brush brushHeaderText = new SolidBrush(_headerTextColor);
+            g.DrawString(_headerText, _headerFont, brushHeaderText, headerClientRect);
 
-            RectangleF bodyRectangle = new RectangleF(0, this._headerSize, this.Width, this.Height - this._headerSize);
-            Brush backgroundBrush = new SolidBrush(this.BackColor);
-            g.FillRectangle(backgroundBrush, bodyRectangle);
+            Brush backgroundBrush = new SolidBrush(BackColor);
+            g.FillRectangle(backgroundBrush, bodyRect);
 
-            RectangleF bodyClientRectangle = bodyRectangle.ApplyPadding(this.Padding);
-            Brush brushText = new SolidBrush(this.ForeColor);
-            g.DrawString(this._text, this._textFont, brushText, bodyClientRectangle);
+            Brush brushText = new SolidBrush(ForeColor);
+            g.Clip = new Region(textRect);
+            g.Clip.Exclude(iconsRect);
+            g.DrawString(_text, _textFont, brushText, textRect);
+            g.ResetClip();
 
-            try
+            string date = _date?.ToString(_dateFormat);
+            if (date != null)
             {
-                string date = this._date?.ToString(this._dateFormat);
-                if (date != null)
+                Brush brushDate = new SolidBrush(_dateColor);
+                g.DrawString(date, _dateFont, brushDate, dateRect);
+            }
+
+            foreach (SideIconData iconData in icons.Values)
+            {
+                if (iconData.hovered)
                 {
-                    SizeF sizeDate = g.MeasureString(date, this._dateFont);
-                    Brush brushDate = new SolidBrush(this._dateColor);
-                    RectangleF rectDate = new RectangleF(headerClientRect.Right - sizeDate.Width,
-                                                            headerClientRect.Bottom - sizeDate.Height,
-                                                            sizeDate.Width,
-                                                            sizeDate.Height);
-                    g.DrawString(date, this._dateFont, brushDate, rectDate);
+                    g.FillRectangle(Brushes.White, iconData.rect);
                 }
+                g.DrawImage(iconData.image, iconData.rect);
             }
-            catch (FormatException ex)
-            {
-                MessageBox.Show(ex.Message, "Date Format Invalid", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            //SizeF x = g.MeasureString(this.Text, this.Font, this.ClientRectangle.Width);
         }
 
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            bool cursorInIcon = false;
+            if (iconsRect.Contains(e.Location))
+            {
+                foreach (SideIconData iconData in icons.Values)
+                {
+                    iconData.hovered = iconData.rect.Contains(e.Location);
+                    cursorInIcon |= iconData.hovered;
+                }
+                Invalidate();
+            }
+            Cursor = (cursorInIcon) ? Cursors.Hand : Cursors.Default;
+        }
+
+        protected override void OnMouseClick(MouseEventArgs e)
+        {
+            base.OnMouseClick(e);
+            if (iconsRect.Contains(e.Location))
+            {
+                foreach (string key in icons.Keys)
+                {
+                    SideIconData iconData = icons[key];
+                    if (iconData.rect.Contains(e.Location))
+                    {
+                        IconClick?.Invoke(this, key);
+                    }
+                }
+            }
+        }
     }
 }
