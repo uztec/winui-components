@@ -52,6 +52,9 @@ namespace UzunTec.WinUI.Controls
         private decimal _decimalValue = 0;
         public decimal DecimalValue { get => this._decimalValue; set { this._decimalValue = value; this.UpdateText(); } }
 
+        public int IntValue { get => (int)this._decimalValue; set { this._decimalValue = value; this.UpdateText(); } } // TODO
+        public double DoubleValue { get => (double)this._decimalValue; set { this._decimalValue = (decimal)value; this.UpdateText(); } } // TODO
+
         // Restricts the entry of characters to digits (including hex), the negative sign,
         // the decimal point, and editing keystrokes (backspace).
         protected override void OnKeyPress(KeyPressEventArgs e)
