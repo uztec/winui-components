@@ -12,15 +12,12 @@ namespace UzunTec.WinUI.Controls
 {
     public class ThemeButton : Button, IThemeControlWithBackground
     {
-        public bool ReverseTextColor { get; set; }
-        public bool ShowBackground { get; set; }
 
+        [Browsable(false), ReadOnly(true)]
+        public new Color BackColor { get => this.BackgroundColorDark; set { this.BackgroundColorDark = value; } }
 
-        [Browsable(false)]
-        public new Color BackColor { get; }
-
-        [Browsable(false)]
-        public new Color ForeColor { get; }
+        [Browsable(false), ReadOnly(true)]
+        public new Color ForeColor { get => this.TextColor; set { this.TextColor = value; } }
 
         [Browsable(false)]
         public ThemeScheme ThemeScheme => ThemeSchemeManager.Instance.GetTheme();
@@ -63,6 +60,14 @@ namespace UzunTec.WinUI.Controls
         public Padding InternalPadding { get => this._internalPadding; set { this._internalPadding = value; this.Invalidate(); } }
         private Padding _internalPadding;
 
+        [Category("Z-Custom"), DefaultValue(false)]
+        public bool ReverseTextColor { get => this._reverseTextColor; set { this._reverseTextColor = value; this.Invalidate(); } }
+        private bool _reverseTextColor;
+        
+        [Category("Z-Custom"), DefaultValue(false)]
+        public bool ShowBackground { get => this._showBackground; set { this._showBackground = value; this.Invalidate(); } }
+        private bool _showBackground;
+
         public ThemeButton()
         {
             this.InternalPadding = new Padding(1);
@@ -95,7 +100,7 @@ namespace UzunTec.WinUI.Controls
             Graphics g = pevent.Graphics;
             g.Clear(Parent.BackColor);
 
-            if (this.ShowBackground)
+            if (this._showBackground)
             {
                 g.FillBackground(this, false);
             }
@@ -118,7 +123,7 @@ namespace UzunTec.WinUI.Controls
             }
 
             Brush textBrush = (this.Enabled && this.MouseHovered) ? ThemeSchemeManager.Instance.GetHighlightBrush(this)
-                    : this.ReverseTextColor ? ThemeSchemeManager.Instance.GetDisabledBackgroundBrush(this)
+                    : this._reverseTextColor ? ThemeSchemeManager.Instance.GetDisabledBackgroundBrush(this)
                     : ThemeSchemeManager.Instance.GetTextBrush(this);
 
             g.DrawText(this.Text, this.Font, textBrush, textRect, textSize, this.TextAlign);
