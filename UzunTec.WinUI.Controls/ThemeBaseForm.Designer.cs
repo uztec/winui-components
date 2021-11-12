@@ -31,9 +31,9 @@ namespace UzunTec.WinUI.Controls
         {
             this.panelTitle = new System.Windows.Forms.Panel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.btnMaximize = new System.Windows.Forms.Button();
-            this.btnMinimize = new System.Windows.Forms.Button();
+            this.btnCloseIcon = new System.Windows.Forms.Button();
+            this.btnMaximizeIcon = new System.Windows.Forms.Button();
+            this.btnMinimizeIcon = new System.Windows.Forms.Button();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.lblTitle = new System.Windows.Forms.Label();
             this.panelTitle.SuspendLayout();
@@ -57,9 +57,9 @@ namespace UzunTec.WinUI.Controls
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.flowLayoutPanel1.Controls.Add(this.btnClose);
-            this.flowLayoutPanel1.Controls.Add(this.btnMaximize);
-            this.flowLayoutPanel1.Controls.Add(this.btnMinimize);
+            this.flowLayoutPanel1.Controls.Add(this.btnCloseIcon);
+            this.flowLayoutPanel1.Controls.Add(this.btnMaximizeIcon);
+            this.flowLayoutPanel1.Controls.Add(this.btnMinimizeIcon);
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(660, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -67,55 +67,55 @@ namespace UzunTec.WinUI.Controls
             this.flowLayoutPanel1.TabIndex = 2;
             this.flowLayoutPanel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelMovable_MouseDown);
             // 
-            // btnClose
+            // btnCloseIcon
             // 
-            this.btnClose.BackColor = System.Drawing.Color.Transparent;
-            this.btnClose.FlatAppearance.BorderSize = 0;
-            this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Font = new System.Drawing.Font("Arial", 11F);
-            this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.Location = new System.Drawing.Point(65, 0);
-            this.btnClose.Margin = new System.Windows.Forms.Padding(0);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(26, 32);
-            this.btnClose.TabIndex = 2;
-            this.btnClose.Text = "✖";
-            this.btnClose.UseVisualStyleBackColor = false;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            this.btnCloseIcon.BackColor = System.Drawing.Color.Transparent;
+            this.btnCloseIcon.FlatAppearance.BorderSize = 0;
+            this.btnCloseIcon.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnCloseIcon.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnCloseIcon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCloseIcon.Font = new System.Drawing.Font("Arial", 11F);
+            this.btnCloseIcon.ForeColor = System.Drawing.Color.White;
+            this.btnCloseIcon.Location = new System.Drawing.Point(65, 0);
+            this.btnCloseIcon.Margin = new System.Windows.Forms.Padding(0);
+            this.btnCloseIcon.Name = "btnCloseIcon";
+            this.btnCloseIcon.Size = new System.Drawing.Size(26, 32);
+            this.btnCloseIcon.TabIndex = 2;
+            this.btnCloseIcon.Text = "✖";
+            this.btnCloseIcon.UseVisualStyleBackColor = false;
+            this.btnCloseIcon.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // btnMaximize
+            // btnMaximizeIcon
             // 
-            this.btnMaximize.BackColor = System.Drawing.Color.Transparent;
-            this.btnMaximize.FlatAppearance.BorderSize = 0;
-            this.btnMaximize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMaximize.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Bold);
-            this.btnMaximize.ForeColor = System.Drawing.Color.Transparent;
-            this.btnMaximize.Location = new System.Drawing.Point(39, 0);
-            this.btnMaximize.Margin = new System.Windows.Forms.Padding(0);
-            this.btnMaximize.Name = "btnMaximize";
-            this.btnMaximize.Size = new System.Drawing.Size(26, 26);
-            this.btnMaximize.TabIndex = 3;
-            this.btnMaximize.Text = "◻";
-            this.btnMaximize.UseVisualStyleBackColor = false;
-            this.btnMaximize.Click += new System.EventHandler(this.btnMaximize_Click);
+            this.btnMaximizeIcon.BackColor = System.Drawing.Color.Transparent;
+            this.btnMaximizeIcon.FlatAppearance.BorderSize = 0;
+            this.btnMaximizeIcon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMaximizeIcon.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Bold);
+            this.btnMaximizeIcon.ForeColor = System.Drawing.Color.Transparent;
+            this.btnMaximizeIcon.Location = new System.Drawing.Point(39, 0);
+            this.btnMaximizeIcon.Margin = new System.Windows.Forms.Padding(0);
+            this.btnMaximizeIcon.Name = "btnMaximizeIcon";
+            this.btnMaximizeIcon.Size = new System.Drawing.Size(26, 26);
+            this.btnMaximizeIcon.TabIndex = 3;
+            this.btnMaximizeIcon.Text = "◻";
+            this.btnMaximizeIcon.UseVisualStyleBackColor = false;
+            this.btnMaximizeIcon.Click += new System.EventHandler(this.btnMaximize_Click);
             // 
-            // btnMinimize
+            // btnMinimizeIcon
             // 
-            this.btnMinimize.BackColor = System.Drawing.Color.Transparent;
-            this.btnMinimize.FlatAppearance.BorderSize = 0;
-            this.btnMinimize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMinimize.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Bold);
-            this.btnMinimize.ForeColor = System.Drawing.Color.Transparent;
-            this.btnMinimize.Location = new System.Drawing.Point(13, 0);
-            this.btnMinimize.Margin = new System.Windows.Forms.Padding(0);
-            this.btnMinimize.Name = "btnMinimize";
-            this.btnMinimize.Size = new System.Drawing.Size(26, 26);
-            this.btnMinimize.TabIndex = 4;
-            this.btnMinimize.Text = "🗕";
-            this.btnMinimize.UseVisualStyleBackColor = false;
-            this.btnMinimize.Click += new System.EventHandler(this.btnMinimize_Click);
+            this.btnMinimizeIcon.BackColor = System.Drawing.Color.Transparent;
+            this.btnMinimizeIcon.FlatAppearance.BorderSize = 0;
+            this.btnMinimizeIcon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMinimizeIcon.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Bold);
+            this.btnMinimizeIcon.ForeColor = System.Drawing.Color.Transparent;
+            this.btnMinimizeIcon.Location = new System.Drawing.Point(13, 0);
+            this.btnMinimizeIcon.Margin = new System.Windows.Forms.Padding(0);
+            this.btnMinimizeIcon.Name = "btnMinimizeIcon";
+            this.btnMinimizeIcon.Size = new System.Drawing.Size(26, 26);
+            this.btnMinimizeIcon.TabIndex = 4;
+            this.btnMinimizeIcon.Text = "🗕";
+            this.btnMinimizeIcon.UseVisualStyleBackColor = false;
+            this.btnMinimizeIcon.Click += new System.EventHandler(this.btnMinimize_Click);
             // 
             // panelHeader
             // 
@@ -165,9 +165,9 @@ namespace UzunTec.WinUI.Controls
         private System.Windows.Forms.Panel panelTitle;
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.Button btnMaximize;
-        private System.Windows.Forms.Button btnMinimize;
+        private System.Windows.Forms.Button btnCloseIcon;
+        private System.Windows.Forms.Button btnMaximizeIcon;
+        private System.Windows.Forms.Button btnMinimizeIcon;
         private System.Windows.Forms.Label lblTitle;
     }
 }

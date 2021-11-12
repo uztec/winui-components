@@ -31,13 +31,13 @@ namespace UzunTec.WinUI.Controls
         public new Font Font { get => this.lblTitle.Font; set { this.lblTitle.Font = value; this.Invalidate(); } }
 
         [Category("Theme"), DefaultValue(typeof(Color), "True")]
-        public bool ShowClose { get => btnClose.Visible; set => btnClose.Visible = value; }
+        public bool ShowClose { get => btnCloseIcon.Visible; set => btnCloseIcon.Visible = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "True")]
-        public bool ShowMaximize { get => btnMaximize.Visible; set => btnMaximize.Visible = value; }
+        public bool ShowMaximize { get => btnMaximizeIcon.Visible; set => btnMaximizeIcon.Visible = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "True")]
-        public bool ShowMinimize { get => btnMinimize.Visible; set => btnMinimize.Visible = value; }
+        public bool ShowMinimize { get => btnMinimizeIcon.Visible; set => btnMinimizeIcon.Visible = value; }
 
         [Browsable(false)]
         public ThemeScheme ThemeScheme => ThemeSchemeManager.Instance.GetTheme();
