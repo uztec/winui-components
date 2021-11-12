@@ -10,11 +10,11 @@ namespace UzunTec.WinUI.Controls
 {
     public class ThemeDatePicker : DateTimePicker, IThemeControlWithHint
     {
+        [Browsable(false), ReadOnly(true)]
+        public new Color BackColor { get => this.BackgroundColorDark; set { this.BackgroundColorDark = value; } }
+                
         [Browsable(false)]
-        public new Color BackColor { get; }
-
-        [Browsable(false)]
-        public new Color ForeColor { get; }
+        public new Color ForeColor { get => this.TextColor; set { this.TextColor = value; } }
 
         [Browsable(false)]
         public new Size MinimumSize { get; set; }
