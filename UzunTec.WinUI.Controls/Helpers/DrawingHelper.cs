@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Drawing.Drawing2D;
 using UzunTec.WinUI.Controls.Interfaces;
 using UzunTec.WinUI.Utils;
 
@@ -87,6 +88,22 @@ namespace UzunTec.WinUI.Controls.Helpers
             g.ResetClip();
         }
 
+        internal static void DrawTriangle(this Graphics g, IThemeControlWithHint ctrl)
+        {
+            // Create and Draw the arrow
+            GraphicsPath pth = new GraphicsPath();
+            PointF TopRight = new PointF(ctrl.ClientRectangle.Width - 0.5f - 14, (ctrl.ClientRectangle.Height >> 1) - 2.5f);
+            PointF MidBottom = new PointF(ctrl.ClientRectangle.Width - 4.5f - 14, (ctrl.ClientRectangle.Height >> 1) + 2.5f);
+            PointF TopLeft = new PointF(ctrl.ClientRectangle.Width - 8.5f - 14, (ctrl.ClientRectangle.Height >> 1) - 2.5f);
+            pth.AddLine(TopLeft, TopRight);
+            pth.AddLine(TopRight, MidBottom);
 
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            Brush triangleBrush = ctrl.Enabled ? ctrl.Focused ? new SolidBrush(ctrl.HighlightColor)
+                  : new SolidBrush(ctrl.HintColor)
+                  : new SolidBrush(ctrl.DisabledHintColor);
+            g.FillPath(triangleBrush, pth);
+            g.SmoothingMode = SmoothingMode.None;
+        }
     }
 }

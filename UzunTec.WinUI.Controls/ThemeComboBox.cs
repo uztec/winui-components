@@ -1,7 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using UzunTec.WinUI.Controls.Helpers;
 using UzunTec.WinUI.Controls.Interfaces;
 using UzunTec.WinUI.Utils;
 
@@ -9,11 +11,6 @@ namespace UzunTec.WinUI.Controls
 {
     public class ThemeComboBox : ComboBox, IThemeControlWithHint
     {
-        private const int LINE_BOTTOM_HEIGHT = 1;
-        private const int FOCUSED_LINE_BOTTOM_HEIGHT = 2;
-        private const int LINE_BOTTOM_PADDING = 1;
-
-        private bool hasHint;
 
         [Browsable(false), ReadOnly(true)]
         public new Color BackColor { get => this.BackgroundColorDark; set { this.BackgroundColorDark = value; } }
@@ -75,6 +72,11 @@ namespace UzunTec.WinUI.Controls
         [Category("Theme"), DefaultValue(typeof(Color), "Black")]
         public Color DisabledHintColor { get; set; }
 
+        [Category("Theme"), DefaultValue(typeof(Color), "Control")]
+        public Color SelectionColorLight { get; set; }
+        [Category("Theme"), DefaultValue(typeof(Color), "Control")]
+        public Color SelectionColorDark { get; set; }
+
         #endregion
 
         [Category("Z-Custom"), DefaultValue(typeof(string), "")]
@@ -106,20 +108,19 @@ namespace UzunTec.WinUI.Controls
 
         [Category("Z-Custom"), DefaultValue(true)]
         public Padding InternalPadding { get => this._internalPadding; set { this._internalPadding = value; this.Invalidate(); } }
-
-        public Color SelectionColorLight { get; set; }
-        public Color SelectionColorDark { get; set; }
-
         private Padding _internalPadding;
+
+        private RectangleF textRect, hintRect;
+        private bool hasHint;
 
         public ThemeComboBox()
         {
-
             // Control Defaults
             this.PlaceholderHintText = "";
             this.InternalPadding = new Padding(5);
             this._showHint = true;
             this.Size = new Size(200, 50);
+            this.ItemHeight = 44;
 
             // Theme
             this.Font = this.ThemeScheme.ControlTextFont;
@@ -166,10 +167,6 @@ namespace UzunTec.WinUI.Controls
 
         }
 
-        private void UpdateRects()
-        {
-        }
-
         private void CustomMeasureItem(object sender, MeasureItemEventArgs e)
         {
             e.ItemHeight = this.Height - 7;
@@ -198,6 +195,25 @@ namespace UzunTec.WinUI.Controls
 
         }
 
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+            //this.UpdateRects();
+        }
+
+        private void UpdateRects()
+        {
+            Graphics g = this.CreateGraphics();
+
+            this.textRect = this.ClientRectangle.ToRectF().ApplyPadding(this._internalPadding);
+ 
+            if (this.hasHint)
+            {
+                this.hintRect = this.GetHintRect(g);
+                this.textRect = this.textRect.ApplyPadding(0, this.hintRect.Height, 0, 0);
+            }
+            this.textRect = this.textRect.ApplyPadding(0, 0, 0, this.ClientRectangle.Height - this.GetBottomLineRect().Y);
+        }
 
 
         protected override void OnPaint(PaintEventArgs e)
@@ -205,71 +221,33 @@ namespace UzunTec.WinUI.Controls
             Graphics g = e.Graphics;
             g.Clear(Parent.BackColor);
 
-            RectangleF availableRectangle = new RectangleF(ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, ClientRectangle.Height).ApplyPadding(this._internalPadding);
-
-            Brush backgroundBrush = Enabled ?
-                            (Focused || MouseHovered) ? new LinearGradientBrush(ClientRectangle, this.FocusedBackgroundColorDark, this.FocusedBackgroundColorLight, LinearGradientMode.Vertical)
-                            : new LinearGradientBrush(ClientRectangle, this.BackgroundColorDark, this.BackgroundColorLight, LinearGradientMode.Vertical)
-                            : new LinearGradientBrush(ClientRectangle, this.DisabledBackgroundColorDark, this.DisabledBackgroundColorLight, LinearGradientMode.Vertical);
-
-            g.FillRectangle(backgroundBrush, ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, ClientRectangle.Height - LINE_BOTTOM_PADDING);
-
-            Brush highlightBrush = new SolidBrush(this.HighlightColor);
-            Brush textBrush = Enabled ? new SolidBrush(this.TextColor) : new SolidBrush(this.DisabledTextColor);
-
-            // Draw Botom line base
-            Brush lineBrush = Focused ? highlightBrush : textBrush;
-            float lineHeight = Focused ? FOCUSED_LINE_BOTTOM_HEIGHT : LINE_BOTTOM_HEIGHT;
-            float lineY = ClientRectangle.Bottom - lineHeight - (Focused ? 0 : LINE_BOTTOM_PADDING);
-            g.FillRectangle(lineBrush, 0, lineY, this.Width, lineHeight);
-            availableRectangle = availableRectangle.ApplyPadding(0, 0, 0, ClientRectangle.Bottom - lineY);
-
-            this.DrawTriangle(g, this);
-
+            g.FillBackground(this);
+            g.DrawBottomLine(this);
 
             if (this.hasHint && (Focused || !string.IsNullOrWhiteSpace(this.Text)))
             {
-                Brush hintBrush = Enabled ? Focused ? highlightBrush
-                    : new SolidBrush(this.HintColor)
-                    : new SolidBrush(this.DisabledHintColor);
-
-                SizeF hintSize = g.MeasureString(this._placeholderHintText, this.HintFont, this.Width);
-                RectangleF hintRect = new RectangleF(this._internalPadding.Left, this._internalPadding.Top, hintSize.Width, hintSize.Height);
-                g.DrawString(this._placeholderHintText, this.HintFont, hintBrush, hintRect);
-                availableRectangle = availableRectangle.ApplyPadding(0, hintSize.Height, 0, 0);
+                g.DrawHint(this);
             }
 
+            Brush textBrush = ThemeSchemeManager.Instance.GetTextBrush(this);
             if (!string.IsNullOrWhiteSpace(this.Text))
             {
-                g.Clip = new Region(availableRectangle);
-                g.DrawString(this.Text, this.Font, textBrush, availableRectangle);
+                g.Clip = new Region(this.textRect);
+                g.DrawString(this.Text, this.Font, textBrush, this.textRect);
                 g.ResetClip();
             }
             else if (!string.IsNullOrWhiteSpace(this._placeholderHintText) && !Focused)
             {
                 Brush placeHolderBrush = Enabled ? new SolidBrush(this.PlaceholderColor) : textBrush;
-                g.Clip = new Region(availableRectangle);
-                g.DrawString(this._placeholderHintText, this.PlaceholderFont, placeHolderBrush, availableRectangle);
+                g.Clip = new Region(this.textRect);
+                g.DrawString(this._placeholderHintText, this.PlaceholderFont, placeHolderBrush, this.textRect);
                 g.ResetClip();
             }
+
+            g.DrawTriangle(this);
+
         }
 
-        private void DrawTriangle(Graphics g, ThemeComboBox ctrl)
-        {
-            // Create and Draw the arrow
-            GraphicsPath pth = new GraphicsPath();
-            PointF TopRight = new PointF(this.Width - 0.5f - 14, (ctrl.Height >> 1) - 2.5f);
-            PointF MidBottom = new PointF(this.Width - 4.5f - 14, (ctrl.Height >> 1) + 2.5f);
-            PointF TopLeft = new PointF(this.Width - 8.5f - 14, (ctrl.Height >> 1) - 2.5f);
-            pth.AddLine(TopLeft, TopRight);
-            pth.AddLine(TopRight, MidBottom);
-
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            Brush triangleBrush = Enabled ? Focused ? new SolidBrush(ctrl.HighlightColor)
-                  : new SolidBrush(this.HintColor)
-                  : new SolidBrush(this.DisabledHintColor);
-            g.FillPath(triangleBrush, pth);
-            g.SmoothingMode = SmoothingMode.None;
-        }
+      
     }
 }

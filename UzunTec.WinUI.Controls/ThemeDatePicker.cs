@@ -238,7 +238,7 @@ namespace UzunTec.WinUI.Controls
         }
         private void UpdateRects()
         {
-            Graphics g = Graphics.FromHwnd(this.Handle);
+            Graphics g = this.CreateGraphics();
 
             RectangleF clientRect = this.ClientRectangle.ToRectF().ApplyPadding(this._internalPadding);
             float iconRectWidth = this.calendarIcon.Width + this._internalPadding.Horizontal;

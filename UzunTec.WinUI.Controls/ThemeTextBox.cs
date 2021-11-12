@@ -107,7 +107,7 @@ namespace UzunTec.WinUI.Controls
         private bool _showHint;
 
 
-        [Category("Z-Custom"), DefaultValue(true)]
+        [Category("Z-Custom"), DefaultValue(typeof(Padding), "5; 5; 5; 5;")]
         public Padding InternalPadding { get => this._internalPadding; set { this._internalPadding = value; this.Invalidate(); } }
         private Padding _internalPadding;
 
@@ -232,7 +232,7 @@ namespace UzunTec.WinUI.Controls
         }
         private void UpdateRects()
         {
-            Graphics g = Graphics.FromHwnd(this.Handle);
+            Graphics g = this.CreateGraphics();
 
             this.textRect = new RectangleF(
                 ClientRectangle.X + this._internalPadding.Left,
