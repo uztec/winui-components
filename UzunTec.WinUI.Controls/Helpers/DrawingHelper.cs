@@ -61,10 +61,10 @@ namespace UzunTec.WinUI.Controls.Helpers
             g.DrawString(ctrl.PlaceholderHintText, ctrl.HintFont, hintBrush, hintRect);
         }
 
-        internal static RectangleF GetHintRect(this IThemeControlWithHint ctrl, Graphics g)
+        internal static RectangleF GetHintRect(this IThemeControlWithHint ctrl, Graphics g, PointF offset = default)
         {
             SizeF hintSize = g.MeasureString(ctrl.PlaceholderHintText, ctrl.HintFont, ctrl.ClientRectangle.Width);
-            return new RectangleF(ctrl.InternalPadding.Left, ctrl.InternalPadding.Top, hintSize.Width, hintSize.Height);
+            return new RectangleF(offset.X + ctrl.InternalPadding.Left, offset.Y + ctrl.InternalPadding.Top, hintSize.Width, hintSize.Height);
         }
 
         internal static void DrawText(this Graphics g, string text, Font font, Brush textBrush, RectangleF rect, ContentAlignment alignment = ContentAlignment.TopLeft)
