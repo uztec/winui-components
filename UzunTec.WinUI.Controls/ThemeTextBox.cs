@@ -12,6 +12,9 @@ namespace UzunTec.WinUI.Controls
 {
     public class ThemeTextBox : RichTextBox, IThemeControlWithHint
     {
+        public event EventHandler PrependIconClick;
+        public event EventHandler AppendIconClick;
+
 
         [Browsable(false), ReadOnly(true)]
         public new Color BackColor { get => BackgroundColorDark; set => BackgroundColorDark = value; }
@@ -218,7 +221,6 @@ namespace UzunTec.WinUI.Controls
             base.AutoSize = false;
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
 
-
             UpdateRects();
             SetTextRect(textRect);
 
@@ -258,7 +260,7 @@ namespace UzunTec.WinUI.Controls
 
             if (hasHint)
             {
-                this.hintRect = this.GetHintRect(g, new PointF(hintOffset,0));
+                this.hintRect = this.GetHintRect(g, new PointF(hintOffset, 0));
                 this.textRect = this.textRect.ApplyPadding(0, hintRect.Height, 0, 0);
             }
 
@@ -339,6 +341,13 @@ namespace UzunTec.WinUI.Controls
             }
         }
 
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+            this.Cursor = (this.PrependIconClick != null && this.prependIconData.image != null && this.prependIconData.rect.Contains(e.Location))
+                || (this.AppendIconClick != null && this.appendIconData.image != null && this.appendIconData.rect.Contains(e.Location)) ? Cursors.Hand : Cursors.Default;
+        }
+
         protected override void OnTextChanged(EventArgs e)
         {
             base.OnTextChanged(e);
@@ -348,19 +357,21 @@ namespace UzunTec.WinUI.Controls
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            //if (LeadingIcon != null && _leadingIconBounds.Contains(e.Location))
-            //{
-            //    LeadingIconClick?.Invoke(this, new EventArgs());
-            //}
-            //else if (TrailingIcon != null && _trailingIconBounds.Contains(e.Location))
-            //{
-            //    TrailingIconClick?.Invoke(this, new EventArgs());
-            //}
-            //else
-            //{
-            //    if (DesignMode)
-            //        return;
-            //}
+            if (this.PrependIconClick != null && this.prependIconData.image != null && this.prependIconData.rect.Contains(e.Location))
+            {
+                this.PrependIconClick?.Invoke(this, new EventArgs());
+            }
+            else if (this.AppendIconClick != null && this.appendIconData.image != null && this.appendIconData.rect.Contains(e.Location))
+            {
+                AppendIconClick?.Invoke(this, new EventArgs());
+            }
+            else
+            {
+                if (DesignMode)
+                {
+                    return;
+                }
+            }
             base.OnMouseDown(e);
         }
 
