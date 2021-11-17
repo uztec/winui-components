@@ -198,7 +198,7 @@ namespace UzunTec.WinUI.Controls
 
             if (this.hasHint && (Focused || !string.IsNullOrWhiteSpace(this.Text)))
             {
-                g.DrawHint(this);
+                g.DrawHint(this, this.hintRect);
             }
 
             Brush textBrush = ThemeSchemeManager.Instance.GetTextBrush(this);
