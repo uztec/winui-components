@@ -93,7 +93,7 @@ namespace UzunTec.WinUI.Controls
         public bool ShowHint
         {
             get => _showHint;
-            set { _showHint = value; Invalidate(); }
+            set { _showHint = value; this.UpdateRects(); Invalidate(); }
         }
         private bool _showHint;
 
@@ -179,8 +179,8 @@ namespace UzunTec.WinUI.Controls
         public ThemeTextBox()
         {
             // Control Defaults
-            PlaceholderHintText = "";
-            InternalPadding = new Padding(5);
+            _placeholderHintText = "";
+            _internalPadding = new Padding(5);
             _showHint = true;
             Size = new Size(200, 50);
             base.BorderStyle = BorderStyle.None;

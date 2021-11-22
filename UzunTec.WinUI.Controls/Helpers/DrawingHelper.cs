@@ -88,13 +88,16 @@ namespace UzunTec.WinUI.Controls.Helpers
             g.ResetClip();
         }
 
-        internal static void DrawTriangle(this Graphics g, IThemeControlWithHint ctrl)
+        internal static void DrawTriangle(this Graphics g, IThemeControlWithHint ctrl, RectangleF rect)
         {
             // Create and Draw the arrow
             GraphicsPath pth = new GraphicsPath();
-            PointF TopRight = new PointF(ctrl.ClientRectangle.Width - 0.5f - 14, (ctrl.ClientRectangle.Height >> 1) - 2.5f);
-            PointF MidBottom = new PointF(ctrl.ClientRectangle.Width - 4.5f - 14, (ctrl.ClientRectangle.Height >> 1) + 2.5f);
-            PointF TopLeft = new PointF(ctrl.ClientRectangle.Width - 8.5f - 14, (ctrl.ClientRectangle.Height >> 1) - 2.5f);
+            float triangleHeight = 7f;
+            float triangleWidth = 9f;
+            PointF center = new PointF(rect.X + rect.Width / 2, rect.Y + rect.Height / 2);
+            PointF TopRight = new PointF(center.X + triangleWidth / 2, center.Y - triangleHeight / 2);
+            PointF MidBottom = new PointF(center.X, center.Y + triangleHeight / 2);
+            PointF TopLeft = new PointF(center.X - triangleWidth / 2, center.Y - triangleHeight / 2);
             pth.AddLine(TopLeft, TopRight);
             pth.AddLine(TopRight, MidBottom);
 

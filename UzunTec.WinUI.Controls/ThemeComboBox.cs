@@ -2,15 +2,19 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using UzunTec.WinUI.Controls.Helpers;
 using UzunTec.WinUI.Controls.Interfaces;
+using UzunTec.WinUI.Controls.InternalContracts;
 using UzunTec.WinUI.Utils;
 
 namespace UzunTec.WinUI.Controls
 {
     public class ThemeComboBox : ComboBox, IThemeControlWithHint
     {
+        public event EventHandler PrependIconClick;
+        public event EventHandler AppendIconClick;
 
         [Browsable(false), ReadOnly(true)]
         public new Color BackColor { get => this.BackgroundColorDark; set { this.BackgroundColorDark = value; } }
@@ -105,22 +109,97 @@ namespace UzunTec.WinUI.Controls
         }
         private bool _showHint;
 
+        //
+        [Category("Z-Custom"), DefaultValue(typeof(string), "")]
+        public string Prefix
+        {
+            get => _prefixText;
+            set { _prefixText = value; this.UpdateRects(); this.Invalidate(); }
+        }
+        private string _prefixText = string.Empty;
+
+        [Category("Z-Custom"), DefaultValue(typeof(Font), "Segoe UI; 6pt")]
+        public Font PrefixFont
+        {
+            get => _prefixFont;
+            set { _prefixFont = value; this.UpdateRects(); this.Invalidate(); }
+        }
+        private Font _prefixFont;
+
+        [Category("Z-Custom"), DefaultValue(typeof(string), "")]
+        public string Suffix
+        {
+            get => _suffixText;
+            set { _suffixText = value; this.UpdateRects(); this.Invalidate(); }
+        }
+        private string _suffixText = string.Empty;
+
+        [Category("Z-Custom"), DefaultValue(typeof(Font), "Segoe UI; 6pt")]
+        public Font SuffixFont
+        {
+            get => _suffixFont;
+            set { _suffixFont = value; this.UpdateRects(); this.Invalidate(); }
+        }
+        private Font _suffixFont;
+
+        [Category("Z-Custom"), DefaultValue(typeof(Color), "Black")]
+        public Color PrefixSuffixTextColor
+        {
+            get => _prefixSuffixTextColor;
+            set { _prefixSuffixTextColor = value; Invalidate(); }
+        }
+        private Color _prefixSuffixTextColor;
+        //
 
         [Category("Z-Custom"), DefaultValue(true)]
         public Padding InternalPadding { get => this._internalPadding; set { this._internalPadding = value; this.Invalidate(); } }
         private Padding _internalPadding;
+        
+        //
+        [Category("Z-Custom"), DefaultValue(typeof(Image), "")]
+        public Image PrependIcon
+        {
+            get => this.prependIconData.image;
+            set { this.prependIconData.image = value; this.UpdateRects(); this.Invalidate(); }
+        }
 
-        private RectangleF textRect, hintRect;
-        private bool hasHint;
+        [Category("Z-Custom"), DefaultValue(typeof(float), "5")]
+        public float PrependIconMargin
+        {
+            get => this._prependIconMargin;
+            set { this._prependIconMargin = value; this.UpdateRects(); this.Invalidate(); }
+        }
+        private float _prependIconMargin;
+
+        [Category("Z-Custom"), DefaultValue(typeof(Image), "")]
+        public Image AppendIcon
+        {
+            get => this.appendIconData.image;
+            set { this.appendIconData.image = value; this.UpdateRects(); this.Invalidate(); }
+        }
+
+        [Category("Z-Custom"), DefaultValue(typeof(float), "5")]
+        public float AppendIconMargin
+        {
+            get => this._appendIconMargin;
+            set { this._appendIconMargin = value; this.UpdateRects(); this.Invalidate(); }
+        }
+        private float _appendIconMargin;
+        //
+                
+        private RectangleF textRect, hintRect, prefixRect, suffixRect, triangleRect;
+        private bool hasHint, hasPrefix, hasSuffix;
+        private readonly SideIconData prependIconData = new SideIconData();
+        private readonly SideIconData appendIconData = new SideIconData();
 
         public ThemeComboBox()
         {
             // Control Defaults
-            this.PlaceholderHintText = "";
-            this.InternalPadding = new Padding(5);
-            this._showHint = true;
-            this.Size = new Size(200, 50);
-            this.ItemHeight = 44;
+            _placeholderHintText = "";
+            _internalPadding = new Padding(5);
+            _showHint = true;
+            Size = new Size(200, 50);
+            ItemHeight = 44;
 
             // Theme
             this.Font = this.ThemeScheme.ControlTextFont;
@@ -145,6 +224,12 @@ namespace UzunTec.WinUI.Controls
             this.BackgroundColorLight = this.ThemeScheme.ControlBackgroundColorLight;
             this.DisabledBackgroundColorDark = this.ThemeScheme.DisabledControlBackgroundColorDark;
             this.DisabledBackgroundColorLight = this.ThemeScheme.DisabledControlBackgroundColorLight;
+
+            _prefixFont = ThemeScheme.ControlHintFont;
+            _suffixFont = ThemeScheme.ControlHintFont;
+            _prefixSuffixTextColor = ThemeScheme.ControlTextColor;
+            this._prependIconMargin = 5;
+            this._appendIconMargin = 5;
         }
 
         protected override void OnCreateControl()
@@ -154,16 +239,20 @@ namespace UzunTec.WinUI.Controls
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
 
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
+
+            this.UpdateRects();
+            SetTextRect(textRect);
+
             LostFocus += (sender, args) => { MouseHovered = false; this.Invalidate(); };
             GotFocus += (sender, args) => this.Invalidate();
             MouseEnter += (sender, args) => { MouseHovered = true; this.Invalidate(); };
             MouseLeave += (sender, args) => { MouseHovered = false; this.Invalidate(); };
+            SizeChanged += (sender, args) => { UpdateRects(); SetTextRect(textRect); };
 
             MeasureItem += CustomMeasureItem;
             DrawItem += CustomDrawItem;
             DropDownStyle = ComboBoxStyle.DropDownList;
             DrawMode = DrawMode.OwnerDrawVariable;
-            this.UpdateRects();
 
         }
 
@@ -203,16 +292,65 @@ namespace UzunTec.WinUI.Controls
 
         private void UpdateRects()
         {
-            Graphics g = this.CreateGraphics();
+            if (!this.Created && !DesignMode)
+            {
+                return;
+            }
+            hasHint = _showHint && !string.IsNullOrEmpty(_placeholderHintText);
+            hasPrefix = !string.IsNullOrEmpty(_prefixText);
+            hasSuffix = !string.IsNullOrEmpty(_suffixText);
+
+            Graphics g = CreateGraphics();
+
+            const float TRIANGLE_RECTANGLE_WIDTH = 30;
+
+            this.triangleRect = new RectangleF(this.ClientRectangle.Width - TRIANGLE_RECTANGLE_WIDTH, 0, TRIANGLE_RECTANGLE_WIDTH, this.ClientRectangle.Height);
 
             this.textRect = this.ClientRectangle.ToRectF().ApplyPadding(this._internalPadding);
- 
+            this.textRect = this.textRect.ApplyPadding(0, 0, triangleRect.Width, this.ClientRectangle.Height - this.GetBottomLineRect().Y);
+
+            float hintOffset = 0;
+
+            if (this.prependIconData.image != null)
+            {
+                float iconRectWidth = this.prependIconData.image.Width + (2 * this._prependIconMargin);
+                this.prependIconData.rect = new RectangleF(0, 0, iconRectWidth, this.ClientRectangle.Height);
+                hintOffset = iconRectWidth;
+                this.textRect = this.textRect.ApplyPadding(iconRectWidth, 0, 0, 0);
+            }
+
+            if (this.appendIconData.image != null)
+            {
+                float iconRectWidth = (this.appendIconData.image.Width + (2 * this._appendIconMargin));
+                this.appendIconData.rect = new RectangleF(this.ClientRectangle.Width - iconRectWidth, 0, iconRectWidth, this.ClientRectangle.Height);
+                this.triangleRect = new RectangleF(this.ClientRectangle.Width - TRIANGLE_RECTANGLE_WIDTH - iconRectWidth, 0, TRIANGLE_RECTANGLE_WIDTH, this.ClientRectangle.Height);
+                this.textRect = this.textRect.ApplyPadding(0, 0, appendIconData.rect.Width, 0);
+            }
+
             if (this.hasHint)
             {
-                this.hintRect = this.GetHintRect(g);
+                this.hintRect = this.GetHintRect(g, new PointF(hintOffset, 0));
                 this.textRect = this.textRect.ApplyPadding(0, this.hintRect.Height, 0, 0);
             }
-            this.textRect = this.textRect.ApplyPadding(0, 0, 0, this.ClientRectangle.Height - this.GetBottomLineRect().Y);
+
+
+            if (hasPrefix)
+            {
+                SizeF prefixSize = g.MeasureString(_prefixText, _prefixFont, ClientRectangle.Width);
+                PointF prefixLcation = new PointF(this.textRect.Left, this.textRect.Bottom - prefixSize.Height);
+                this.prefixRect = new RectangleF(prefixLcation, prefixSize);
+                this.textRect = this.textRect.ApplyPadding(prefixRect.Width, 0, 0, 0);
+            }
+
+            if (hasSuffix)
+            {
+                SizeF suffixSize = g.MeasureString(_suffixText, _suffixFont, ClientRectangle.Width);
+                PointF suffixLcation = new PointF(this.textRect.Right - suffixSize.Width, this.textRect.Bottom - suffixSize.Height);
+                this.suffixRect = new RectangleF(suffixLcation, suffixSize);
+                this.textRect = this.textRect.ApplyPadding(0, 0, suffixSize.Width, 0);
+            }
+
+            this.Invalidate();
         }
 
 
@@ -226,7 +364,8 @@ namespace UzunTec.WinUI.Controls
 
             if (this.hasHint && (Focused || !string.IsNullOrWhiteSpace(this.Text)))
             {
-                g.DrawHint(this);
+                g.DrawHint(this, hintRect);
+                //g.FillRectangle(Brushes.BurlyWood, hintRect);
             }
 
             Brush textBrush = ThemeSchemeManager.Instance.GetTextBrush(this);
@@ -235,6 +374,7 @@ namespace UzunTec.WinUI.Controls
                 g.Clip = new Region(this.textRect);
                 g.DrawString(this.Text, this.Font, textBrush, this.textRect);
                 g.ResetClip();
+                //g.FillRectangle(Brushes.Blue, textRect);
             }
             else if (!string.IsNullOrWhiteSpace(this._placeholderHintText) && !Focused)
             {
@@ -242,12 +382,87 @@ namespace UzunTec.WinUI.Controls
                 g.Clip = new Region(this.textRect);
                 g.DrawString(this._placeholderHintText, this.PlaceholderFont, placeHolderBrush, this.textRect);
                 g.ResetClip();
+                //g.FillRectangle(Brushes.Blue, textRect);
             }
 
-            g.DrawTriangle(this);
+            g.DrawTriangle(this, triangleRect);
+            //g.FillRectangle(Brushes.Red, triangleRect);
 
+            if (this.hasPrefix)
+            {
+                Brush prefixSuffixBrush = new SolidBrush(this._prefixSuffixTextColor);
+                g.Clip = new Region(this.prefixRect);
+                g.DrawString(this._prefixText, this._prefixFont, prefixSuffixBrush, this.prefixRect);
+                g.ResetClip();
+                //g.FillRectangle(Brushes.Yellow, prefixRect);
+            }
+
+            if (this.hasSuffix)
+            {
+                Brush prefixSuffixBrush = new SolidBrush(this._prefixSuffixTextColor);
+                g.Clip = new Region(this.suffixRect);
+                g.DrawString(this._suffixText, this._suffixFont, prefixSuffixBrush, this.suffixRect);
+                g.ResetClip();
+                //g.FillRectangle(Brushes.Chocolate, suffixRect);
+            }
+
+            if (this.prependIconData.image != null)
+            {
+                g.DrawImage(this.prependIconData.image, this.prependIconData.rect.GetAlignmentPoint(this.prependIconData.image.Size, ContentAlignment.MiddleCenter));
+                //g.FillRectangle(Brushes.Green, prependIconData.rect);
+            }
+
+            if (this.appendIconData.image != null)
+            {
+                g.DrawImage(this.appendIconData.image, this.appendIconData.rect.GetAlignmentPoint(this.appendIconData.image.Size, ContentAlignment.MiddleCenter));
+                //g.FillRectangle(Brushes.Green, appendIconData.rect);
+            }
         }
 
-      
+        protected override void OnTextChanged(EventArgs e)
+        {
+            base.OnTextChanged(e);
+            Invalidate();
+        }
+
+        private void SetTextRect(RectangleF rect)
+        {
+            RECT rc = new RECT(rect.ApplyPadding(4, 0, 0, 0));
+            SendMessage(Handle, EM_SETRECT, 0, ref rc);
+        }
+
+        [DllImport(@"User32.dll", EntryPoint = @"SendMessage", CharSet = CharSet.Auto)]
+        private static extern int SendMessage(IntPtr hWnd, uint msg, int wParam, ref RECT lParam);
+
+
+        // Padding
+        private const int EM_SETRECT = 0xB3;
+        //        Win32ApiConstants.EM_SETRECT
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct RECT
+        {
+            public readonly int Left;
+            public readonly int Top;
+            public readonly int Right;
+            public readonly int Bottom;
+
+            private RECT(int left, int top, int right, int bottom)
+            {
+                Left = left;
+                Top = top;
+                Right = right;
+                Bottom = bottom;
+            }
+
+            public RECT(Rectangle r) : this(r.Left, r.Top, r.Right, r.Bottom)
+            {
+            }
+
+            public RECT(RectangleF r) : this(r.ToRect(true))
+            {
+            }
+        }
+
     }
 }
