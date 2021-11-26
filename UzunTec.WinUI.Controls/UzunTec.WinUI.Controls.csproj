@@ -38,6 +38,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InternalContracts\SideIconData.cs" />
+    <Compile Include="ThemeLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ThemeModalBase.cs">
       <SubType>Form</SubType>
     </Compile>
