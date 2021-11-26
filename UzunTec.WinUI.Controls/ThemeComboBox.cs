@@ -185,8 +185,17 @@ namespace UzunTec.WinUI.Controls
             set { this._appendIconMargin = value; this.UpdateRects(); this.Invalidate(); }
         }
         private float _appendIconMargin;
+
+        [Category("Z-Custom"), DefaultValue(typeof(ContentAlignment), "BottomLeft")]
+        public ContentAlignment TextAlign { get => this._textAlign; set { this._textAlign = value; this.Invalidate(); } }
+        private ContentAlignment _textAlign;
+       
+        [Category("Z-Custom"), DefaultValue(typeof(ContentAlignment), "MiddleLeft")]
+        public ContentAlignment ItemTextAlign { get => this._itemTextAlign; set { this._itemTextAlign = value; this.Invalidate(); } }
+        private ContentAlignment _itemTextAlign;
+
         //
-                
+
         private RectangleF textRect, hintRect, prefixRect, suffixRect, triangleRect;
         private bool hasHint, hasPrefix, hasSuffix;
         private readonly SideIconData prependIconData = new SideIconData();
@@ -198,6 +207,8 @@ namespace UzunTec.WinUI.Controls
             _placeholderHintText = "";
             _internalPadding = new Padding(5);
             _showHint = true;
+            this._textAlign = ContentAlignment.BottomLeft;
+            this._itemTextAlign = ContentAlignment.MiddleLeft;
             Size = new Size(200, 50);
             ItemHeight = 44;
 
@@ -241,13 +252,12 @@ namespace UzunTec.WinUI.Controls
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
 
             this.UpdateRects();
-            SetTextRect(textRect);
-
+            
             LostFocus += (sender, args) => { MouseHovered = false; this.Invalidate(); };
             GotFocus += (sender, args) => this.Invalidate();
             MouseEnter += (sender, args) => { MouseHovered = true; this.Invalidate(); };
             MouseLeave += (sender, args) => { MouseHovered = false; this.Invalidate(); };
-            SizeChanged += (sender, args) => { UpdateRects(); SetTextRect(textRect); };
+            SizeChanged += (sender, args) => { UpdateRects(); };
 
             MeasureItem += CustomMeasureItem;
             DrawItem += CustomDrawItem;
@@ -276,12 +286,8 @@ namespace UzunTec.WinUI.Controls
             g.FillRectangle(backgroundBrush, e.Bounds);
 
             string text = this.GetItemText(this.Items[e.Index]);
-
-            g.DrawString(text, this.Font, new SolidBrush(this.TextColor),
-                new Point(e.Bounds.Location.X + 14, e.Bounds.Location.Y));
-
+            g.DrawText(text, this.Font, new SolidBrush(this.TextColor), e.Bounds, this._itemTextAlign);
             e.DrawFocusRectangle();
-
         }
 
         protected override void OnSizeChanged(EventArgs e)
@@ -372,7 +378,7 @@ namespace UzunTec.WinUI.Controls
             if (!string.IsNullOrWhiteSpace(this.Text))
             {
                 g.Clip = new Region(this.textRect);
-                g.DrawString(this.Text, this.Font, textBrush, this.textRect);
+                g.DrawText(this.Text, this.Font, textBrush, this.textRect, this._textAlign);
                 g.ResetClip();
                 //g.FillRectangle(Brushes.Blue, textRect);
             }
@@ -380,7 +386,7 @@ namespace UzunTec.WinUI.Controls
             {
                 Brush placeHolderBrush = Enabled ? new SolidBrush(this.PlaceholderColor) : textBrush;
                 g.Clip = new Region(this.textRect);
-                g.DrawString(this._placeholderHintText, this.PlaceholderFont, placeHolderBrush, this.textRect);
+                g.DrawText(this._placeholderHintText, this.PlaceholderFont, placeHolderBrush, this.textRect, this._textAlign);
                 g.ResetClip();
                 //g.FillRectangle(Brushes.Blue, textRect);
             }
@@ -425,44 +431,6 @@ namespace UzunTec.WinUI.Controls
             Invalidate();
         }
 
-        private void SetTextRect(RectangleF rect)
-        {
-            RECT rc = new RECT(rect.ApplyPadding(4, 0, 0, 0));
-            SendMessage(Handle, EM_SETRECT, 0, ref rc);
-        }
-
-        [DllImport(@"User32.dll", EntryPoint = @"SendMessage", CharSet = CharSet.Auto)]
-        private static extern int SendMessage(IntPtr hWnd, uint msg, int wParam, ref RECT lParam);
-
-
-        // Padding
-        private const int EM_SETRECT = 0xB3;
-        //        Win32ApiConstants.EM_SETRECT
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct RECT
-        {
-            public readonly int Left;
-            public readonly int Top;
-            public readonly int Right;
-            public readonly int Bottom;
-
-            private RECT(int left, int top, int right, int bottom)
-            {
-                Left = left;
-                Top = top;
-                Right = right;
-                Bottom = bottom;
-            }
-
-            public RECT(Rectangle r) : this(r.Left, r.Top, r.Right, r.Bottom)
-            {
-            }
-
-            public RECT(RectangleF r) : this(r.ToRect(true))
-            {
-            }
-        }
 
     }
 }
