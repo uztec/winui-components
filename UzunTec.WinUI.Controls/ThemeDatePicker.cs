@@ -11,20 +11,19 @@ namespace UzunTec.WinUI.Controls
     public class ThemeDatePicker : DateTimePicker, IThemeControlWithHint
     {
         [Browsable(false), ReadOnly(true)]
-        public new Color BackColor { get => this.BackgroundColorDark; set { this.BackgroundColorDark = value; } }
-                
+        public new Color BackColor { get => this.BackgroundColorDark; set => this.BackgroundColorDark = value; }
+
         [Browsable(false)]
-        public new Color ForeColor { get => this.TextColor; set { this.TextColor = value; } }
+        public new Color ForeColor { get => this.TextColor; set => this.TextColor = value; }
 
         [Browsable(false)]
         public new Size MinimumSize { get; set; }
 
         [Category("Theme"), DefaultValue(typeof(Font), "Segoe UI; 15pt")]
-        public new Font Font { get => this._textFont; set { this._textFont = value; this.UpdateRects();  this.Invalidate(); } }
+        public new Font Font { get => this._textFont; set { this._textFont = value; this.UpdateRects(); this.Invalidate(); } }
         private Font _textFont;
-        
-        public new Size Size { get => base.Size; set { base.MinimumSize = value; base.Size = value; this.Invalidate(); } }
 
+        public new Size Size { get => base.Size; set { base.MinimumSize = value; base.Size = value; this.Invalidate(); } }
 
         [Browsable(false)]
         public ThemeScheme ThemeScheme => ThemeSchemeManager.Instance.GetTheme();
@@ -82,13 +81,7 @@ namespace UzunTec.WinUI.Controls
         public string PlaceholderHintText
         {
             get => _placeholderHintText;
-            set
-            {
-                _placeholderHintText = value;
-                hasHint = this._showHint && !string.IsNullOrEmpty(_placeholderHintText);
-                this.UpdateRects();
-                Invalidate();
-            }
+            set { _placeholderHintText = value; this.UpdateRects(); this.Invalidate(); }
         }
         private string _placeholderHintText = string.Empty;
 
@@ -96,18 +89,12 @@ namespace UzunTec.WinUI.Controls
         public bool ShowHint
         {
             get => _showHint;
-            set
-            {
-                _showHint = value;
-                hasHint = this._showHint && !string.IsNullOrEmpty(_placeholderHintText);
-                this.UpdateRects();
-                Invalidate();
-            }
+            set { _showHint = value; this.UpdateRects(); this.Invalidate(); }
         }
         private bool _showHint;
 
 
-        [Category("Z-Custom"), DefaultValue(true)]
+        [Category("Z-Custom"), DefaultValue(typeof(Padding), "5; 5; 5; 5;")]
         public Padding InternalPadding { get => this._internalPadding; set { this._internalPadding = value; this.UpdateRects(); this.Invalidate(); } }
         private Padding _internalPadding;
 
@@ -116,8 +103,7 @@ namespace UzunTec.WinUI.Controls
         public ContentAlignment TextAlign { get => this._textAlign; set { this._textAlign = value; this.Invalidate(); } }
         private ContentAlignment _textAlign;
 
-
-        //-> Other Values
+        // Private
         private bool droppedDown = false;
         private Image calendarIcon = Properties.Resources.calendarWhite;
         private RectangleF iconRect, textRect, hintRect;
@@ -158,34 +144,37 @@ namespace UzunTec.WinUI.Controls
             this.DisabledBackgroundColorLight = this.ThemeScheme.DisabledControlBackgroundColorLight;
         }
 
-        protected override void OnInvalidated(InvalidateEventArgs e)
+        protected override void OnCreateControl()
         {
-            if (this.BackgroundColorDark.GetBrightness() >= 0.6F)
-            {
-                calendarIcon = Properties.Resources.calendarDark;
-            }
-            else
-            {
-                calendarIcon = Properties.Resources.calendarWhite;
-            }
-            base.OnInvalidated(e);
-        }
+            base.OnCreateControl();
 
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+            this.UpdateRects();
 
-        protected override void OnDropDown(EventArgs eventargs)
-        {
-            base.OnDropDown(eventargs);
-            droppedDown = true;
+            LostFocus += (sender, args) => { MouseHovered = false; this.Invalidate(); };
+            GotFocus += (sender, args) => this.Invalidate();
+            MouseEnter += (sender, args) => { MouseHovered = true; this.Invalidate(); };
+            MouseLeave += (sender, args) => { MouseHovered = false; this.Invalidate(); };
+            SizeChanged += (sender, args) => { this.UpdateRects(); };
+
         }
-        protected override void OnCloseUp(EventArgs eventargs)
+        private void UpdateRects()
         {
-            base.OnCloseUp(eventargs);
-            droppedDown = false;
-        }
-        protected override void OnKeyPress(KeyPressEventArgs e)
-        {
-            base.OnKeyPress(e);
-            e.Handled = true;
+            this.hasHint = this._showHint && !string.IsNullOrEmpty(_placeholderHintText);
+
+            Graphics g = this.CreateGraphics();
+
+            RectangleF clientRect = this.ClientRectangle.ToRectF().ApplyPadding(this._internalPadding);
+            float iconRectWidth = this.calendarIcon.Width + this._internalPadding.Horizontal;
+            this.iconRect = clientRect.ApplyPadding(clientRect.Width - iconRectWidth, 0, 0, 0);
+            this.textRect = clientRect.ApplyPadding(0, 0, iconRectWidth, 0);
+
+            if (this.hasHint)
+            {
+                this.hintRect = this.GetHintRect(g);
+                this.textRect = this.textRect.ApplyPadding(0, this.hintRect.Height, 0, 0);
+            }
+            this.textRect = this.textRect.ApplyPadding(0, 0, 0, this.ClientRectangle.Height - this.GetBottomLineRect().Y);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -219,38 +208,35 @@ namespace UzunTec.WinUI.Controls
             g.DrawImage(calendarIcon, this.iconRect.GetAlignmentPoint(this.calendarIcon.Size, ContentAlignment.MiddleCenter));
         }
 
-        protected override void OnSizeChanged(EventArgs e)
+        protected override void OnInvalidated(InvalidateEventArgs e)
         {
-            base.OnSizeChanged(e);
-            this.UpdateRects();
-        }
-
-        protected override void OnCreateControl()
-        {
-            base.OnCreateControl();
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
-            LostFocus += (sender, args) => { MouseHovered = false; this.Invalidate(); };
-            GotFocus += (sender, args) => this.Invalidate();
-            MouseEnter += (sender, args) => { MouseHovered = true; this.Invalidate(); };
-            MouseLeave += (sender, args) => { MouseHovered = false; this.Invalidate(); };
-
-            this.UpdateRects();
-        }
-        private void UpdateRects()
-        {
-            Graphics g = this.CreateGraphics();
-
-            RectangleF clientRect = this.ClientRectangle.ToRectF().ApplyPadding(this._internalPadding);
-            float iconRectWidth = this.calendarIcon.Width + this._internalPadding.Horizontal;
-            this.iconRect = clientRect.ApplyPadding(clientRect.Width - iconRectWidth, 0,0,0);
-            this.textRect = clientRect.ApplyPadding(0, 0, iconRectWidth, 0);
-
-            if (this.hasHint)
+            if (this.BackgroundColorDark.GetBrightness() >= 0.6F)
             {
-                this.hintRect = this.GetHintRect(g);
-                this.textRect = this.textRect.ApplyPadding(0, this.hintRect.Height, 0, 0);
+                calendarIcon = Properties.Resources.calendarDark;
             }
-            this.textRect = this.textRect.ApplyPadding(0, 0, 0, this.ClientRectangle.Height - this.GetBottomLineRect().Y);
+            else
+            {
+                calendarIcon = Properties.Resources.calendarWhite;
+            }
+            base.OnInvalidated(e);
+        }
+
+
+        protected override void OnDropDown(EventArgs eventargs)
+        {
+            base.OnDropDown(eventargs);
+            droppedDown = true;
+        }
+        protected override void OnCloseUp(EventArgs eventargs)
+        {
+            base.OnCloseUp(eventargs);
+            droppedDown = false;
+        }
+
+        protected override void OnKeyPress(KeyPressEventArgs e)
+        {
+            base.OnKeyPress(e);
+            e.Handled = true;
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
