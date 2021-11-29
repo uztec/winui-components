@@ -38,7 +38,7 @@ namespace UzunTec.WinUI.Controls
             this.ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.True;
             this.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
-            this.DefaultCellStyle.Font = new Font("Roboto", 10);
+            this.DefaultCellStyle.Font = new Font("Segoe UI", 10);
             this.DefaultCellStyle.BackColor = this.ThemeScheme.FormBackgroundDarkColor; //BackgroundDarkColor
             this.DefaultCellStyle.ForeColor = this.ThemeScheme.ControlTextColor; //TextDarkDefaultColor
             this.DefaultCellStyle.SelectionBackColor = this.ThemeScheme.PrimaryLightColor; //LightPrimaryColor

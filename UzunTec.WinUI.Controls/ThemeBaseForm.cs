@@ -51,7 +51,7 @@ namespace UzunTec.WinUI.Controls
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(41)))), ((int)(((byte)(53)))));
 
             // Theme
-            this.Font = this.ThemeScheme.ControlTextFont;
+            this.Font = this.ThemeScheme.FormTitleBarFont;
             this.panelTitle.BackColor = this.ThemeScheme.ControlTextLightColor;
             this.HeaderTextColor = this.ThemeScheme.ControlTextLightColor;
             this.panelTitle.BackColor = this.ThemeScheme.PrimaryColor;

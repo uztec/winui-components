@@ -238,7 +238,7 @@ namespace UzunTec.WinUI.Controls
 
             _prefixFont = ThemeScheme.ControlHintFont;
             _suffixFont = ThemeScheme.ControlHintFont;
-            _prefixSuffixTextColor = ThemeScheme.ControlTextColor;
+            _prefixSuffixTextColor = ThemeScheme.PrefixSuffixTextColor;
             this._prependIconMargin = 5;
             this._appendIconMargin = 5;
         }

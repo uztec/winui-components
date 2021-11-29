@@ -129,6 +129,9 @@ namespace UzunTec.WinUI.Controls
             this.TextColor = this.ThemeScheme.ControlTextColor;
             this.DisabledTextColor = this.ThemeScheme.DisabledControlTextColor;
 
+            this.FocusedBackgroundColorDark = ThemeScheme.ControlBackgroundColorLight;
+            this.FocusedBackgroundColorLight = ThemeScheme.ControlBackgroundColorLight;
+
             this.HintColor = this.ThemeScheme.ControlHintTextColor;
             this.HintFont = this.ThemeScheme.ControlHintFont;
             this.DisabledHintColor = this.ThemeScheme.DisableControlHintTextColor;

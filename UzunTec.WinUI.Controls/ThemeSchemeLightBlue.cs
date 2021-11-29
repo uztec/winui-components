@@ -16,6 +16,7 @@ namespace UzunTec.WinUI.Controls
             this.FormBackgroundDarkColor = Color.FromArgb(240, 240, 240); //new
 
             this.ControlTextColor = Color.FromArgb(47, 53, 66);
+            this.PrefixSuffixTextColor = Color.FromArgb(133, 143, 154); //new
             this.ControlTextLightColor = Color.FromArgb(240, 240, 240); //new
             this.DisabledControlTextColor = Color.FromArgb(133, 143, 154);
 
@@ -30,9 +31,11 @@ namespace UzunTec.WinUI.Controls
             this.DisabledControlBackgroundColorDark = Color.FromArgb(240, 240, 240);
             this.DisabledControlBackgroundColorLight = Color.FromArgb(250, 250, 250);
 
-            this.ControlTextFont = new Font("Roboto Light", 15);
-            this.ControlHintFont = new Font("Roboto Medium", 6.75f, FontStyle.Bold);
-            this.ControlPlaceholderFont = new Font("Roboto Light", 15);
+            this.FormTitleBarFont = new Font("Segoe UI Semibold", 17.25F, FontStyle.Bold); //new
+
+            this.ControlTextFont = new Font("Segoe UI", 13);
+            this.ControlHintFont = new Font("Segoe UI", 8f);
+            this.ControlPlaceholderFont = new Font("Segoe UI Semilight", 13);
         }
     }
 }

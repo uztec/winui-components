@@ -10,6 +10,7 @@ namespace UzunTec.WinUI.Controls
         public Color FormBackgroundColor { get; set; }
         public Color FormBackgroundDarkColor { get; set; }
         public Color ControlTextColor { get; set; }
+        public Color PrefixSuffixTextColor { get; set; }
         public Color ControlTextLightColor { get; set; }
         public Color ControlBackgroundColorLight { get; set; }
         public Color ControlBackgroundColorDark { get; set; }
@@ -43,6 +44,7 @@ namespace UzunTec.WinUI.Controls
             this.FormBackgroundDarkColor = Color.FromArgb(240, 240, 240); //new
 
             this.ControlTextColor = Color.Black;
+            this.PrefixSuffixTextColor = Color.Black; //new
             this.ControlTextLightColor = Color.Black; //new
             this.DisabledControlTextColor = Color.DarkGray;
 
@@ -57,6 +59,7 @@ namespace UzunTec.WinUI.Controls
             this.DisabledControlBackgroundColorDark = Color.FromArgb(240, 240, 240);
             this.DisabledControlBackgroundColorLight = Color.FromArgb(250, 250, 250);
 
+            this.FormTitleBarFont = new Font("Segoe UI Semibold", 17.25F, FontStyle.Bold);
             this.ControlTextFont = new Font("Segoe UI", 15);
             this.ControlHintFont = new Font("Segoe UI", 7);
             this.ControlPlaceholderFont = new Font("Segoe UI", 15);
