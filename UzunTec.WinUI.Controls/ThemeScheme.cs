@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace UzunTec.WinUI.Controls
 {
@@ -24,6 +25,7 @@ namespace UzunTec.WinUI.Controls
         public Font ControlHintFont { get; set; }
         public Font ControlPlaceholderFont { get; set; }
         public Font FormTitleBarFont { get; set; }
+        public Padding HintControlInternalPadding { get; set; }
         #endregion
 
         #region Control if disabled
@@ -63,6 +65,7 @@ namespace UzunTec.WinUI.Controls
             this.ControlTextFont = new Font("Segoe UI", 15);
             this.ControlHintFont = new Font("Segoe UI", 7);
             this.ControlPlaceholderFont = new Font("Segoe UI", 15);
+            this.HintControlInternalPadding = new Padding(4);
         }
 
         /*

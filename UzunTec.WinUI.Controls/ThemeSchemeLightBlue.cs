@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace UzunTec.WinUI.Controls
 {
@@ -36,6 +37,7 @@ namespace UzunTec.WinUI.Controls
             this.ControlTextFont = new Font("Segoe UI", 13);
             this.ControlHintFont = new Font("Segoe UI", 8f);
             this.ControlPlaceholderFont = new Font("Segoe UI Semilight", 13);
+            this.HintControlInternalPadding = new Padding(4);
         }
     }
 }
