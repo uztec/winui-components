@@ -13,10 +13,12 @@ namespace UzunTec.WinUI.Controls
     public class ThemeSchemeManager
     {
         public static ThemeSchemeManager Instance = new ThemeSchemeManager();
+        private readonly FontFamilyManager fontFamilyManager;
         private readonly ThemeScheme themeScheme;
 
         private ThemeSchemeManager()
         {
+            this.fontFamilyManager = new FontFamilyManager();
             this.themeScheme = new ThemeSchemeLightBlue();
         }
 
@@ -24,6 +26,17 @@ namespace UzunTec.WinUI.Controls
         {
             return this.themeScheme;
         }
+
+        public Font GetFont(string familyName, float size, FontStyle fontStyle, GraphicsUnit unit = GraphicsUnit.Point)
+        {
+            return new Font(this.fontFamilyManager.GetFamily(familyName), size, fontStyle, unit);
+        }
+
+        public Font GetFont(string familyName, float size, GraphicsUnit unit = GraphicsUnit.Point)
+        {
+            return new Font(this.fontFamilyManager.GetFamily(familyName), size, unit);
+        }
+
 
         internal Brush GetFocusedBackgroundBrush(IThemeControlWithBackground ctrl)
         {
@@ -56,5 +69,7 @@ namespace UzunTec.WinUI.Controls
                 ctrl.Focused ? this.GetHighlightBrush(ctrl) : new SolidBrush(ctrl.HintColor)
                 : new SolidBrush(ctrl.DisabledHintColor);
         }
+
+        
     }
 }

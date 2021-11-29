@@ -57,6 +57,16 @@ namespace UzunTec.WinUI.Controls
             this.panelTitle.BackColor = this.ThemeScheme.PrimaryColor;
             this.panelHeader.BackColor = this.ThemeScheme.SecondaryColor;
             this.BackColor = this.ThemeScheme.FormBackgroundColor;
+
+
+            this.btnMinimizeIcon.Font = ThemeSchemeManager.Instance.GetFont("Segoe MDL2", 12);
+            this.btnMaximizeIcon.Font = ThemeSchemeManager.Instance.GetFont("Segoe MDL2", 12);
+            this.btnCloseIcon.Font = ThemeSchemeManager.Instance.GetFont("Segoe MDL2", 12);
+            this.btnMinimizeIcon.Text = "\u2717";
+            this.btnCloseIcon.Text = "\u2717";
+            this.btnMaximizeIcon.Text = "\u2584";
+            //this.btnMaximizeIcon.Text = "\u2718";
+            //this.btnCloseIcon.Text = "\uEF2C";
         }
 
         protected override void OnCreateControl()

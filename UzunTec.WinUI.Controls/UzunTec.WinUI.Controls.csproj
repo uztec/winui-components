@@ -37,6 +37,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FontFamilyManager.cs" />
     <Compile Include="InternalContracts\SideIconData.cs" />
     <Compile Include="ThemeLabel.cs">
       <SubType>Component</SubType>
@@ -116,6 +117,11 @@
       <Project>{4526f2d3-340f-4809-bd5c-1e3edb1053b2}</Project>
       <Name>UzunTec.WinUI.Utils</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Roboto-Thin.ttf" />
+    <None Include="Resources\SegMDL2.ttf" />
+    <None Include="Resources\segoeui.ttf" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

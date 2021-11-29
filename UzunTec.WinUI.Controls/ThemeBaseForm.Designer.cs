@@ -74,14 +74,12 @@ namespace UzunTec.WinUI.Controls
             this.btnCloseIcon.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(76)))), ((int)(((byte)(99)))));
             this.btnCloseIcon.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(76)))), ((int)(((byte)(99)))));
             this.btnCloseIcon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCloseIcon.Font = new System.Drawing.Font("Arial", 14F);
             this.btnCloseIcon.ForeColor = System.Drawing.Color.White;
             this.btnCloseIcon.Location = new System.Drawing.Point(65, 0);
             this.btnCloseIcon.Margin = new System.Windows.Forms.Padding(0);
             this.btnCloseIcon.Name = "btnCloseIcon";
             this.btnCloseIcon.Size = new System.Drawing.Size(26, 26);
             this.btnCloseIcon.TabIndex = 2;
-            this.btnCloseIcon.Text = "🗙︎";
             this.btnCloseIcon.UseVisualStyleBackColor = false;
             this.btnCloseIcon.Click += new System.EventHandler(this.btnClose_Click);
             // 
@@ -92,14 +90,12 @@ namespace UzunTec.WinUI.Controls
             this.btnMaximizeIcon.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(76)))), ((int)(((byte)(99)))));
             this.btnMaximizeIcon.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(76)))), ((int)(((byte)(99)))));
             this.btnMaximizeIcon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMaximizeIcon.Font = new System.Drawing.Font("Arial", 13F);
             this.btnMaximizeIcon.ForeColor = System.Drawing.Color.Transparent;
             this.btnMaximizeIcon.Location = new System.Drawing.Point(39, 0);
             this.btnMaximizeIcon.Margin = new System.Windows.Forms.Padding(0);
             this.btnMaximizeIcon.Name = "btnMaximizeIcon";
             this.btnMaximizeIcon.Size = new System.Drawing.Size(26, 26);
             this.btnMaximizeIcon.TabIndex = 3;
-            this.btnMaximizeIcon.Text = "🗖︎";
             this.btnMaximizeIcon.UseVisualStyleBackColor = false;
             this.btnMaximizeIcon.Click += new System.EventHandler(this.btnMaximize_Click);
             // 
@@ -110,14 +106,12 @@ namespace UzunTec.WinUI.Controls
             this.btnMinimizeIcon.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(76)))), ((int)(((byte)(99)))));
             this.btnMinimizeIcon.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(76)))), ((int)(((byte)(99)))));
             this.btnMinimizeIcon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMinimizeIcon.Font = new System.Drawing.Font("Arial", 14F);
             this.btnMinimizeIcon.ForeColor = System.Drawing.Color.Transparent;
             this.btnMinimizeIcon.Location = new System.Drawing.Point(13, 0);
             this.btnMinimizeIcon.Margin = new System.Windows.Forms.Padding(0);
             this.btnMinimizeIcon.Name = "btnMinimizeIcon";
             this.btnMinimizeIcon.Size = new System.Drawing.Size(26, 26);
             this.btnMinimizeIcon.TabIndex = 4;
-            this.btnMinimizeIcon.Text = "🗕";
             this.btnMinimizeIcon.UseVisualStyleBackColor = false;
             this.btnMinimizeIcon.Click += new System.EventHandler(this.btnMinimize_Click);
             // 

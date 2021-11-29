@@ -79,5 +79,35 @@ namespace UzunTec.WinUI.Controls.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Roboto_Thin {
+            get {
+                object obj = ResourceManager.GetObject("Roboto_Thin", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] SegMDL2 {
+            get {
+                object obj = ResourceManager.GetObject("SegMDL2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] segoeui {
+            get {
+                object obj = ResourceManager.GetObject("segoeui", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }
