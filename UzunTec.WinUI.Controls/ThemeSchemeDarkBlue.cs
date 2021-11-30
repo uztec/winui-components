@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace UzunTec.WinUI.Controls
 {
-    class ThemeSchemeDarkBlue : ThemeScheme
+    public class ThemeSchemeDarkBlue : ThemeScheme
     {
         public ThemeSchemeDarkBlue()
         {

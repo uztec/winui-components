@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace UzunTec.WinUI.Controls.Interfaces
@@ -7,7 +8,7 @@ namespace UzunTec.WinUI.Controls.Interfaces
     {
         ThemeScheme ThemeScheme { get; }
         bool MouseHovered { get; }
-
+        bool UseThemeColors { get; }
         Color HighlightColor { get; }
         Color DisabledTextColor { get; }
         Color TextColor { get; }
@@ -17,5 +18,7 @@ namespace UzunTec.WinUI.Controls.Interfaces
         Rectangle ClientRectangle { get; }
         bool Focused { get; }
         bool Enabled { get; }
+
+        event EventHandler HandleCreated;
     }
 }
