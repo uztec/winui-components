@@ -12,19 +12,31 @@ namespace UzunTec.WinUI.Controls
 {
     public class ThemeSchemeManager
     {
+        public event EventHandler<ThemeScheme> Changed;
+
         public static ThemeSchemeManager Instance = new ThemeSchemeManager();
+        
         private readonly FontFamilyManager fontFamilyManager;
-        private readonly ThemeScheme themeScheme;
+        private ThemeScheme selectedThemeScheme;
 
         private ThemeSchemeManager()
         {
             this.fontFamilyManager = new FontFamilyManager();
-            this.themeScheme = new ThemeSchemeLightBlue();
+            this.selectedThemeScheme = new ThemeSchemeLightBlue();
+            this.Changed?.Invoke(this, this.selectedThemeScheme);
         }
 
         public ThemeScheme GetTheme()
         {
-            return this.themeScheme;
+            return this.selectedThemeScheme;
+
+        }
+
+        public void ChangeTheme(ThemeScheme theme)
+        {
+            this.selectedThemeScheme = theme ?? throw new NullReferenceException();
+            this.Changed?.Invoke(this, this.selectedThemeScheme);
+
         }
 
         public Font GetFont(string familyName, float size, FontStyle fontStyle, GraphicsUnit unit = GraphicsUnit.Point)

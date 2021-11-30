@@ -39,6 +39,9 @@
   <ItemGroup>
     <Compile Include="FontFamilyManager.cs" />
     <Compile Include="InternalContracts\SideIconData.cs" />
+    <Compile Include="InternalContracts\ThemeControlProperties.cs" />
+    <Compile Include="InternalContracts\ThemeControlWithBackgroundProperties.cs" />
+    <Compile Include="InternalContracts\ThemeControlWithHintProperties.cs" />
     <Compile Include="ThemeLabel.cs">
       <SubType>Component</SubType>
     </Compile>
