@@ -16,9 +16,14 @@ namespace UzunTec.WinUI.Controls
             this.fontCollection = new PrivateFontCollection();
             this.fontList = new SortedList<string, FontFamily>();
             this.InstallFont("segoe mdl2", Properties.Resources.SegMDL2);
+            this.InstallFont("roboto", Properties.Resources.Roboto_Regular);
+            this.InstallFont("roboto medium", Properties.Resources.Roboto_Medium);
+            this.InstallFont("roboto light", Properties.Resources.Roboto_Light);
             this.InstallFont("roboto thin", Properties.Resources.Roboto_Thin);
             this.InstallFont("segoe ui", Properties.Resources.segoeui);
-
+            this.InstallFont("segoe light", Properties.Resources.segoeuil);
+            this.InstallFont("segoe semilight", Properties.Resources.segoeuisl);
+            this.InstallFont("segoe semibold", Properties.Resources.seguisb);
         }
 
         internal FontFamily GetFamily(string familyName)

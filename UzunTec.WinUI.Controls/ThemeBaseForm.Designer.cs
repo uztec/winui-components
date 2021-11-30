@@ -149,6 +149,7 @@ namespace UzunTec.WinUI.Controls
             this.Controls.Add(this.panelTitle);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ThemeBaseForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormBase";
             this.panelTitle.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);

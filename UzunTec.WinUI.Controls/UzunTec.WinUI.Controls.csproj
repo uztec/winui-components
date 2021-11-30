@@ -122,9 +122,31 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Roboto-Black.ttf" />
+    <None Include="Resources\Roboto-BlackItalic.ttf" />
+    <None Include="Resources\Roboto-Bold.ttf" />
+    <None Include="Resources\Roboto-BoldItalic.ttf" />
+    <None Include="Resources\Roboto-Italic.ttf" />
+    <None Include="Resources\Roboto-Light.ttf" />
+    <None Include="Resources\Roboto-LightItalic.ttf" />
+    <None Include="Resources\Roboto-Medium.ttf" />
+    <None Include="Resources\Roboto-MediumItalic.ttf" />
+    <None Include="Resources\Roboto-Regular.ttf" />
     <None Include="Resources\Roboto-Thin.ttf" />
+    <None Include="Resources\Roboto-ThinItalic.ttf" />
     <None Include="Resources\SegMDL2.ttf" />
     <None Include="Resources\segoeui.ttf" />
+    <None Include="Resources\segoeuib.ttf" />
+    <None Include="Resources\segoeuii.ttf" />
+    <None Include="Resources\segoeuil.ttf" />
+    <None Include="Resources\segoeuisl.ttf" />
+    <None Include="Resources\segoeuiz.ttf" />
+    <None Include="Resources\seguibl.ttf" />
+    <None Include="Resources\seguibli.ttf" />
+    <None Include="Resources\seguili.ttf" />
+    <None Include="Resources\seguisb.ttf" />
+    <None Include="Resources\seguisbi.ttf" />
+    <None Include="Resources\seguisli.ttf" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UzunTec.WinUI.Controls.Helpers;
 using UzunTec.WinUI.Controls.Interfaces;
 
 namespace UzunTec.WinUI.Controls
@@ -77,11 +71,11 @@ namespace UzunTec.WinUI.Controls
 
         internal Brush GetHintBrush(IThemeControlWithHint ctrl)
         {
-            return ctrl.Enabled? 
+            return ctrl.Enabled ?
                 ctrl.Focused ? this.GetHighlightBrush(ctrl) : new SolidBrush(ctrl.HintColor)
                 : new SolidBrush(ctrl.DisabledHintColor);
         }
 
-        
+
     }
 }

@@ -62,9 +62,9 @@ namespace UzunTec.WinUI.Controls
             this.btnMinimizeIcon.Font = ThemeSchemeManager.Instance.GetFont("Segoe MDL2", 12);
             this.btnMaximizeIcon.Font = ThemeSchemeManager.Instance.GetFont("Segoe MDL2", 12);
             this.btnCloseIcon.Font = ThemeSchemeManager.Instance.GetFont("Segoe MDL2", 12);
-            this.btnMinimizeIcon.Text = "\u2717";
-            this.btnCloseIcon.Text = "\u2717";
-            this.btnMaximizeIcon.Text = "\u2584";
+            this.btnMinimizeIcon.Text = "\u2584";
+            this.btnCloseIcon.Text = "\u2716";
+            this.btnMaximizeIcon.Text = "\u2B12";
             //this.btnMaximizeIcon.Text = "\u2718";
             //this.btnCloseIcon.Text = "\uEF2C";
         }
