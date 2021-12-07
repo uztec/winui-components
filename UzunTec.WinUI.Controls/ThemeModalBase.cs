@@ -48,8 +48,8 @@ namespace UzunTec.WinUI.Controls
 
             // Theme
             BackColor = ThemeScheme.FormBackgroundColor;
-            BorderColorDark = ThemeScheme.PrimaryColor;
-            BorderColorLight = ThemeScheme.SecondaryColor;
+            BorderColorDark = ThemeScheme.FormBackgroundColor;
+            BorderColorLight = ThemeScheme.ControlHintTextColor;
         }
 
         protected override void OnCreateControl()
@@ -71,6 +71,19 @@ namespace UzunTec.WinUI.Controls
                 borderRegion.Exclude(this.ClientRectangle.ToRectF().ApplyPadding(new Padding(this.BorderWidth)));
                 g.FillRegion(borderBrush, borderRegion);
             }
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // ThemeModalBase
+            // 
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Name = "ThemeModalBase";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.ResumeLayout(false);
+
         }
     }
 }

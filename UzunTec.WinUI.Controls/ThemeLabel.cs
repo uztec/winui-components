@@ -104,7 +104,7 @@ namespace UzunTec.WinUI.Controls
         protected override void OnPaint(PaintEventArgs pevent)
         {
             Graphics g = pevent.Graphics;
-            g.Clear(Parent.BackColor);
+            g.Clear(this.GetParentColor());
 
             if (this._showBackground)
             {

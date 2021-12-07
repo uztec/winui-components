@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using UzunTec.WinUI.Controls.Interfaces;
 
@@ -16,12 +17,21 @@ namespace UzunTec.WinUI.Controls
         private ThemeSchemeManager()
         {
             this.fontFamilyManager = new FontFamilyManager();
-            this.selectedThemeScheme = new ThemeSchemeLightBlue();
+            this.selectedThemeScheme = null;
             this.Changed?.Invoke(this, this.selectedThemeScheme);
+        }
+
+        private ThemeScheme GetFirstTheme()
+        {
+            return new ThemeSchemeLightBlue();
         }
 
         public ThemeScheme GetTheme()
         {
+            if (this.selectedThemeScheme == null)
+            {
+                this.selectedThemeScheme = this.GetFirstTheme();
+            }
             return this.selectedThemeScheme;
 
         }

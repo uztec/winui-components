@@ -114,6 +114,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="ThemeModalBase.resx">
+      <DependentUpon>ThemeModalBase.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UzunTec.WinUI.Utils\UzunTec.WinUI.Utils.csproj">

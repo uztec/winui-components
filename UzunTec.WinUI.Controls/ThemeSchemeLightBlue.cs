@@ -32,11 +32,11 @@ namespace UzunTec.WinUI.Controls
             this.DisabledControlBackgroundColorDark = Color.FromArgb(240, 240, 240);
             this.DisabledControlBackgroundColorLight = Color.FromArgb(250, 250, 250);
 
-            this.FormTitleBarFont = new Font("Segoe UI Semibold", 17.25F, FontStyle.Bold); //new
+            this.FormTitleBarFont = ThemeSchemeManager.Instance.GetFont("Segoe UI SemiBold", 17.25F, FontStyle.Bold);
 
-            this.ControlTextFont = new Font("Segoe UI", 13);
-            this.ControlHintFont = new Font("Segoe UI", 8f);
-            this.ControlPlaceholderFont = new Font("Segoe UI Semilight", 13);
+            this.ControlTextFont = ThemeSchemeManager.Instance.GetFont("Segoe UI", 13);
+            this.ControlHintFont = ThemeSchemeManager.Instance.GetFont("Segoe UI", 8);
+            this.ControlPlaceholderFont = ThemeSchemeManager.Instance.GetFont("Segoe UI SemiLight", 13);
             this.HintControlInternalPadding = new Padding(4);
         }
     }
