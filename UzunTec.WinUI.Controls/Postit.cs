@@ -4,13 +4,62 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using UzunTec.WinUI.Controls.Interfaces;
 using UzunTec.WinUI.Controls.InternalContracts;
 using UzunTec.WinUI.Utils;
 
 namespace UzunTec.WinUI.Controls
 {
-    public class Postit : Control
+    public class Postit : Control, IThemeControlWithBackground
     {
+        [Browsable(false), ReadOnly(true)]
+        public new Color BackColor { get => this.BackgroundColorDark; set => this.BackgroundColorDark = value; }
+
+        [Browsable(false), ReadOnly(true)]
+        public new Color ForeColor { get => this.TextColor; set => this.TextColor = value; }
+
+        [Browsable(false)]
+        public ThemeScheme ThemeScheme => ThemeSchemeManager.Instance.GetTheme();
+
+        [Browsable(false)]
+        public bool MouseHovered { get; private set; }
+
+        #region Theme Properties
+        [Category("Theme"), DefaultValue(true)]
+        public bool UseThemeColors { get => this.props.UseThemeColors; set => this.props.UseThemeColors = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Control")]
+        public Color BackgroundColorDark { get => this.props.BackgroundColorDark; set => this.props.BackgroundColorDark = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Control")]
+        public Color BackgroundColorLight { get => this.props.BackgroundColorLight; set => this.props.BackgroundColorLight = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Control")]
+        public Color DisabledBackgroundColorDark { get => this.props.DisabledBackgroundColorDark; set => this.props.DisabledBackgroundColorDark = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Control")]
+        public Color DisabledBackgroundColorLight { get => this.props.DisabledBackgroundColorLight; set => this.props.DisabledBackgroundColorLight = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Control")]
+        public Color FocusedBackgroundColorDark { get => this.props.FocusedBackgroundColorDark; set => this.props.FocusedBackgroundColorDark = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Control")]
+        public Color FocusedBackgroundColorLight { get => this.props.FocusedBackgroundColorLight; set => this.props.FocusedBackgroundColorLight = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Red")]
+        public Color HighlightColor { get => this.props.HighlightColor; set => this.props.HighlightColor = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Gray")]
+        public Color DisabledTextColor { get => this.props.DisabledTextColor; set => this.props.DisabledTextColor = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Black")]
+        public Color TextColor { get => this.props.TextColor; set => this.props.TextColor = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Padding), "1; 1; 1; 1;")]
+        public Padding InternalPadding { get => this.props.InternalPadding; set => this.props.InternalPadding = value; }
+        #endregion
+
+
 
         private Color _headerColorDark;
         [Category("Custom"), DefaultValue(typeof(Color), "LightYellow")]
@@ -68,12 +117,19 @@ namespace UzunTec.WinUI.Controls
 
 
         private RectangleF headerRect, headerClientRect, bodyRect, textRect, dateRect, iconsRect;
+        private readonly ThemeControlWithBackgroundProperties props;
         private readonly Dictionary<string, SideIconData> icons;
         public EventHandler<string> IconClick;
 
 
         public Postit()
         {
+            this.props = new ThemeControlWithBackgroundProperties(this)
+            {
+                Invalidate = this.Invalidate,
+                UpdateDataFromTheme = this.UpdateDataFromTheme,
+                UseThemeColors = false,
+            };
             icons = new Dictionary<string, SideIconData>();
 
             _headerColorDark = Color.LightYellow;
@@ -90,11 +146,38 @@ namespace UzunTec.WinUI.Controls
 
             _textFont = new Font("Modern No. 20", 12, FontStyle.Italic);
 
-            BackColor = Color.LightYellow;
+            this.BackgroundColorDark = Color.LightYellow;
+            this.BackgroundColorLight = Color.LightYellow;
             Size = new Size(250, 200);
-            Padding = new Padding(10, 10, 3, 3);
             _iconMargin = 5;
 
+
+            this.InternalPadding = new Padding(10, 10, 3, 3);
+        }
+
+        private void UpdateDataFromTheme()
+        {
+            this.Font = this.ThemeScheme.ControlTextFont;
+            this.TextColor = this.ThemeScheme.ControlTextColor;
+            this.DisabledTextColor = this.ThemeScheme.DisabledControlTextColor;
+            this.HighlightColor = this.ThemeScheme.ControlHighlightColor;
+            this.BackgroundColorDark = this.ThemeScheme.ControlBackgroundColorDark;
+            this.BackgroundColorLight = this.ThemeScheme.ControlBackgroundColorLight;
+            this.FocusedBackgroundColorDark = this.ThemeScheme.ControlBackgroundColorLight;
+            this.FocusedBackgroundColorLight = this.ThemeScheme.ControlBackgroundColorLight;
+            this.DisabledBackgroundColorDark = this.ThemeScheme.DisabledControlBackgroundColorDark;
+            this.DisabledBackgroundColorLight = this.ThemeScheme.DisabledControlBackgroundColorLight;
+        }
+
+        protected override void OnCreateControl()
+        {
+            base.OnCreateControl();
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+            LostFocus += (sender, args) => { MouseHovered = false; this.Invalidate(); };
+            GotFocus += (sender, args) => this.Invalidate();
+            MouseEnter += (sender, args) => { MouseHovered = true; this.Invalidate(); };
+            MouseLeave += (sender, args) => { MouseHovered = false; this.Invalidate(); };
+            UpdateRects();
         }
 
         public void AddIcon(string key, Image icon)
@@ -115,13 +198,7 @@ namespace UzunTec.WinUI.Controls
             UpdateRects();
         }
 
-        protected override void OnCreateControl()
-        {
-            base.OnCreateControl();
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
 
-            UpdateRects();
-        }
 
         protected override void OnSizeChanged(EventArgs e)
         {
@@ -135,7 +212,7 @@ namespace UzunTec.WinUI.Controls
             headerRect = new RectangleF(0, 0, Width, _headerSize);
             headerClientRect = headerRect.ApplyPadding(Padding);
             bodyRect = new RectangleF(0, _headerSize, Width, Height - _headerSize);
-            textRect = bodyRect.ApplyPadding(Padding);
+            textRect = bodyRect.ApplyPadding(this.InternalPadding);
 
             string date = _date?.ToString(_dateFormat);
             if (date != null)
@@ -219,8 +296,15 @@ namespace UzunTec.WinUI.Controls
                     iconData.hovered = iconData.rect.Contains(e.Location);
                     cursorInIcon |= iconData.hovered;
                 }
-                Invalidate();
             }
+            else
+            {
+                foreach (SideIconData iconData in icons.Values)
+                {
+                    iconData.hovered = false;
+                }
+            }
+            Invalidate();
             Cursor = (cursorInIcon) ? Cursors.Hand : Cursors.Default;
         }
 
