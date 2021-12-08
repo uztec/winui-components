@@ -12,7 +12,7 @@ namespace UzunTec.WinUI.Controls
     public class ThemeNumericTextBox : ThemeTextBox
     {
         [Browsable(false), ReadOnly(true)]
-        public new string Text { get => base.Text; private set { base.Text = value; } }
+        public new string Text { get => base.Text; private set => base.Text = value; }
 
         private readonly List<NumberFormatInfo> numberFormatInfos = new List<NumberFormatInfo>
         {
@@ -25,7 +25,7 @@ namespace UzunTec.WinUI.Controls
         private readonly List<char> negativeSigns = new List<char>();
         private readonly List<char> positiveSigns = new List<char>();
 
-        private readonly string invalidCharRegex; 
+        private readonly string invalidCharRegex;
 
         public ThemeNumericTextBox()
         {
@@ -108,7 +108,7 @@ namespace UzunTec.WinUI.Controls
                 }
                 else
                 {
-                    base.Text = (this.Percentual?this._decimalValue * 100 :this._decimalValue).ToString();
+                    base.Text = (this.Percentual ? this._decimalValue * 100 : this._decimalValue).ToString();
                 }
             }
         }
@@ -136,7 +136,7 @@ namespace UzunTec.WinUI.Controls
                 value = new Regex(@"[^\d]").Replace(value, "");
                 if (decimal.TryParse(value, out decimal output))
                 {
-                    output /= (int) Math.Pow(10, decimalPlaces);
+                    output /= (int)Math.Pow(10, decimalPlaces);
                     return (bNegative) ? -output : output;
                 }
             }
@@ -175,7 +175,7 @@ namespace UzunTec.WinUI.Controls
                     return base.ProcessCmdKey(ref msg, keyData);
             }
         }
-        
+
 
         protected override void WndProc(ref Message m)
         {
