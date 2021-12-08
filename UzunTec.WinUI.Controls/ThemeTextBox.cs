@@ -349,11 +349,11 @@ namespace UzunTec.WinUI.Controls
 
             if (this.prependIconData.image != null)
             {
-                g.DrawImage(this.prependIconData.image, this.prependIconData.rect.GetAlignmentPoint(this.prependIconData.image.Size, ContentAlignment.MiddleCenter));
+                g.DrawImage(this.prependIconData.image, this.prependIconData.rect.ShrinkToSize(this.prependIconData.image.Size, ContentAlignment.MiddleCenter));
             }
             if (this.appendIconData.image != null)
             {
-                g.DrawImage(this.appendIconData.image, this.appendIconData.rect.GetAlignmentPoint(this.appendIconData.image.Size, ContentAlignment.MiddleCenter));
+                g.DrawImage(this.appendIconData.image, this.appendIconData.rect.ShrinkToSize(this.appendIconData.image.Size, ContentAlignment.MiddleCenter));
             }
         }
 

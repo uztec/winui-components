@@ -50,26 +50,25 @@ namespace UzunTec.WinUI.Utils
         }
 
 
-        public static PointF GetAlignmentPoint(this RectangleF rect, SizeF objSize, ContentAlignment alignment)
+        public static RectangleF ShrinkToSize(this RectangleF rect, SizeF objSize, ContentAlignment alignment)
         {
             float offsetX = rect.Width - objSize.Width;
             float offsetY = rect.Height - objSize.Height;
             switch (alignment)
             {
-                case ContentAlignment.TopLeft: return rect.Location;     // Default
-                case ContentAlignment.TopCenter: return rect.ApplyPadding(offsetX / 2, 0).Location;
-                case ContentAlignment.TopRight: return rect.ApplyPadding(offsetX, 0).Location;
+                case ContentAlignment.TopLeft: return rect.ApplyPadding(0, 0, offsetX, offsetY);     // Default
+                case ContentAlignment.TopCenter: return rect.ApplyPadding(offsetX / 2, 0);
+                case ContentAlignment.TopRight: return rect.ApplyPadding(offsetX, 0, 0, 0);
 
-                case ContentAlignment.MiddleLeft: return rect.ApplyPadding(0, offsetY / 2).Location;
-                case ContentAlignment.MiddleCenter: return rect.ApplyPadding(offsetX / 2, offsetY / 2).Location;
-                case ContentAlignment.MiddleRight: return rect.ApplyPadding(offsetX, offsetY / 2).Location;
+                case ContentAlignment.MiddleLeft: return rect.ApplyPadding(0, offsetY / 2);
+                case ContentAlignment.MiddleCenter: return rect.ApplyPadding(offsetX / 2, offsetY / 2);
+                case ContentAlignment.MiddleRight: return rect.ApplyPadding(offsetX, offsetY / 2, 0, offsetY / 2);
 
-                case ContentAlignment.BottomLeft: return rect.ApplyPadding(0, offsetY).Location;
-                case ContentAlignment.BottomCenter: return rect.ApplyPadding(offsetX / 2, offsetY).Location;
-                case ContentAlignment.BottomRight: return rect.ApplyPadding(offsetX, offsetY).Location;
+                case ContentAlignment.BottomLeft: return rect.ApplyPadding(0, offsetY, 0, 0);
+                case ContentAlignment.BottomCenter: return rect.ApplyPadding(offsetX / 2, offsetY, 0, 0);
+                case ContentAlignment.BottomRight: return rect.ApplyPadding(offsetX, offsetY, 0, 0);
             }
-
-            return rect.Location;
+            return rect;
         }
     }
 }

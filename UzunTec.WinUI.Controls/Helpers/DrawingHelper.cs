@@ -78,8 +78,8 @@ namespace UzunTec.WinUI.Controls.Helpers
             g.Clip = new Region(rect);
             if (alignment != ContentAlignment.TopLeft)
             {
-                PointF textPoint = rect.GetAlignmentPoint(textSize, alignment);
-                g.DrawString(text, font, textBrush, textPoint);
+                RectangleF textRect = rect.ShrinkToSize(textSize, alignment);
+                g.DrawString(text, font, textBrush, textRect, new StringFormat { Alignment = FromContentAlignment(alignment) } );
             }
             else
             {
@@ -88,6 +88,27 @@ namespace UzunTec.WinUI.Controls.Helpers
             g.ResetClip();
         }
 
+        internal static StringAlignment FromContentAlignment(ContentAlignment alignment)
+        {
+            switch (alignment)
+            {
+                case ContentAlignment.TopLeft:
+                case ContentAlignment.MiddleLeft:
+                case ContentAlignment.BottomLeft:
+                    return StringAlignment.Near;
+
+                case ContentAlignment.TopCenter:
+                case ContentAlignment.MiddleCenter:
+                case ContentAlignment.BottomCenter:
+                    return StringAlignment.Center;
+
+                case ContentAlignment.TopRight:
+                case ContentAlignment.MiddleRight:
+                case ContentAlignment.BottomRight:
+                    return StringAlignment.Far;
+            }
+            return StringAlignment.Near;
+        }
         internal static void DrawTriangle(this Graphics g, IThemeControlWithHint ctrl, RectangleF rect)
         {
             // Create and Draw the arrow

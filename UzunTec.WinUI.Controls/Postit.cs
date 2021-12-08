@@ -241,8 +241,7 @@ namespace UzunTec.WinUI.Controls
 
             foreach (SideIconData iconData in icons.Values)
             {
-                PointF iconPoint = iconDrawRect.GetAlignmentPoint(iconData.image.Size, ContentAlignment.BottomLeft);
-                iconData.rect = new RectangleF(iconPoint, iconData.image.Size);
+                iconData.rect = iconDrawRect.ShrinkToSize(iconData.image.Size, ContentAlignment.BottomLeft);
                 iconDrawRect = iconDrawRect.ApplyPadding(iconData.image.Width + IconMargin, 0, 0, 0);
             }
 

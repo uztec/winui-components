@@ -126,8 +126,8 @@ namespace UzunTec.WinUI.Controls
             if (this.Image != null)
             {
                 RectangleF imageRect = this.CalculateImageRect(buttonRect, textSize);// textRect;
-                PointF imagePoint = imageRect.GetAlignmentPoint(this.Image.Size, this.ImageAlign);
-                g.DrawImageUnscaled(this.Image, Point.Ceiling(imagePoint));
+                imageRect = imageRect.ShrinkToSize(this.Image.Size, this.ImageAlign);
+                g.DrawImageUnscaled(this.Image, Point.Ceiling(imageRect.Location));
 
                 textRect = this.CalculateTextRect(buttonRect, imageRect);// textRect;
             }

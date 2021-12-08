@@ -220,7 +220,7 @@ namespace UzunTec.WinUI.Controls
             }
 
             //Draw icon
-            g.DrawImage(calendarIcon, this.iconRect.GetAlignmentPoint(this.calendarIcon.Size, ContentAlignment.MiddleCenter));
+            g.DrawImage(calendarIcon, this.iconRect.ShrinkToSize(this.calendarIcon.Size, ContentAlignment.MiddleCenter));
         }
 
         protected override void OnInvalidated(InvalidateEventArgs e)
