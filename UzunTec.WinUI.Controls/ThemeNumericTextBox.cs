@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
@@ -10,6 +11,9 @@ namespace UzunTec.WinUI.Controls
 {
     public class ThemeNumericTextBox : ThemeTextBox
     {
+        [Browsable(false), ReadOnly(true)]
+        public new string Text { get => base.Text; private set { base.Text = value; } }
+
         private readonly List<NumberFormatInfo> numberFormatInfos = new List<NumberFormatInfo>
         {
             CultureInfo.CurrentCulture.NumberFormat,
@@ -100,11 +104,11 @@ namespace UzunTec.WinUI.Controls
             {
                 if (!this.Focused && !string.IsNullOrEmpty(this.Mask))
                 {
-                    this.Text = this.DecimalValue.ToString(this.Mask);
+                    base.Text = this.DecimalValue.ToString(this.Mask);
                 }
                 else
                 {
-                    this.Text = (this.Percentual?this._decimalValue * 100 :this._decimalValue).ToString();
+                    base.Text = (this.Percentual?this._decimalValue * 100 :this._decimalValue).ToString();
                 }
             }
         }
