@@ -148,6 +148,7 @@ namespace UzunTec.WinUI.Controls
 
             this.BackgroundColorDark = Color.LightYellow;
             this.BackgroundColorLight = Color.LightYellow;
+            this.TextColor = Color.Black;
             Size = new Size(250, 200);
             _iconMargin = 5;
 
@@ -257,10 +258,10 @@ namespace UzunTec.WinUI.Controls
             Brush brushHeaderText = new SolidBrush(_headerTextColor);
             g.DrawString(_headerText, _headerFont, brushHeaderText, headerClientRect);
 
-            Brush backgroundBrush = new SolidBrush(BackColor);
+            Brush backgroundBrush = ThemeSchemeManager.Instance.GetBackgroundBrush(this);
             g.FillRectangle(backgroundBrush, bodyRect);
 
-            Brush brushText = new SolidBrush(ForeColor);
+            Brush brushText = new SolidBrush(this.TextColor);
             g.Clip = new Region(textRect);
             g.Clip.Exclude(iconsRect);
             g.DrawString(_text, _textFont, brushText, textRect);

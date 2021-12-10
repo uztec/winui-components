@@ -64,7 +64,7 @@ namespace UzunTec.WinUI.Utils
                 case ContentAlignment.MiddleCenter: return rect.ApplyPadding(offsetX / 2, offsetY / 2);
                 case ContentAlignment.MiddleRight: return rect.ApplyPadding(offsetX, offsetY / 2, 0, offsetY / 2);
 
-                case ContentAlignment.BottomLeft: return rect.ApplyPadding(0, offsetY, 0, 0);
+                case ContentAlignment.BottomLeft: return rect.ApplyPadding(0, offsetY, offsetX, 0);
                 case ContentAlignment.BottomCenter: return rect.ApplyPadding(offsetX / 2, offsetY, 0, 0);
                 case ContentAlignment.BottomRight: return rect.ApplyPadding(offsetX, offsetY, 0, 0);
             }
