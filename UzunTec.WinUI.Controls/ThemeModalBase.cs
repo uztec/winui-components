@@ -42,6 +42,8 @@ namespace UzunTec.WinUI.Controls
 
         public ThemeModalBase()
         {
+            InitializeComponent();
+
             ControlBox = false;
             Padding = new Padding(5);
             _borderWidth = 3;
@@ -67,7 +69,7 @@ namespace UzunTec.WinUI.Controls
                 Graphics g = e.Graphics;
                 Brush borderBrush = new LinearGradientBrush(ClientRectangle, _borderColorDark, _borderColorLight, LinearGradientMode.ForwardDiagonal);
 
-                var borderRegion = new Region(this.ClientRectangle);
+                Region borderRegion = new Region(this.ClientRectangle);
                 borderRegion.Exclude(this.ClientRectangle.ToRectF().ApplyPadding(new Padding(this.BorderWidth)));
                 g.FillRegion(borderBrush, borderRegion);
             }
