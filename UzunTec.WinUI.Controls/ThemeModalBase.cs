@@ -44,11 +44,11 @@ namespace UzunTec.WinUI.Controls
         {
             ControlBox = false;
             Padding = new Padding(5);
-            _borderWidth = 5;
+            _borderWidth = 3;
 
             // Theme
             BackColor = ThemeScheme.FormBackgroundColor;
-            BorderColorDark = ThemeScheme.FormBackgroundColor;
+            BorderColorDark = ThemeScheme.ControlHintTextColor;
             BorderColorLight = ThemeScheme.ControlHintTextColor;
         }
 
