@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace UzunTec.WinUI.Controls
+namespace UzunTec.WinUI.Controls.Themes
 {
     public class ThemeSchemeLightBlue : ThemeScheme
     {
@@ -16,13 +16,13 @@ namespace UzunTec.WinUI.Controls
             this.FormBackgroundColor = Color.GhostWhite;
             this.FormBackgroundDarkColor = Color.FromArgb(240, 240, 240); //new
 
-            this.ControlTextColor = Color.FromArgb(47, 53, 66);
+            this.ControlTextColorDark = Color.FromArgb(47, 53, 66);
             this.PrefixSuffixTextColor = Color.FromArgb(133, 143, 154); //new
             this.ControlTextLightColor = Color.FromArgb(240, 240, 240); //new
-            this.DisabledControlTextColor = Color.FromArgb(133, 143, 154);
+            this.ControlTextColorDisabled = Color.FromArgb(133, 143, 154);
 
             this.ControlHintTextColor = Color.FromArgb(133, 143, 154);
-            this.DisableControlHintTextColor = Color.FromArgb(133, 143, 154);
+            this.ThemeHighlightColor = Color.FromArgb(133, 143, 154);
             this.ControlPlaceholderColor = Color.FromArgb(133, 143, 154);
 
             this.ControlHighlightColor = Color.FromArgb(116, 173, 80);

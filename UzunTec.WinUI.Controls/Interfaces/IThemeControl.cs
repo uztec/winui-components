@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using UzunTec.WinUI.Controls.Themes;
 
 namespace UzunTec.WinUI.Controls.Interfaces
 {
@@ -9,10 +10,12 @@ namespace UzunTec.WinUI.Controls.Interfaces
         ThemeScheme ThemeScheme { get; }
         bool MouseHovered { get; }
         bool UseThemeColors { get; }
-        Color HighlightColor { get; }
-        Color DisabledTextColor { get; }
-        Color TextColor { get; }
+
         Padding InternalPadding { get; }
+
+        void UpdateRects();
+        void UpdateStylesFromTheme()
+
 
         // Control Base Properties
         Rectangle ClientRectangle { get; }
@@ -20,5 +23,6 @@ namespace UzunTec.WinUI.Controls.Interfaces
         bool Enabled { get; }
 
         event EventHandler HandleCreated;
+        void Invalidate();
     }
 }

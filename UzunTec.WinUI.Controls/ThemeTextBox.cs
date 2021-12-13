@@ -6,11 +6,12 @@ using System.Windows.Forms;
 using UzunTec.WinUI.Controls.Helpers;
 using UzunTec.WinUI.Controls.Interfaces;
 using UzunTec.WinUI.Controls.InternalContracts;
+using UzunTec.WinUI.Controls.Themes;
 using UzunTec.WinUI.Utils;
 
 namespace UzunTec.WinUI.Controls
 {
-    public class ThemeTextBox : RichTextBox, IThemeControlWithHint
+    public class ThemeTextBox : RichTextBox, IThemeControlWithHintPlaceholder, IThemeControlWithPrefixSuffix
     {
         public event EventHandler PrependIconClick;
         public event EventHandler AppendIconClick;
@@ -46,22 +47,22 @@ namespace UzunTec.WinUI.Controls
         public Color BackgroundColorLight { get => this.props.BackgroundColorLight; set => this.props.BackgroundColorLight = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color DisabledBackgroundColorDark { get => this.props.DisabledBackgroundColorDark; set => this.props.DisabledBackgroundColorDark = value; }
+        public Color BackgroundColorDisabledDark { get => this.props.BackgroundColorDisabledDark; set => this.props.BackgroundColorDisabledDark = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color DisabledBackgroundColorLight { get => this.props.DisabledBackgroundColorLight; set => this.props.DisabledBackgroundColorLight = value; }
+        public Color BackgroundColorDisabledLight { get => this.props.BackgroundColorDisabledLight; set => this.props.BackgroundColorDisabledLight = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color FocusedBackgroundColorDark { get => this.props.FocusedBackgroundColorDark; set => this.props.FocusedBackgroundColorDark = value; }
+        public Color BackgroundColorFocusedDark { get => this.props.BackgroundColorFocusedDark; set => this.props.BackgroundColorFocusedDark = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color FocusedBackgroundColorLight { get => this.props.FocusedBackgroundColorLight; set => this.props.FocusedBackgroundColorLight = value; }
+        public Color BackgroundColorFocusedLight { get => this.props.BackgroundColorFocusedLight; set => this.props.BackgroundColorFocusedLight = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Red")]
         public Color HighlightColor { get => this.props.HighlightColor; set => this.props.HighlightColor = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Gray")]
-        public Color DisabledTextColor { get => this.props.DisabledTextColor; set => this.props.DisabledTextColor = value; }
+        public Color TextColorDisabled { get => this.props.TextColorDisabled; set => this.props.TextColorDisabled = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Black")]
         public Color TextColor { get => this.props.TextColor; set => this.props.TextColor = value; }
@@ -82,7 +83,7 @@ namespace UzunTec.WinUI.Controls
         public Font PlaceholderFont { get => this.props.PlaceholderFont; set => this.props.PlaceholderFont = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Black")]
-        public Color DisabledHintColor { get => this.props.DisabledHintColor; set => this.props.DisabledHintColor = value; }
+        public Color HintDisabledColor { get => this.props.HintDisabledColor; set => this.props.HintDisabledColor = value; }
 
         #endregion
 
@@ -101,47 +102,6 @@ namespace UzunTec.WinUI.Controls
             set { _showHint = value; this.UpdateRects(); Invalidate(); }
         }
         private bool _showHint;
-
-        [Category("Z-Custom"), DefaultValue(typeof(string), "")]
-        public string Prefix
-        {
-            get => _prefixText;
-            set { _prefixText = value; this.UpdateRects(); this.Invalidate(); }
-        }
-        private string _prefixText = string.Empty;
-
-        [Category("Z-Custom"), DefaultValue(typeof(Font), "Segoe UI; 6pt")]
-        public Font PrefixFont
-        {
-            get => _prefixFont;
-            set { _prefixFont = value; this.UpdateRects(); this.Invalidate(); }
-        }
-        private Font _prefixFont;
-
-        [Category("Z-Custom"), DefaultValue(typeof(string), "")]
-        public string Suffix
-        {
-            get => _suffixText;
-            set { _suffixText = value; this.UpdateRects(); this.Invalidate(); }
-        }
-        private string _suffixText = string.Empty;
-
-        [Category("Z-Custom"), DefaultValue(typeof(Font), "Segoe UI; 6pt")]
-        public Font SuffixFont
-        {
-            get => _suffixFont;
-            set { _suffixFont = value; this.UpdateRects(); this.Invalidate(); }
-        }
-        private Font _suffixFont;
-
-        [Category("Z-Custom"), DefaultValue(typeof(Color), "Black")]
-        public Color PrefixSuffixTextColor
-        {
-            get => _prefixSuffixTextColor;
-            set { _prefixSuffixTextColor = value; Invalidate(); }
-        }
-        private Color _prefixSuffixTextColor;
-
 
         [Category("Z-Custom"), DefaultValue(typeof(Image), "")]
         public Image PrependIcon
@@ -180,15 +140,11 @@ namespace UzunTec.WinUI.Controls
 
 
         private readonly ThemeControlWithHintProperties props;
+        private readonly ThemeControlWithPrefixSuffixProperties prefixSuffixProps;
 
         public ThemeTextBox()
         {
-            this.props = new ThemeControlWithHintProperties(this)
-            {
-                Invalidate = this.Invalidate,
-                UpdateRects = this.UpdateRects,
-                UpdateDataFromTheme = this.UpdateDataFromTheme,
-            };
+            this.props = new ThemeControlWithHintProperties(this);
 
             // Control Defaults
             _placeholderHintText = "";
@@ -200,19 +156,19 @@ namespace UzunTec.WinUI.Controls
             this._appendIconMargin = 5;
         }
 
-        private void UpdateDataFromTheme()
+        private void UpdateStylesFromTheme()
         {
             // Theme
             Font = ThemeScheme.ControlTextFont;
-            TextColor = ThemeScheme.ControlTextColor;
-            DisabledTextColor = ThemeScheme.DisabledControlTextColor;
+            TextColor = ThemeScheme.ControlTextColorDark;
+            TextColorDisabled = ThemeScheme.ControlTextColorDisabled;
 
-            FocusedBackgroundColorDark = ThemeScheme.ControlBackgroundColorLight;
-            FocusedBackgroundColorLight = ThemeScheme.ControlBackgroundColorLight;
+            BackgroundColorFocusedDark = ThemeScheme.ControlBackgroundColorLight;
+            BackgroundColorFocusedLight = ThemeScheme.ControlBackgroundColorLight;
 
             HintColor = ThemeScheme.ControlHintTextColor;
             HintFont = ThemeScheme.ControlHintFont;
-            DisabledHintColor = ThemeScheme.DisableControlHintTextColor;
+            HintDisabledColor = ThemeScheme.ThemeHighlightColor;
 
             HighlightColor = ThemeScheme.ControlHighlightColor;
 
@@ -221,8 +177,8 @@ namespace UzunTec.WinUI.Controls
 
             BackgroundColorDark = ThemeScheme.ControlBackgroundColorDark;
             BackgroundColorLight = ThemeScheme.ControlBackgroundColorLight;
-            DisabledBackgroundColorDark = ThemeScheme.DisabledControlBackgroundColorDark;
-            DisabledBackgroundColorLight = ThemeScheme.DisabledControlBackgroundColorLight;
+            BackgroundColorDisabledDark = ThemeScheme.DisabledControlBackgroundColorDark;
+            BackgroundColorDisabledLight = ThemeScheme.DisabledControlBackgroundColorLight;
 
             _prefixFont = ThemeScheme.ControlHintFont;
             _suffixFont = ThemeScheme.ControlHintFont;

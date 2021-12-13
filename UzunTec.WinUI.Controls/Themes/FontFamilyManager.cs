@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Drawing.Text;
 using System.Runtime.InteropServices;
 
-namespace UzunTec.WinUI.Controls
+namespace UzunTec.WinUI.Controls.Themes
 {
     internal class FontFamilyManager
     {

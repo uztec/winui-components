@@ -11,7 +11,7 @@ using UzunTec.WinUI.Utils;
 
 namespace UzunTec.WinUI.Controls
 {
-    public class ThemeButton : Button, IThemeControlWithBackground
+    public class ThemeButton : Button, IThemeControlWithTextBackground
     {
         [Browsable(false), ReadOnly(true)]
         public new Color BackColor { get => this.BackgroundColorDark; set => this.BackgroundColorDark = value; }
@@ -36,22 +36,22 @@ namespace UzunTec.WinUI.Controls
         public Color BackgroundColorLight { get => this.props.BackgroundColorLight; set => this.props.BackgroundColorLight = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color DisabledBackgroundColorDark { get => this.props.DisabledBackgroundColorDark; set => this.props.DisabledBackgroundColorDark = value; }
+        public Color BackgroundColorDisabledDark { get => this.props.BackgroundColorDisabledDark; set => this.props.BackgroundColorDisabledDark = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color DisabledBackgroundColorLight { get => this.props.DisabledBackgroundColorLight; set => this.props.DisabledBackgroundColorLight = value; }
+        public Color BackgroundColorDisabledLight { get => this.props.BackgroundColorDisabledLight; set => this.props.BackgroundColorDisabledLight = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color FocusedBackgroundColorDark { get => this.props.FocusedBackgroundColorDark; set => this.props.FocusedBackgroundColorDark = value; }
+        public Color BackgroundColorFocusedDark { get => this.props.BackgroundColorFocusedDark; set => this.props.BackgroundColorFocusedDark = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color FocusedBackgroundColorLight { get => this.props.FocusedBackgroundColorLight; set => this.props.FocusedBackgroundColorLight = value; }
+        public Color BackgroundColorFocusedLight { get => this.props.BackgroundColorFocusedLight; set => this.props.BackgroundColorFocusedLight = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Red")]
         public Color HighlightColor { get => this.props.HighlightColor; set => this.props.HighlightColor = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Gray")]
-        public Color DisabledTextColor { get => this.props.DisabledTextColor; set => this.props.DisabledTextColor = value; }
+        public Color TextColorDisabled { get => this.props.TextColorDisabled; set => this.props.TextColorDisabled = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Black")]
         public Color TextColor { get => this.props.TextColor; set => this.props.TextColor = value; }
@@ -69,30 +69,30 @@ namespace UzunTec.WinUI.Controls
         public bool ShowBackground { get => this._showBackground; set { this._showBackground = value; this.Invalidate(); } }
         private bool _showBackground;
 
-        private readonly ThemeControlWithBackgroundProperties props;
+        private readonly ThemeControlWithTextBackgroundProperties props;
 
         public ThemeButton()
         {
-            this.props = new ThemeControlWithBackgroundProperties(this)
+            this.props = new ThemeControlWithTextBackgroundProperties(this)
             {
                 Invalidate = this.Invalidate,
-                UpdateDataFromTheme = this.UpdateDataFromTheme,
+                UpdateStylesFromTheme = this.UpdateStylesFromTheme,
             };
             this.InternalPadding = new Padding(1);
         }
 
-        private void UpdateDataFromTheme()
+        private void UpdateStylesFromTheme()
         {
             this.Font = this.ThemeScheme.ControlTextFont;
             this.TextColor = this.ThemeScheme.ControlTextColor;
-            this.DisabledTextColor = this.ThemeScheme.DisabledControlTextColor;
+            this.TextColorDisabled = this.ThemeScheme.DisabledControlTextColor;
             this.HighlightColor = this.ThemeScheme.ControlHighlightColor;
             this.BackgroundColorDark = this.ThemeScheme.ControlBackgroundColorDark;
             this.BackgroundColorLight = this.ThemeScheme.ControlBackgroundColorLight;
-            this.FocusedBackgroundColorDark = this.ThemeScheme.ControlBackgroundColorLight;
-            this.FocusedBackgroundColorLight = this.ThemeScheme.ControlBackgroundColorLight;
-            this.DisabledBackgroundColorDark = this.ThemeScheme.DisabledControlBackgroundColorDark;
-            this.DisabledBackgroundColorLight = this.ThemeScheme.DisabledControlBackgroundColorLight;
+            this.BackgroundColorFocusedDark = this.ThemeScheme.ControlBackgroundColorLight;
+            this.BackgroundColorFocusedLight = this.ThemeScheme.ControlBackgroundColorLight;
+            this.BackgroundColorDisabledDark = this.ThemeScheme.DisabledControlBackgroundColorDark;
+            this.BackgroundColorDisabledLight = this.ThemeScheme.DisabledControlBackgroundColorLight;
         }
 
         protected override void OnCreateControl()

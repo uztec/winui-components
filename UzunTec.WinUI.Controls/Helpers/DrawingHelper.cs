@@ -13,15 +13,15 @@ namespace UzunTec.WinUI.Controls.Helpers
 
         private static readonly ThemeSchemeManager themeManager = ThemeSchemeManager.Instance;
 
-        internal static void FillBackground(this Graphics g, IThemeControlWithBackground ctrl)
+        internal static void FillBackground(this Graphics g, IThemeControlWithTextBackground ctrl)
         {
             FillBackground(g, ctrl, ctrl.ClientRectangle);
         }
-        internal static void FillBackground(this Graphics g, IThemeControlWithBackground ctrl, bool lineBottom)
+        internal static void FillBackground(this Graphics g, IThemeControlWithTextBackground ctrl, bool lineBottom)
         {
             FillBackground(g, ctrl, ctrl.ClientRectangle, lineBottom);
         }
-        internal static void FillBackground(this Graphics g, IThemeControlWithBackground ctrl, RectangleF bgRect, bool lineBottom = true)
+        internal static void FillBackground(this Graphics g, IThemeControlWithTextBackground ctrl, RectangleF bgRect, bool lineBottom = true)
         {
 
             Brush backgroundBrush = ctrl.Enabled ?
@@ -125,7 +125,7 @@ namespace UzunTec.WinUI.Controls.Helpers
             g.SmoothingMode = SmoothingMode.AntiAlias;
             Brush triangleBrush = ctrl.Enabled ? ctrl.Focused ? new SolidBrush(ctrl.HighlightColor)
                   : new SolidBrush(ctrl.HintColor)
-                  : new SolidBrush(ctrl.DisabledHintColor);
+                  : new SolidBrush(ctrl.HintDisabledColor);
             g.FillPath(triangleBrush, pth);
             g.SmoothingMode = SmoothingMode.None;
         }

@@ -7,11 +7,12 @@ using System.Windows.Forms;
 using UzunTec.WinUI.Controls.Helpers;
 using UzunTec.WinUI.Controls.Interfaces;
 using UzunTec.WinUI.Controls.InternalContracts;
+using UzunTec.WinUI.Controls.Themes;
 using UzunTec.WinUI.Utils;
 
 namespace UzunTec.WinUI.Controls
 {
-    public class ThemeComboBox : ComboBox, IThemeControlWithHint
+    public class ThemeComboBox : ComboBox, IThemeControlWithHintPlaceholder, IThemeControlWithPrefixSuffix
     {
         public event EventHandler PrependIconClick;
         public event EventHandler AppendIconClick;
@@ -43,22 +44,22 @@ namespace UzunTec.WinUI.Controls
         public Color BackgroundColorLight { get => this.props.BackgroundColorLight; set => this.props.BackgroundColorLight = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color DisabledBackgroundColorDark { get => this.props.DisabledBackgroundColorDark; set => this.props.DisabledBackgroundColorDark = value; }
+        public Color BackgroundColorDisabledDark { get => this.props.BackgroundColorDisabledDark; set => this.props.BackgroundColorDisabledDark = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color DisabledBackgroundColorLight { get => this.props.DisabledBackgroundColorLight; set => this.props.DisabledBackgroundColorLight = value; }
+        public Color BackgroundColorDisabledLight { get => this.props.BackgroundColorDisabledLight; set => this.props.BackgroundColorDisabledLight = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color FocusedBackgroundColorDark { get => this.props.FocusedBackgroundColorDark; set => this.props.FocusedBackgroundColorDark = value; }
+        public Color BackgroundColorFocusedDark { get => this.props.BackgroundColorFocusedDark; set => this.props.BackgroundColorFocusedDark = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color FocusedBackgroundColorLight { get => this.props.FocusedBackgroundColorLight; set => this.props.FocusedBackgroundColorLight = value; }
+        public Color BackgroundColorFocusedLight { get => this.props.BackgroundColorFocusedLight; set => this.props.BackgroundColorFocusedLight = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Red")]
         public Color HighlightColor { get => this.props.HighlightColor; set => this.props.HighlightColor = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Gray")]
-        public Color DisabledTextColor { get => this.props.DisabledTextColor; set => this.props.DisabledTextColor = value; }
+        public Color TextColorDisabled { get => this.props.TextColorDisabled; set => this.props.TextColorDisabled = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Black")]
         public Color TextColor { get => this.props.TextColor; set => this.props.TextColor = value; }
@@ -79,7 +80,7 @@ namespace UzunTec.WinUI.Controls
         public Font PlaceholderFont { get => this.props.PlaceholderFont; set => this.props.PlaceholderFont = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Black")]
-        public Color DisabledHintColor { get => this.props.DisabledHintColor; set => this.props.DisabledHintColor = value; }
+        public Color HintDisabledColor { get => this.props.HintDisabledColor; set => this.props.HintDisabledColor = value; }
 
 
         #endregion
@@ -124,7 +125,7 @@ namespace UzunTec.WinUI.Controls
         public string Prefix
         {
             get => _prefixText;
-            set { _prefixText = value; this.UpdateRects(); this.Invalidate(); }
+            set { _prefixText = value; this.control.UpdateRects(); this.Invalidate(); }
         }
         private string _prefixText = string.Empty;
 
@@ -132,7 +133,7 @@ namespace UzunTec.WinUI.Controls
         public Font PrefixFont
         {
             get => _prefixFont;
-            set { _prefixFont = value; this.UpdateRects(); this.Invalidate(); }
+            set { _prefixFont = value; this.control.UpdateRects(); this.Invalidate(); }
         }
         private Font _prefixFont;
 
@@ -140,7 +141,7 @@ namespace UzunTec.WinUI.Controls
         public string Suffix
         {
             get => _suffixText;
-            set { _suffixText = value; this.UpdateRects(); this.Invalidate(); }
+            set { _suffixText = value; this.control.UpdateRects(); this.Invalidate(); }
         }
         private string _suffixText = string.Empty;
 
@@ -148,7 +149,7 @@ namespace UzunTec.WinUI.Controls
         public Font SuffixFont
         {
             get => _suffixFont;
-            set { _suffixFont = value; this.UpdateRects(); this.Invalidate(); }
+            set { _suffixFont = value; this.control.UpdateRects(); this.Invalidate(); }
         }
         private Font _suffixFont;
 
@@ -164,14 +165,14 @@ namespace UzunTec.WinUI.Controls
         public Image PrependIcon
         {
             get => this.prependIconData.image;
-            set { this.prependIconData.image = value; this.UpdateRects(); this.Invalidate(); }
+            set { this.prependIconData.image = value; this.control.UpdateRects(); this.Invalidate(); }
         }
 
         [Category("Z-Custom"), DefaultValue(typeof(float), "5")]
         public float PrependIconMargin
         {
             get => this._prependIconMargin;
-            set { this._prependIconMargin = value; this.UpdateRects(); this.Invalidate(); }
+            set { this._prependIconMargin = value; this.control.UpdateRects(); this.Invalidate(); }
         }
         private float _prependIconMargin;
 
@@ -179,14 +180,14 @@ namespace UzunTec.WinUI.Controls
         public Image AppendIcon
         {
             get => this.appendIconData.image;
-            set { this.appendIconData.image = value; this.UpdateRects(); this.Invalidate(); }
+            set { this.appendIconData.image = value; this.control.UpdateRects(); this.Invalidate(); }
         }
 
         [Category("Z-Custom"), DefaultValue(typeof(float), "5")]
         public float AppendIconMargin
         {
             get => this._appendIconMargin;
-            set { this._appendIconMargin = value; this.UpdateRects(); this.Invalidate(); }
+            set { this._appendIconMargin = value; this.control.UpdateRects(); this.Invalidate(); }
         }
         private float _appendIconMargin;
 
@@ -211,7 +212,7 @@ namespace UzunTec.WinUI.Controls
             {
                 Invalidate = this.Invalidate,
                 UpdateRects = this.UpdateRects,
-                UpdateDataFromTheme = this.UpdateDataFromTheme,
+                UpdateStylesFromTheme = this.UpdateStylesFromTheme,
             };
         
             // Control Defaults
@@ -223,19 +224,19 @@ namespace UzunTec.WinUI.Controls
             ItemHeight = 44;
         }
 
-        private void UpdateDataFromTheme()
+        private void UpdateStylesFromTheme()
         {
             // Theme
             this.Font = this.ThemeScheme.ControlTextFont;
-            this.TextColor = this.ThemeScheme.ControlTextColor;
-            this.DisabledTextColor = this.ThemeScheme.DisabledControlTextColor;
+            this.TextColor = this.ThemeScheme.ControlTextColorDark;
+            this.TextColorDisabled = this.ThemeScheme.ControlTextColorDisabled;
 
-            this.FocusedBackgroundColorDark = this.ThemeScheme.ControlBackgroundColorLight;
-            this.FocusedBackgroundColorLight = this.ThemeScheme.ControlBackgroundColorLight;
+            this.BackgroundColorFocusedDark = this.ThemeScheme.ControlBackgroundColorLight;
+            this.BackgroundColorFocusedLight = this.ThemeScheme.ControlBackgroundColorLight;
 
             this.HintColor = this.ThemeScheme.ControlHintTextColor;
             this.HintFont = this.ThemeScheme.ControlHintFont;
-            this.DisabledHintColor = this.ThemeScheme.DisableControlHintTextColor;
+            this.HintDisabledColor = this.ThemeScheme.ThemeHighlightColor;
 
             this.HighlightColor = this.ThemeScheme.ControlHighlightColor;
             this.SelectionColorDark = Color.FromArgb(80, this.HighlightColor);
@@ -246,8 +247,8 @@ namespace UzunTec.WinUI.Controls
 
             this.BackgroundColorDark = this.ThemeScheme.ControlBackgroundColorDark;
             this.BackgroundColorLight = this.ThemeScheme.ControlBackgroundColorLight;
-            this.DisabledBackgroundColorDark = this.ThemeScheme.DisabledControlBackgroundColorDark;
-            this.DisabledBackgroundColorLight = this.ThemeScheme.DisabledControlBackgroundColorLight;
+            this.BackgroundColorDisabledDark = this.ThemeScheme.DisabledControlBackgroundColorDark;
+            this.BackgroundColorDisabledLight = this.ThemeScheme.DisabledControlBackgroundColorLight;
 
             _prefixFont = ThemeScheme.ControlHintFont;
             _suffixFont = ThemeScheme.ControlHintFont;
@@ -266,7 +267,7 @@ namespace UzunTec.WinUI.Controls
 
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
 
-            this.UpdateRects();
+            this.control.UpdateRects();
             
             LostFocus += (sender, args) => { MouseHovered = false; this.Invalidate(); };
             GotFocus += (sender, args) => this.Invalidate();
@@ -308,7 +309,7 @@ namespace UzunTec.WinUI.Controls
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
-            //this.UpdateRects();
+            //this.control.UpdateRects();
         }
 
         private void UpdateRects()

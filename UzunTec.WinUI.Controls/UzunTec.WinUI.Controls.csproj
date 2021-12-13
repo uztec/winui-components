@@ -37,10 +37,15 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FontFamilyManager.cs" />
+    <Compile Include="Interfaces\IThemeControlWithPrefixSuffix.cs" />
+    <Compile Include="Interfaces\IThemeControlWithHintPlaceholder.cs" />
+    <Compile Include="InternalContracts\ThemeControlWithHintPlaceHolderProperties.cs" />
+    <Compile Include="InternalContracts\ThemeControlWithHintProperties - Copy.cs" />
+    <Compile Include="ThemeConstants.cs" />
+    <Compile Include="Themes\FontFamilyManager.cs" />
     <Compile Include="InternalContracts\SideIconData.cs" />
     <Compile Include="InternalContracts\ThemeControlProperties.cs" />
-    <Compile Include="InternalContracts\ThemeControlWithBackgroundProperties.cs" />
+    <Compile Include="InternalContracts\ThemeControlWithTextBackgroundProperties.cs" />
     <Compile Include="InternalContracts\ThemeControlWithHintProperties.cs" />
     <Compile Include="ThemeLabel.cs">
       <SubType>Component</SubType>
@@ -56,7 +61,7 @@
     </Compile>
     <Compile Include="Helpers\DrawingHelper.cs" />
     <Compile Include="Interfaces\IThemeControl.cs" />
-    <Compile Include="Interfaces\IThemeControlWithBackground.cs" />
+    <Compile Include="Interfaces\IThemeControlWithTextBackground.cs" />
     <Compile Include="Interfaces\IThemeControlWithHint.cs" />
     <Compile Include="ThemeBaseForm.cs">
       <SubType>Form</SubType>
@@ -70,8 +75,8 @@
     <Compile Include="ThemeDataGridView.Designer.cs">
       <DependentUpon>ThemeDataGridView.cs</DependentUpon>
     </Compile>
-    <Compile Include="ThemeSchemeDarkBlue.cs" />
-    <Compile Include="ThemeSchemeLightBlue.cs" />
+    <Compile Include="Themes\ThemeSchemeDarkBlue.cs" />
+    <Compile Include="Themes\ThemeSchemeLightBlue.cs" />
     <Compile Include="ThemeAutoCompleteBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -81,6 +86,10 @@
     <Compile Include="ThemeNumericTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Themes\ColorVariant.cs" />
+    <Compile Include="Themes\FontClass.cs" />
+    <Compile Include="Themes\Palette.cs" />
+    <Compile Include="Themes\Palettes.cs" />
     <Compile Include="ThemeTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -99,8 +108,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ThemeScheme.cs" />
-    <Compile Include="ThemeSchemeManager.cs" />
+    <Compile Include="Themes\ThemeScheme.cs" />
+    <Compile Include="Themes\ThemeSchemeManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\calendarDark.png" />

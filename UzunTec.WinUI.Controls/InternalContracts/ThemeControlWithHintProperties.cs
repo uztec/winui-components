@@ -1,9 +1,10 @@
 ﻿using System.Drawing;
 using UzunTec.WinUI.Controls.Interfaces;
+using UzunTec.WinUI.Controls.Themes;
 
 namespace UzunTec.WinUI.Controls.InternalContracts
 {
-    internal class ThemeControlWithHintProperties : ThemeControlWithBackgroundProperties
+    internal class ThemeControlWithHintProperties : ThemeControlWithTextBackgroundProperties
     {
         internal ThemeControlWithHintProperties(IThemeControlWithHint control) : base(control) { }
 
@@ -15,7 +16,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
                 if (!this._useThemeColors || this.updatingTheme)
                 {
                     this._hintColor = value;
-                    this.Invalidate();
+                    this.control.Invalidate();
                 }
             }
         }
@@ -29,53 +30,54 @@ namespace UzunTec.WinUI.Controls.InternalContracts
                 if (!this._useThemeColors || this.updatingTheme)
                 {
                     this._hintFont = value;
-                    this.UpdateRects();
-                    this.Invalidate();
+                    this.control.UpdateRects();
+                    this.control.Invalidate();
                 }
             }
         }
         protected Font _hintFont;
-        public Color PlaceholderColor
-        {
-            get => this._placeholderColor;
-            set
-            {
-                if (!this._useThemeColors || this.updatingTheme)
-                {
-                    this._placeholderColor = value;
-                    this.Invalidate();
-                }
-            }
-        }
-        protected Color _placeholderColor;
 
-        public Font PlaceholderFont
+        public Color HintDisabledColor
         {
-            get => this._placeholderFont;
+            get => this._hintDisabledColor;
             set
             {
                 if (!this._useThemeColors || this.updatingTheme)
                 {
-                    this._placeholderFont = value;
-                    this.UpdateRects();
-                    this.Invalidate();
+                    this._hintDisabledColor = value;
+                    this.control.Invalidate();
                 }
             }
         }
-        protected Font _placeholderFont;
-        public Color DisabledHintColor
+        protected Color _hintDisabledColor;
+
+
+        public Color HintHighlightColor
         {
-            get => this._disabledHintColor;
+            get => this._hintHighlightColor;
             set
             {
                 if (!this._useThemeColors || this.updatingTheme)
                 {
-                    this._disabledHintColor = value;
-                    this.Invalidate();
+                    this._hintHighlightColor = value;
+                    this.control.Invalidate();
                 }
             }
         }
-        protected Color _disabledHintColor;
+        protected Color _hintHighlightColor;
+
+        public FontClass HintFontClass
+        {
+            get => this._hintFontClass;
+            set
+            {
+                this._hintFontClass = value;
+                this.control.UpdateRects();
+                this.control.Invalidate();
+            }
+        }
+        protected FontClass _hintFontClass;
+
 
         public string PlaceholderHintText
         {
@@ -85,8 +87,8 @@ namespace UzunTec.WinUI.Controls.InternalContracts
                 if (!this._useThemeColors || this.updatingTheme)
                 {
                     this._placeholderHintText = value;
-                    this.UpdateRects();
-                    this.Invalidate();
+                    this.control.UpdateRects();
+                    this.control.Invalidate();
                 }
             }
         }
@@ -99,8 +101,8 @@ namespace UzunTec.WinUI.Controls.InternalContracts
                 if (!this._useThemeColors || this.updatingTheme)
                 {
                     this._showHint = value;
-                    this.UpdateRects();
-                    this.Invalidate();
+                    this.control.UpdateRects();
+                    this.control.Invalidate();
                 }
             }
         }

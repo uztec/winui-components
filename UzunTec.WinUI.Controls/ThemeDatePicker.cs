@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using UzunTec.WinUI.Controls.Helpers;
 using UzunTec.WinUI.Controls.Interfaces;
 using UzunTec.WinUI.Controls.InternalContracts;
+using UzunTec.WinUI.Controls.Themes;
 using UzunTec.WinUI.Utils;
 
 namespace UzunTec.WinUI.Controls
@@ -20,10 +21,6 @@ namespace UzunTec.WinUI.Controls
         [Browsable(false)]
         public new Size MinimumSize { get; set; }
 
-        [Category("Theme"), DefaultValue(typeof(Font), "Segoe UI; 15pt")]
-        public new Font Font { get => this._textFont; set { this._textFont = value; this.UpdateRects(); this.Invalidate(); } }
-        private Font _textFont;
-
         public new Size Size { get => base.Size; set { base.MinimumSize = value; base.Size = value; this.Invalidate(); } }
 
         [Browsable(false)]
@@ -36,6 +33,18 @@ namespace UzunTec.WinUI.Controls
         [Category("Theme"), DefaultValue(true)]
         public bool UseThemeColors { get => this.props.UseThemeColors; set => this.props.UseThemeColors = value; }
 
+        [Category("Theme"), DefaultValue(typeof(Padding), "5; 5; 5; 5;")]
+        public Padding InternalPadding { get => this.props.InternalPadding; set => this.props.InternalPadding = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Black")]
+        public Color TextColor { get => this.props.TextColor; set => this.props.TextColor = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Gray")]
+        public Color TextColorDisabled { get => this.props.TextColorDisabled; set => this.props.TextColorDisabled = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Font), "Segoe UI; 15pt")]
+        public new Font Font { get => this.props.TextFont; set => this.props.TextFont = value; }
+
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
         public Color BackgroundColorDark { get => this.props.BackgroundColorDark; set => this.props.BackgroundColorDark = value; }
 
@@ -43,28 +52,18 @@ namespace UzunTec.WinUI.Controls
         public Color BackgroundColorLight { get => this.props.BackgroundColorLight; set => this.props.BackgroundColorLight = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color DisabledBackgroundColorDark { get => this.props.DisabledBackgroundColorDark; set => this.props.DisabledBackgroundColorDark = value; }
+        public Color BackgroundColorDisabledDark { get => this.props.BackgroundColorDisabledDark; set => this.props.BackgroundColorDisabledDark = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color DisabledBackgroundColorLight { get => this.props.DisabledBackgroundColorLight; set => this.props.DisabledBackgroundColorLight = value; }
+        public Color BackgroundColorDisabledLight { get => this.props.BackgroundColorDisabledLight; set => this.props.BackgroundColorDisabledLight = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color FocusedBackgroundColorDark { get => this.props.FocusedBackgroundColorDark; set => this.props.FocusedBackgroundColorDark = value; }
+        public Color BackgroundColorFocusedDark { get => this.props.BackgroundColorFocusedDark; set => this.props.BackgroundColorFocusedDark = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color FocusedBackgroundColorLight { get => this.props.FocusedBackgroundColorLight; set => this.props.FocusedBackgroundColorLight = value; }
+        public Color BackgroundColorFocusedLight { get => this.props.BackgroundColorFocusedLight; set => this.props.BackgroundColorFocusedLight = value; }
 
-        [Category("Theme"), DefaultValue(typeof(Color), "Red")]
-        public Color HighlightColor { get => this.props.HighlightColor; set => this.props.HighlightColor = value; }
 
-        [Category("Theme"), DefaultValue(typeof(Color), "Gray")]
-        public Color DisabledTextColor { get => this.props.DisabledTextColor; set => this.props.DisabledTextColor = value; }
-
-        [Category("Theme"), DefaultValue(typeof(Color), "Black")]
-        public Color TextColor { get => this.props.TextColor; set => this.props.TextColor = value; }
-
-        [Category("Theme"), DefaultValue(typeof(Padding), "5; 5; 5; 5;")]
-        public Padding InternalPadding { get => this.props.InternalPadding; set => this.props.InternalPadding = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Black")]
         public Color HintColor { get => this.props.HintColor; set => this.props.HintColor = value; }
@@ -72,32 +71,24 @@ namespace UzunTec.WinUI.Controls
         [Category("Theme"), DefaultValue(typeof(Font), "Segoe UI; 6pt")]
         public Font HintFont { get => this.props.HintFont; set => this.props.HintFont = value; }
 
-        [Category("Theme"), DefaultValue(typeof(Color), "Black")]
-        public Color PlaceholderColor { get => this.props.PlaceholderColor; set => this.props.PlaceholderColor = value; }
+        [Category("Theme"), DefaultValue(typeof(Color), "Red")]
+        public Color HintHighlightColor { get => this.props.HintHighlightColor; set => this.props.HintHighlightColor = value; }
 
-        [Category("Theme"), DefaultValue(typeof(Font), "Segoe UI; 15pt")]
-        public Font PlaceholderFont { get => this.props.PlaceholderFont; set => this.props.PlaceholderFont = value; }
+        [Category("Theme"), DefaultValue(typeof(FontClass), "Hint")]
+        public FontClass HintFontClass { get => this.props.HintFontClass; set => this.props.HintFontClass = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Black")]
-        public Color DisabledHintColor { get => this.props.DisabledHintColor; set => this.props.DisabledHintColor = value; }
+        public Color HintDisabledColor { get => this.props.HintDisabledColor; set => this.props.HintDisabledColor = value; }
 
         #endregion
 
         [Category("Z-Custom"), DefaultValue(typeof(string), "")]
-        public string PlaceholderHintText
-        {
-            get => _placeholderHintText;
-            set { _placeholderHintText = value; this.UpdateRects(); this.Invalidate(); }
-        }
-        private string _placeholderHintText = string.Empty;
+        public string PlaceholderHintText { get => this.props.PlaceholderHintText; set => this.props.PlaceholderHintText = value; }
+
 
         [Category("Z-Custom"), DefaultValue(true)]
-        public bool ShowHint
-        {
-            get => _showHint;
-            set { _showHint = value; this.UpdateRects(); this.Invalidate(); }
-        }
-        private bool _showHint;
+        public bool ShowHint { get => this.props.ShowHint; set => this.props.ShowHint = value; }
+
 
         [Category("Z-Custom"), DefaultValue(typeof(ContentAlignment), "MiddleCenter")]
         public ContentAlignment TextAlign { get => this._textAlign; set { this._textAlign = value; this.Invalidate(); } }
@@ -112,52 +103,41 @@ namespace UzunTec.WinUI.Controls
 
         public ThemeDatePicker()
         {
-            this.props = new ThemeControlWithHintProperties(this)
-            {
-                Invalidate = this.Invalidate,
-                UpdateRects = this.UpdateRects,
-                UpdateDataFromTheme = this.UpdateDataFromTheme,
-            };
+            this.props = new ThemeControlWithHintProperties(this);
 
             // Control Defaults
             base.MinimumSize = new Size(1, 1);
             base.Font = new Font(FontFamily.GenericSansSerif, 28);       // To Adjust the Height
-            this.Size = new Size(200, 50);
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+            this.Size = ThemeConstants.DefaultControlSize.ToSize();
             this.Format = DateTimePickerFormat.Custom;
             this.CustomFormat = "dd-MMM-yyyy";
             this.PlaceholderHintText = "";
             this._textAlign = ContentAlignment.MiddleCenter;
-            this._showHint = true;
+            this.ShowHint = true;
+            this.InternalPadding = ThemeConstants.DefaultHintControlInternalPadding;
+
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
         }
 
-        private void UpdateDataFromTheme()
+        public void UpdateStylesFromTheme()
         {
             // Theme
             this.Font = this.ThemeScheme.ControlTextFont;
-            this.TextColor = this.ThemeScheme.ControlTextColor;
-            this.DisabledTextColor = this.ThemeScheme.DisabledControlTextColor;
-
-            this.FocusedBackgroundColorDark = ThemeScheme.ControlBackgroundColorLight;
-            this.FocusedBackgroundColorLight = ThemeScheme.ControlBackgroundColorLight;
-
-            this.HintColor = this.ThemeScheme.ControlHintTextColor;
-            this.HintFont = this.ThemeScheme.ControlHintFont;
-            this.DisabledHintColor = this.ThemeScheme.DisableControlHintTextColor;
-
-            this.HighlightColor = this.ThemeScheme.ControlHighlightColor;
-
-            this.PlaceholderFont = this.ThemeScheme.ControlPlaceholderFont;
-            this.PlaceholderColor = this.ThemeScheme.ControlPlaceholderColor;
+            this.TextColor = this.ThemeScheme.ControlTextColorDark;
+            this.TextColorDisabled = this.ThemeScheme.ControlTextColorDisabled;
 
             this.BackgroundColorDark = this.ThemeScheme.ControlBackgroundColorDark;
             this.BackgroundColorLight = this.ThemeScheme.ControlBackgroundColorLight;
-            this.DisabledBackgroundColorDark = this.ThemeScheme.DisabledControlBackgroundColorDark;
-            this.DisabledBackgroundColorLight = this.ThemeScheme.DisabledControlBackgroundColorLight;
-            this.InternalPadding = ThemeScheme.HintControlInternalPadding;
+            this.BackgroundColorDisabledDark = this.ThemeScheme.DisabledControlBackgroundColorDark;
+            this.BackgroundColorDisabledLight = this.ThemeScheme.DisabledControlBackgroundColorLight;
+            this.BackgroundColorFocusedDark = ThemeScheme.ControlBackgroundColorLight;
+            this.BackgroundColorFocusedLight = ThemeScheme.ControlBackgroundColorLight;
+
+            this.HintColor = this.ThemeScheme.ControlHintTextColor;
+            this.HintFont = this.ThemeScheme.GetFontFromClass(this.HintFontClass);
+            this.HintDisabledColor = this.ThemeScheme.ThemeHighlightColor;
+            this.HintHighlightColor = this.ThemeScheme.ControlHighlightColor;
         }
-
-
 
         protected override void OnCreateControl()
         {
@@ -173,9 +153,9 @@ namespace UzunTec.WinUI.Controls
             SizeChanged += (sender, args) => { this.UpdateRects(); };
 
         }
-        private void UpdateRects()
+        public void UpdateRects()
         {
-            this.hasHint = this._showHint && !string.IsNullOrEmpty(_placeholderHintText);
+            this.hasHint = this.ShowHint && !string.IsNullOrEmpty(this.PlaceholderHintText);
 
             Graphics g = this.CreateGraphics();
 

@@ -2,10 +2,12 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using UzunTec.WinUI.Controls.Interfaces;
+using UzunTec.WinUI.Controls.Themes;
 
 namespace UzunTec.WinUI.Controls
 {
-    public partial class ThemeDataGridView : DataGridView
+    public partial class ThemeDataGridView : DataGridView, IThemeControl
     {
 
         [Browsable(false)]
@@ -40,9 +42,9 @@ namespace UzunTec.WinUI.Controls
 
             this.DefaultCellStyle.Font = new Font("Segoe UI", 10);
             this.DefaultCellStyle.BackColor = this.ThemeScheme.FormBackgroundDarkColor; //BackgroundDarkColor
-            this.DefaultCellStyle.ForeColor = this.ThemeScheme.ControlTextColor; //TextDarkDefaultColor
+            this.DefaultCellStyle.ForeColor = this.ThemeScheme.ControlTextColorDark; //TextDarkDefaultColor
             this.DefaultCellStyle.SelectionBackColor = this.ThemeScheme.PrimaryLightColor; //LightPrimaryColor
-            this.DefaultCellStyle.SelectionForeColor = this.ThemeScheme.ControlTextColor; //TextDarkDefaultColor
+            this.DefaultCellStyle.SelectionForeColor = this.ThemeScheme.ControlTextColorDark; //TextDarkDefaultColor
             this.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
 

@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using UzunTec.WinUI.Controls.Interfaces;
 
-namespace UzunTec.WinUI.Controls
+namespace UzunTec.WinUI.Controls.Themes
 {
     public class ThemeSchemeManager
     {
@@ -54,19 +54,19 @@ namespace UzunTec.WinUI.Controls
         }
 
 
-        internal Brush GetFocusedBackgroundBrush(IThemeControlWithBackground ctrl)
+        internal Brush GetFocusedBackgroundBrush(IThemeControlWithTextBackground ctrl)
         {
-            return new LinearGradientBrush(ctrl.ClientRectangle, ctrl.FocusedBackgroundColorDark, ctrl.FocusedBackgroundColorLight, LinearGradientMode.Vertical);
+            return new LinearGradientBrush(ctrl.ClientRectangle, ctrl.BackgroundColorFocusedDark, ctrl.BackgroundColorFocusedLight, LinearGradientMode.Vertical);
         }
 
-        internal Brush GetBackgroundBrush(IThemeControlWithBackground ctrl)
+        internal Brush GetBackgroundBrush(IThemeControlWithTextBackground ctrl)
         {
             return new LinearGradientBrush(ctrl.ClientRectangle, ctrl.BackgroundColorDark, ctrl.BackgroundColorLight, LinearGradientMode.Vertical);
         }
 
-        internal Brush GetDisabledBackgroundBrush(IThemeControlWithBackground ctrl)
+        internal Brush GetDisabledBackgroundBrush(IThemeControlWithTextBackground ctrl)
         {
-            return new LinearGradientBrush(ctrl.ClientRectangle, ctrl.DisabledBackgroundColorDark, ctrl.DisabledBackgroundColorLight, LinearGradientMode.Vertical);
+            return new LinearGradientBrush(ctrl.ClientRectangle, ctrl.BackgroundColorDisabledDark, ctrl.BackgroundColorDisabledLight, LinearGradientMode.Vertical);
         }
 
         internal Brush GetHighlightBrush(IThemeControl ctrl)
@@ -76,14 +76,14 @@ namespace UzunTec.WinUI.Controls
 
         internal Brush GetTextBrush(IThemeControl ctrl)
         {
-            return ctrl.Enabled ? new SolidBrush(ctrl.TextColor) : new SolidBrush(ctrl.DisabledTextColor);
+            return ctrl.Enabled ? new SolidBrush(ctrl.TextColor) : new SolidBrush(ctrl.TextColorDisabled);
         }
 
         internal Brush GetHintBrush(IThemeControlWithHint ctrl)
         {
             return ctrl.Enabled ?
                 ctrl.Focused ? this.GetHighlightBrush(ctrl) : new SolidBrush(ctrl.HintColor)
-                : new SolidBrush(ctrl.DisabledHintColor);
+                : new SolidBrush(ctrl.HintDisabledColor);
         }
 
 

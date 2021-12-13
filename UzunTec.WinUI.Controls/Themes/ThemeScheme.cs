@@ -1,16 +1,21 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
-namespace UzunTec.WinUI.Controls
+namespace UzunTec.WinUI.Controls.Themes
 {
     public class ThemeScheme
     {
+        public Palette Palette { get; set; }
+        public IDictionary<FontClass, Font> FontClasses { get; protected set; }
+
         public Color PrimaryColor { get; set; }
         public Color PrimaryLightColor { get; set; }
         public Color SecondaryColor { get; set; }
         public Color FormBackgroundColor { get; set; }
         public Color FormBackgroundDarkColor { get; set; }
-        public Color ControlTextColor { get; set; }
+        public Color ControlTextColorDark { get; set; }
         public Color PrefixSuffixTextColor { get; set; }
         public Color ControlTextLightColor { get; set; }
         public Color ControlBackgroundColorLight { get; set; }
@@ -29,10 +34,10 @@ namespace UzunTec.WinUI.Controls
         #endregion
 
         #region Control if disabled
-        public Color DisabledControlTextColor { get; set; }
+        public Color ControlTextColorDisabled { get; set; }
         public Color DisabledControlBackgroundColorLight { get; set; }
         public Color DisabledControlBackgroundColorDark { get; set; }
-        public Color DisableControlHintTextColor { get; set; }
+        public Color ThemeHighlightColor { get; set; }
         #endregion
 
         public ThemeScheme()
@@ -45,13 +50,13 @@ namespace UzunTec.WinUI.Controls
             this.FormBackgroundColor = Color.FromArgb(240, 240, 240);
             this.FormBackgroundDarkColor = Color.FromArgb(240, 240, 240); //new
 
-            this.ControlTextColor = Color.Black;
+            this.ControlTextColorDark = Color.Black;
             this.PrefixSuffixTextColor = Color.Black; //new
             this.ControlTextLightColor = Color.Black; //new
-            this.DisabledControlTextColor = Color.DarkGray;
+            this.ControlTextColorDisabled = Color.DarkGray;
 
             this.ControlHintTextColor = Color.DarkGray;
-            this.DisableControlHintTextColor = Color.Gray;
+            this.ThemeHighlightColor = Color.Gray;
             this.ControlPlaceholderColor = Color.FromArgb(200, Color.DarkGray);
 
             this.ControlHighlightColor = Color.Purple;
@@ -66,6 +71,11 @@ namespace UzunTec.WinUI.Controls
             this.ControlHintFont = ThemeSchemeManager.Instance.GetFont("Segoe UI", 7);
             this.ControlPlaceholderFont = ThemeSchemeManager.Instance.GetFont("Segoe UI", 15);
             this.HintControlInternalPadding = new Padding(4);
+        }
+
+        internal Font GetFontFromClass(FontClass hintFontClass)
+        {
+            throw new NotImplementedException();
         }
 
         /*
