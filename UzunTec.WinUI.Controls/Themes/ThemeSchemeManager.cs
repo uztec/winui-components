@@ -23,7 +23,7 @@ namespace UzunTec.WinUI.Controls.Themes
 
         private ThemeScheme GetFirstTheme()
         {
-            return new ThemeSchemeLightBlue();
+            return new ThemeScheme();
         }
 
         public ThemeScheme GetTheme()
@@ -69,12 +69,12 @@ namespace UzunTec.WinUI.Controls.Themes
             return new LinearGradientBrush(ctrl.ClientRectangle, ctrl.BackgroundColorDisabledDark, ctrl.BackgroundColorDisabledLight, LinearGradientMode.Vertical);
         }
 
-        internal Brush GetHighlightBrush(IThemeControl ctrl)
+        internal Brush GetThemeHighlightBrush()
         {
-            return new SolidBrush(ctrl.HighlightColor);
+            return new SolidBrush(this.selectedThemeScheme.ThemeHighlightColor);
         }
 
-        internal Brush GetTextBrush(IThemeControl ctrl)
+        internal Brush GetTextBrush(IThemeControlWithTextBackground ctrl)
         {
             return ctrl.Enabled ? new SolidBrush(ctrl.TextColor) : new SolidBrush(ctrl.TextColorDisabled);
         }
@@ -82,7 +82,7 @@ namespace UzunTec.WinUI.Controls.Themes
         internal Brush GetHintBrush(IThemeControlWithHint ctrl)
         {
             return ctrl.Enabled ?
-                ctrl.Focused ? this.GetHighlightBrush(ctrl) : new SolidBrush(ctrl.HintColor)
+                ctrl.Focused ? this.GetThemeHighlightBrush() : new SolidBrush(ctrl.HintColor)
                 : new SolidBrush(ctrl.HintDisabledColor);
         }
 

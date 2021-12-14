@@ -1,76 +1,105 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
+using UzunTec.WinUI.Utils;
 
 namespace UzunTec.WinUI.Controls.Themes
 {
     public class ThemeScheme
     {
+        public bool DarkTheme { get; set; }
+
         public Palette Palette { get; set; }
         public IDictionary<FontClass, Font> FontClasses { get; protected set; }
 
-        public Color PrimaryColor { get; set; }
-        public Color PrimaryLightColor { get; set; }
-        public Color SecondaryColor { get; set; }
-        public Color FormBackgroundColor { get; set; }
-        public Color FormBackgroundDarkColor { get; set; }
-        public Color ControlTextColorDark { get; set; }
-        public Color PrefixSuffixTextColor { get; set; }
-        public Color ControlTextLightColor { get; set; }
-        public Color ControlBackgroundColorLight { get; set; }
-        public Color ControlBackgroundColorDark { get; set; }
-        public Color ControlHighlightColor { get; set; }
-        public Color ControlHintTextColor { get; set; }
-        public Color ControlPlaceholderColor { get; set; }
-        public Color FormTitleBarColor { get; set; }
-
-        #region Fonts
-        public Font ControlTextFont { get; set; }
-        public Font ControlHintFont { get; set; }
-        public Font ControlPlaceholderFont { get; set; }
-        public Font FormTitleBarFont { get; set; }
-        public Padding HintControlInternalPadding { get; set; }
-        #endregion
-
-        #region Control if disabled
-        public Color ControlTextColorDisabled { get; set; }
-        public Color DisabledControlBackgroundColorLight { get; set; }
-        public Color DisabledControlBackgroundColorDark { get; set; }
         public Color ThemeHighlightColor { get; set; }
-        #endregion
+        public Color ControlTextColorDark { get; set; }
+        public Color ControlTextColorLight { get; set; }
+        public Color ControlTextColorDisabled { get; set; }
+        public Font ControlTextFont { get; set; }
+        public Color ControlBackgroundColorDark { get; set; }
+        public Color ControlBackgroundColorLight { get; set; }
+        public Color ControlBackgroundColorFocusedDark { get; set; }
+        public Color ControlBackgroundColorFocusedLight { get; set; }
+        public Color ControlBackgroundColorDisabledDark { get; set; }
+        public Color ControlBackgroundColorDisabledLight { get; set; }
+        public Color ControlHintTextColor { get; set; }
+        public Color ControlHintTextColorDisabled { get; set; }
+        public Color ControlPlaceholderTextColor { get; set; }
+        public Font ControlPlaceholderFont { get; set; }
+        public Color ThemeSelectionColorDark { get; set; }
+        public Color ThemeSelectionColorLight { get; set; }
+        public Color ThemeSelectionColorExtraLight { get; set; }
+        public Color FormBackgroundColor { get; set; }
+        public Color FormHeaderTextColor { get; set; }
+        public Font FormHeaderTextFont { get; set; }
+        public Color FormHeaderColorDark { get; set; }
+        public Color FormHeaderColorLight { get; set; }
+        public Font FormTitleFont { get; set; }
+        public Color FormTitleTextColor { get; set; }
+        public Color FormTitlePanelBackgroundColorDark { get; set; }
+        public Color FormTitlePanelBackgroundColorLight { get; set; }
+        public Color FormControlButtonHoverColor { get; set; }
+        public Color CellBackgroundColor { get; set; }
+        public Font GridFont { get; set; }
+        public Font GridHeaderFont { get; set; }
 
         public ThemeScheme()
         {
-            this.PrimaryColor = Color.FromArgb(240, 240, 240);
-            this.PrimaryLightColor = Color.FromArgb(240, 240, 240); //new
+            this.Palette = Palettes.Aussie;
 
-            this.SecondaryColor = Color.FromArgb(240, 240, 240); //new
+            this.FontClasses = new Dictionary<FontClass, Font>
+            {
+                {FontClass.H1, ThemeSchemeManager.Instance.GetFont("Segoe UI SemiBold", 25) },
+                {FontClass.H2, ThemeSchemeManager.Instance.GetFont("Segoe UI Semibold", 20) },
+                {FontClass.H3, ThemeSchemeManager.Instance.GetFont("Segoe UI", 18, FontStyle.Italic) },
+                {FontClass.H4, ThemeSchemeManager.Instance.GetFont("Segoe UI Light", 17, FontStyle.Italic) },
+                {FontClass.H5, ThemeSchemeManager.Instance.GetFont("Segoe UI Light", 16) },
+                {FontClass.H6, ThemeSchemeManager.Instance.GetFont("Segoe UI Light", 15) },
+                {FontClass.Body, ThemeSchemeManager.Instance.GetFont("Segoe UI ", 14 ) },
+                {FontClass.Styled, ThemeSchemeManager.Instance.GetFont("Roboto Thin", 14, FontStyle.Italic) },
+                {FontClass.Small, ThemeSchemeManager.Instance.GetFont("Segoe UI ", 8 ) },
+                {FontClass.Tiny, ThemeSchemeManager.Instance.GetFont("Segoe UI ", 6 ) },
+            };
 
-            this.FormBackgroundColor = Color.FromArgb(240, 240, 240);
-            this.FormBackgroundDarkColor = Color.FromArgb(240, 240, 240); //new
+            this.DarkTheme = false;
 
-            this.ControlTextColorDark = Color.Black;
-            this.PrefixSuffixTextColor = Color.Black; //new
-            this.ControlTextLightColor = Color.Black; //new
-            this.ControlTextColorDisabled = Color.DarkGray;
+            // Fonts
+            this.ControlTextFont = this.FontClasses[FontClass.Body];
+            this.FormTitleFont = this.FontClasses[FontClass.H1];
+            this.FormHeaderTextFont = this.FontClasses[FontClass.Body];
+            this.ControlPlaceholderFont = this.FontClasses[FontClass.Body];
+            this.GridFont = this.FontClasses[FontClass.Body];
+            this.GridHeaderFont = this.FontClasses[FontClass.H4];
 
-            this.ControlHintTextColor = Color.DarkGray;
-            this.ThemeHighlightColor = Color.Gray;
-            this.ControlPlaceholderColor = Color.FromArgb(200, Color.DarkGray);
 
-            this.ControlHighlightColor = Color.Purple;
 
-            this.ControlBackgroundColorDark = Color.FromArgb(220, 220, 220);
-            this.ControlBackgroundColorLight = Color.FromArgb(240, 240, 240);
-            this.DisabledControlBackgroundColorDark = Color.FromArgb(240, 240, 240);
-            this.DisabledControlBackgroundColorLight = Color.FromArgb(250, 250, 250);
+            this.ThemeHighlightColor = this.Palette.GetColor(ColorVariant.Primary, false);
+            this.ControlTextColorDark = this.Palette.GetColor(ColorVariant.Dark);
+            this.ControlTextColorLight = this.Palette.GetColor(ColorVariant.Light);
+            this.ControlTextColorDisabled = this.Palette.GetColor(ColorVariant.Secondary);
+            this.ControlBackgroundColorDark = Color.FromArgb(25, 31, 41);
+            this.ControlBackgroundColorLight = Color.FromArgb(25, 31, 41);
+            this.ControlBackgroundColorFocusedDark = this.Palette.GetColor(ColorVariant.Secondary, true);
+            this.ControlBackgroundColorFocusedLight = this.Palette.GetColor(ColorVariant.Secondary, false);
+            this.ControlBackgroundColorDisabledDark = Color.FromArgb(49, 57, 71);
+            this.ControlBackgroundColorDisabledLight = Color.FromArgb(49, 57, 71);
 
-            this.FormTitleBarFont = ThemeSchemeManager.Instance.GetFont("Segoe UI SemiBold", 17.25F, FontStyle.Bold);
-            this.ControlTextFont = ThemeSchemeManager.Instance.GetFont("Segoe UI", 12);
-            this.ControlHintFont = ThemeSchemeManager.Instance.GetFont("Segoe UI", 7);
-            this.ControlPlaceholderFont = ThemeSchemeManager.Instance.GetFont("Segoe UI", 15);
-            this.HintControlInternalPadding = new Padding(4);
+            this.ControlHintTextColor = this.Palette.GetColor(ColorVariant.Dark);
+            this.ControlHintTextColorDisabled = this.Palette.GetColor(ColorVariant.Secondary);
+            this.ControlPlaceholderTextColor = this.Palette.GetColor(ColorVariant.Secondary);
+            this.ThemeSelectionColorDark = this.Palette.GetColor(ColorVariant.Primary, true);
+            this.ThemeSelectionColorLight = this.Palette.GetColor(ColorVariant.Primary, false);
+            this.ThemeSelectionColorExtraLight = this.Palette.GetColor(ColorVariant.Primary, false).Lighten(50);
+
+            this.FormBackgroundColor = this.Palette.GetColor(ColorVariant.Light);
+            this.FormHeaderTextColor = this.Palette.GetColor(ColorVariant.Light);
+            this.FormHeaderColorDark = this.Palette.GetColor(ColorVariant.Dark);
+            this.FormHeaderColorLight = this.Palette.GetColor(ColorVariant.Dark);
+            this.FormTitleTextColor = this.Palette.GetColor(ColorVariant.Light);
+            this.FormTitlePanelBackgroundColorDark = this.Palette.GetColor(ColorVariant.Primary, true);
+            this.FormTitlePanelBackgroundColorLight = this.Palette.GetColor(ColorVariant.Primary, false);
+            this.FormControlButtonHoverColor = this.Palette.GetColor(ColorVariant.Light);
+            this.CellBackgroundColor = this.Palette.GetColor(ColorVariant.Primary, false).Lighten(50);
         }
 
         public Font GetFontFromClass(FontClass fontClass)

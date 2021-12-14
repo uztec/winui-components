@@ -51,61 +51,17 @@
     <Compile Include="InternalContracts\ThemeControlProperties.cs" />
     <Compile Include="InternalContracts\ThemeControlWithTextBackgroundProperties.cs" />
     <Compile Include="InternalContracts\ThemeControlWithHintProperties.cs" />
-    <Compile Include="ThemeLabel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ThemeModalBase.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="ThemeButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GradientPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Helpers\DrawingHelper.cs" />
     <Compile Include="Interfaces\IThemeControl.cs" />
     <Compile Include="Interfaces\IThemeControlWithTextBackground.cs" />
     <Compile Include="Interfaces\IThemeControlWithHint.cs" />
-    <Compile Include="ThemeBaseForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ThemeBaseForm.Designer.cs">
-      <DependentUpon>ThemeBaseForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ThemeDataGridView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ThemeDataGridView.Designer.cs">
-      <DependentUpon>ThemeDataGridView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Themes\ThemeSchemeDarkBlue.cs" />
-    <Compile Include="Themes\ThemeSchemeLightBlue.cs" />
-    <Compile Include="ThemeAutoCompleteBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ThemeComboBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ThemeNumericTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Themes\ColorVariant.cs" />
     <Compile Include="Themes\FontClass.cs" />
     <Compile Include="Themes\Palette.cs" />
     <Compile Include="Themes\Palettes.cs" />
-    <Compile Include="ThemeTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ThemeDatePicker.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="EnhancedFlowLayoutPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Postit.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -120,15 +76,9 @@
     <Content Include="Resources\calendarWhite.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ThemeBaseForm.resx">
-      <DependentUpon>ThemeBaseForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ThemeModalBase.resx">
-      <DependentUpon>ThemeModalBase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
