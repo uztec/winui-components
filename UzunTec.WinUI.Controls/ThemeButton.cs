@@ -52,10 +52,10 @@ namespace UzunTec.WinUI.Controls
         public Color BackgroundColorDisabledLight { get => this.props.BackgroundColorDisabledLight; set => this.props.BackgroundColorDisabledLight = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color BackgroundColorHighlightDark { get => this.props.BackgroundColorFocusedDark; set => this.props.BackgroundColorFocusedDark = value; }
+        public Color BackgroundColorFocusedDark { get => this.props.BackgroundColorFocusedDark; set => this.props.BackgroundColorFocusedDark = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color BackgroundColorHighlightLight { get => this.props.BackgroundColorFocusedLight; set => this.props.BackgroundColorFocusedLight = value; }
+        public Color BackgroundColorFocusedLight { get => this.props.BackgroundColorFocusedLight; set => this.props.BackgroundColorFocusedLight = value; }
 
 
 
@@ -151,8 +151,8 @@ namespace UzunTec.WinUI.Controls
 
             this.BackgroundColorDark = this.ThemeScheme.GetPaletteColor(this.BackgroundColorVariant, true);
             this.BackgroundColorLight = this.ThemeScheme.GetPaletteColor(this.BackgroundColorVariant, false);
-            this.BackgroundColorHighlightDark = this.ThemeScheme.GetPaletteColor(this.BackgroundColorHighlightVariant, true);
-            this.BackgroundColorHighlightLight = this.ThemeScheme.GetPaletteColor(this.BackgroundColorHighlightVariant, false);
+            this.BackgroundColorFocusedDark = this.ThemeScheme.GetPaletteColor(this.BackgroundColorHighlightVariant, true);
+            this.BackgroundColorFocusedLight = this.ThemeScheme.GetPaletteColor(this.BackgroundColorHighlightVariant, false);
             this.BackgroundColorDisabledDark = this.ThemeScheme.GetPaletteColor(this.BackgroundColorDisabledVariant, true);
             this.BackgroundColorDisabledLight = this.ThemeScheme.GetPaletteColor(this.BackgroundColorDisabledVariant, false);
 
@@ -202,7 +202,7 @@ namespace UzunTec.WinUI.Controls
                 textRect = this.CalculateTextRect(buttonRect, imageRect);// textRect;
             }
 
-            Brush textBrush = (this.Enabled && (this.Focused || this.MouseHovered)) ? ThemeSchemeManager.Instance.GetHighlightBrush(this)
+            Brush textBrush = (this.Enabled && (this.Focused || this.MouseHovered)) ? ThemeSchemeManager.Instance.GetThemeHighlightBrush()
                     : this._reverseTextColor ? ThemeSchemeManager.Instance.GetDisabledBackgroundBrush(this)
                     : ThemeSchemeManager.Instance.GetTextBrush(this);
 
