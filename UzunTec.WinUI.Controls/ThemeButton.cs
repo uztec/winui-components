@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
@@ -35,16 +34,16 @@ namespace UzunTec.WinUI.Controls
 
         [Category("Theme"), DefaultValue(typeof(Padding), "1; 1; 1; 1;")]
         public Padding InternalPadding { get => this.props.InternalPadding; set => this.props.InternalPadding = value; }
-      
+
         [Category("Theme"), DefaultValue(typeof(Color), "Black")]
         public Color TextColor { get => this.props.TextColor; set => this.props.TextColor = value; }
-       
+
         [Category("Theme"), DefaultValue(typeof(Color), "Gray")]
         public Color TextColorDisabled { get => this.props.TextColorDisabled; set => this.props.TextColorDisabled = value; }
-        
+
         [Category("Theme"), DefaultValue(typeof(Font), "Seguoe UI")]
         public new Font Font { get => this.props.TextFont; set => this.props.TextFont = value; }
-        
+
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
         public Color BackgroundColorDark { get => this.props.BackgroundColorDark; set => this.props.BackgroundColorDark = value; }
 
@@ -70,8 +69,6 @@ namespace UzunTec.WinUI.Controls
 
 
         #region Theme Buttom Props
-
-
         [Category("Theme"), DefaultValue(typeof(FontClass), "Body")]
         public FontClass TextFontClass { get => this.btnProps.TextFontClass; set => this.btnProps.TextFontClass = value; }
 
@@ -102,7 +99,7 @@ namespace UzunTec.WinUI.Controls
         public ColorVariant BackgroundColorVariant { get => this.btnProps.BackgroundColorVariant; set => this.btnProps.BackgroundColorVariant = value; }
 
         [Category("Theme"), DefaultValue(typeof(ColorVariant), "Dark")]
-        public ColorVariant BackgroundColorHighlightVariant { get => this.btnProps.BackgroundColorHighlightVariant; set => this.btnProps.BackgroundColorHighlightVariant = value; }
+        public ColorVariant BackgroundColorFocusedVariant { get => this.btnProps.BackgroundColorFocusedVariant; set => this.btnProps.BackgroundColorFocusedVariant = value; }
 
         [Category("Theme"), DefaultValue(typeof(ColorVariant), "Dark")]
         public ColorVariant BackgroundColorDisabledVariant { get => this.btnProps.BackgroundColorDisabledVariant; set => this.btnProps.BackgroundColorDisabledVariant = value; }
@@ -133,11 +130,13 @@ namespace UzunTec.WinUI.Controls
             this.TextColorHightlightVariant = ColorVariant.Light;
             this.TextColorDisabledVariant = ColorVariant.Light;
             this.BackgroundColorVariant = ColorVariant.Secondary;
-            this.BackgroundColorHighlightVariant = ColorVariant.Primary;
+            this.BackgroundColorFocusedVariant = ColorVariant.Info;
             this.BackgroundColorDisabledVariant = ColorVariant.Secondary;
             this.BorderColorVariant = ColorVariant.Primary;
             this.BorderColorHighlightVariant = ColorVariant.Primary;
             this.BorderColorDisabledVariant = ColorVariant.Secondary;
+
+            this.TextFontClass = FontClass.Body;
         }
 
         public void UpdateStylesFromTheme()
@@ -149,8 +148,8 @@ namespace UzunTec.WinUI.Controls
 
             this.BackgroundColorDark = this.ThemeScheme.GetPaletteColor(this.BackgroundColorVariant, true);
             this.BackgroundColorLight = this.ThemeScheme.GetPaletteColor(this.BackgroundColorVariant, false);
-            this.BackgroundColorFocusedDark = this.ThemeScheme.GetPaletteColor(this.BackgroundColorHighlightVariant, true);
-            this.BackgroundColorFocusedLight = this.ThemeScheme.GetPaletteColor(this.BackgroundColorHighlightVariant, false);
+            this.BackgroundColorFocusedDark = this.ThemeScheme.GetPaletteColor(this.BackgroundColorFocusedVariant, true);
+            this.BackgroundColorFocusedLight = this.ThemeScheme.GetPaletteColor(this.BackgroundColorFocusedVariant, false);
             this.BackgroundColorDisabledDark = this.ThemeScheme.GetPaletteColor(this.BackgroundColorDisabledVariant, true);
             this.BackgroundColorDisabledLight = this.ThemeScheme.GetPaletteColor(this.BackgroundColorDisabledVariant, false);
 
@@ -185,9 +184,22 @@ namespace UzunTec.WinUI.Controls
 
             g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
             g.SmoothingMode = SmoothingMode.AntiAlias;
+            RectangleF buttonRect = ClientRectangle.ToRectF();
 
-            RectangleF buttonRect = ClientRectangle.ToRectF().ApplyPadding(this.InternalPadding);
+            if (this.BorderWidth > 0)
+            {
+                Brush borderBrush = this.Enabled ? 
+                    (this.Focused || this.MouseHovered) ? new SolidBrush(this.BorderColorHighlight)
+                    : new SolidBrush(this.BorderColor)
+                    : new SolidBrush(this.BorderColorDisabled);
 
+                Region borderRegion = new Region(this.ClientRectangle);
+                buttonRect = buttonRect.ApplyPadding(new Padding(this.BorderWidth));
+                borderRegion.Exclude(buttonRect);
+                g.FillRegion(borderBrush, borderRegion);
+            }
+
+            buttonRect = buttonRect.ApplyPadding(this.InternalPadding);
             RectangleF textRect = buttonRect;
             SizeF textSize = g.MeasureString(this.Text, this.Font, buttonRect.Size);
 

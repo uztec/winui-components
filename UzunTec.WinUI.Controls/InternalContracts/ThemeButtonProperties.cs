@@ -135,7 +135,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
         protected ColorVariant _backgroundColorVariant;
 
 
-        public ColorVariant BackgroundColorHighlightVariant
+        public ColorVariant BackgroundColorFocusedVariant
         {
             get => this._backgroundColorHightlightVariant;
             set

@@ -42,13 +42,9 @@
   <ItemGroup>
     <Compile Include="Interfaces\IThemeControlWithPrefixSuffix.cs" />
     <Compile Include="Interfaces\IThemeControlWithHintPlaceholder.cs" />
-    <Compile Include="InternalContracts\ThemeButtonSimpleProperties.cs" />
     <Compile Include="InternalContracts\ThemeControlWithHintPlaceHolderProperties.cs" />
     <Compile Include="InternalContracts\ThemeButtonProperties.cs" />
     <Compile Include="InternalContracts\ThemeControlWithPrefixSuffixProperties.cs" />
-    <Compile Include="ThemeButtonSimple.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="ThemeConstants.cs" />
     <Compile Include="Themes\FontFamilyManager.cs" />
     <Compile Include="InternalContracts\SideIconData.cs" />
