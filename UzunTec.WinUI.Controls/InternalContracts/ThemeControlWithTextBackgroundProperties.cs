@@ -12,7 +12,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             get => this._textFont;
             set
             {
-                if (!this._useThemeColors || this.updatingTheme)
+                if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._textFont = value;
                     this.control.UpdateRects();
@@ -28,7 +28,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             get => this._textColor;
             set
             {
-                if (!this._useThemeColors || this.updatingTheme)
+                if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._textColor = value;
                     this.control.Invalidate();
@@ -42,7 +42,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             get => this._textColorDisabled;
             set
             {
-                if (!this._useThemeColors || this.updatingTheme)
+                if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._textColorDisabled = value;
                     this.control.Invalidate();
@@ -57,7 +57,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             get => this._backgroundColorDark;
             set
             {
-                if (!this._useThemeColors || this.updatingTheme)
+                if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._backgroundColorDark = value;
                     this.control.Invalidate();
@@ -70,7 +70,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             get => this._backgroundColorLight;
             set
             {
-                if (!this._useThemeColors || this.updatingTheme)
+                if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._backgroundColorLight = value;
                     this.control.Invalidate();
@@ -84,7 +84,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             get => this._backgroundColorDisabledDark;
             set
             {
-                if (!this._useThemeColors || this.updatingTheme)
+                if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._backgroundColorDisabledDark = value;
                     this.control.Invalidate();
@@ -98,7 +98,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             get => this._backgroundColorDisabledLight;
             set
             {
-                if (!this._useThemeColors || this.updatingTheme)
+                if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._backgroundColorDisabledLight = value;
                     this.control.Invalidate();
@@ -112,7 +112,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             get => this._backgroundColorFocusedDark;
             set
             {
-                if (!this._useThemeColors || this.updatingTheme)
+                if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._backgroundColorFocusedDark = value;
                     this.control.Invalidate();
@@ -126,7 +126,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             get => this._backgroundColorFocusedLight;
             set
             {
-                if (!this._useThemeColors || this.updatingTheme)
+                if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._backgroundColorFocusedLight = value;
                     this.control.Invalidate();

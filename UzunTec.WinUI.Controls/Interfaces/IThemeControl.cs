@@ -10,6 +10,7 @@ namespace UzunTec.WinUI.Controls.Interfaces
         ThemeScheme ThemeScheme { get; }
         bool MouseHovered { get; }
         bool UseThemeColors { get; }
+        bool UpdatingTheme { get; set; }
 
         Padding InternalPadding { get; }
 

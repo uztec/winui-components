@@ -13,7 +13,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             get => this._textColorHighlight;
             set
             {
-                if (!this._useThemeColors || this.updatingTheme)
+                if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._textColorHighlight = value;
                     this.control.Invalidate();
@@ -27,7 +27,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             get => this._borderColor;
             set
             {
-                if (!this._useThemeColors || this.updatingTheme)
+                if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._borderColor = value;
                     this.control.Invalidate();
@@ -42,7 +42,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             get => this._borderColorDisabled;
             set
             {
-                if (!this._useThemeColors || this.updatingTheme)
+                if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._borderColorDisabled = value;
                     this.control.Invalidate();
@@ -57,7 +57,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             get => this._borderColorHighlight;
             set
             {
-                if (!this._useThemeColors || this.updatingTheme)
+                if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._borderColorHighlight = value;
                     this.control.Invalidate();
@@ -127,6 +127,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
                 if (this._useThemeColors)
                 {
                     this.DoUpdateStylesFromTheme();
+                    this.control.UpdateRects();
                     this.control.Invalidate();
                 }
             }
@@ -216,21 +217,6 @@ namespace UzunTec.WinUI.Controls.InternalContracts
         public bool Transparent { get => _transparent; set { _transparent = value; this.control.Invalidate(); } }
         private bool _transparent;
 
-
-        public Font TextFont
-        {
-            get => this._textFont;
-            set
-            {
-                if (!this._useThemeColors || this.updatingTheme)
-                {
-                    this._textFont = value;
-                    this.control.UpdateRects();
-                    this.control.Invalidate();
-                }
-            }
-        }
-        protected Font _textFont;
 
         public FontClass TextFontClass
         {

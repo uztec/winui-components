@@ -26,6 +26,9 @@ namespace UzunTec.WinUI.Controls
         [Browsable(false)]
         public bool MouseHovered { get; private set; }
 
+        [Browsable(false)]
+        public bool UpdatingTheme { get; set; }
+
         #region Theme Properties
         [Category("Theme"), DefaultValue(true)]
         public bool UseThemeColors { get => this.props.UseThemeColors; set => this.props.UseThemeColors = value; }
@@ -38,7 +41,10 @@ namespace UzunTec.WinUI.Controls
        
         [Category("Theme"), DefaultValue(typeof(Color), "Gray")]
         public Color TextColorDisabled { get => this.props.TextColorDisabled; set => this.props.TextColorDisabled = value; }
-
+        
+        [Category("Theme"), DefaultValue(typeof(Font), "Seguoe UI")]
+        public new Font Font { get => this.props.TextFont; set => this.props.TextFont = value; }
+        
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
         public Color BackgroundColorDark { get => this.props.BackgroundColorDark; set => this.props.BackgroundColorDark = value; }
 
@@ -64,8 +70,7 @@ namespace UzunTec.WinUI.Controls
 
 
         #region Theme Buttom Props
-        [Category("Theme"), DefaultValue(typeof(Font), "Seguoe UI")]
-        public new Font Font { get => this.btnProps.TextFont; set => this.btnProps.TextFont = value; }
+
 
         [Category("Theme"), DefaultValue(typeof(FontClass), "Body")]
         public FontClass TextFontClass { get => this.btnProps.TextFontClass; set => this.btnProps.TextFontClass = value; }
@@ -110,17 +115,10 @@ namespace UzunTec.WinUI.Controls
 
         [Category("Theme"), DefaultValue(typeof(ColorVariant), "Dark")]
         public ColorVariant BorderColorDisabledVariant { get => this.btnProps.BorderColorDisabledVariant; set => this.btnProps.BorderColorDisabledVariant = value; }
+        [Category("Theme"), DefaultValue(false)]
+        public bool Transparent { get => this.btnProps.Transparent; set => this.btnProps.Transparent = value; }
 
         #endregion
-
-
-        [Category("Z-Custom"), DefaultValue(false)]
-        public bool ReverseTextColor { get => this._reverseTextColor; set { this._reverseTextColor = value; this.Invalidate(); } }
-        private bool _reverseTextColor;
-
-        [Category("Z-Custom"), DefaultValue(false)]
-        public bool ShowBackground { get => this._showBackground; set { this._showBackground = value; this.Invalidate(); } }
-        private bool _showBackground;
 
         private readonly ThemeControlWithTextBackgroundProperties props;
         private readonly ThemeButtonProperties btnProps;
@@ -180,7 +178,7 @@ namespace UzunTec.WinUI.Controls
             Graphics g = pevent.Graphics;
             g.Clear(this.GetParentColor());
 
-            if (this._showBackground)
+            if (!this.Transparent)
             {
                 g.FillBackground(this, false);
             }
@@ -203,7 +201,6 @@ namespace UzunTec.WinUI.Controls
             }
 
             Brush textBrush = (this.Enabled && (this.Focused || this.MouseHovered)) ? ThemeSchemeManager.Instance.GetThemeHighlightBrush()
-                    : this._reverseTextColor ? ThemeSchemeManager.Instance.GetDisabledBackgroundBrush(this)
                     : ThemeSchemeManager.Instance.GetTextBrush(this);
 
             g.DrawText(this.Text, this.Font, textBrush, textRect, textSize, this.TextAlign);
@@ -229,7 +226,6 @@ namespace UzunTec.WinUI.Controls
                     return buttonRect.ApplyPadding(0, 0, imageRect.Width, 0);
             }
             return buttonRect;
-            throw new NotImplementedException();
         }
 
         private RectangleF CalculateImageRect(RectangleF buttonRect, SizeF textSize)

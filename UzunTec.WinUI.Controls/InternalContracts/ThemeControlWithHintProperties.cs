@@ -13,7 +13,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             get => this._hintColor;
             set
             {
-                if (!this._useThemeColors || this.updatingTheme)
+                if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._hintColor = value;
                     this.control.Invalidate();
@@ -27,7 +27,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             get => this._hintFont;
             set
             {
-                if (!this._useThemeColors || this.updatingTheme)
+                if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._hintFont = value;
                     this.control.UpdateRects();
@@ -42,7 +42,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             get => this._hintDisabledColor;
             set
             {
-                if (!this._useThemeColors || this.updatingTheme)
+                if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._hintDisabledColor = value;
                     this.control.Invalidate();
@@ -57,7 +57,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             get => this._hintHighlightColor;
             set
             {
-                if (!this._useThemeColors || this.updatingTheme)
+                if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._hintHighlightColor = value;
                     this.control.Invalidate();
@@ -87,7 +87,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             get => this._placeholderHintText;
             set
             {
-                if (!this._useThemeColors || this.updatingTheme)
+                if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._placeholderHintText = value;
                     this.control.UpdateRects();
@@ -101,7 +101,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             get => this._showHint;
             set
             {
-                if (!this._useThemeColors || this.updatingTheme)
+                if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._showHint = value;
                     this.control.UpdateRects();

@@ -12,7 +12,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             get => this._placeholderColor;
             set
             {
-                if (!this._useThemeColors || this.updatingTheme)
+                if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._placeholderColor = value;
                     this.control.Invalidate();
@@ -26,7 +26,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             get => this._placeholderFont;
             set
             {
-                if (!this._useThemeColors || this.updatingTheme)
+                if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._placeholderFont = value;
                     this.control.UpdateRects();

@@ -8,7 +8,6 @@ namespace UzunTec.WinUI.Controls.InternalContracts
     internal class ThemeControlProperties
     {
         protected readonly IThemeControl control;
-        protected bool updatingTheme;
 
         internal ThemeControlProperties(IThemeControl control)
         {
@@ -26,12 +25,13 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             };
 
             this._useThemeColors = true;
-            this.updatingTheme = true;
+            this.control.UpdatingTheme = true;
         }
+
 
         private void Control_HandleCreated(object sender, EventArgs e)
         {
-            this.updatingTheme = true;
+            this.control.UpdatingTheme = true;
             if (this._useThemeColors)
             {
                 this.DoUpdateStylesFromTheme();
@@ -40,9 +40,9 @@ namespace UzunTec.WinUI.Controls.InternalContracts
 
         protected void DoUpdateStylesFromTheme()
         {
-            this.updatingTheme = true;
+            this.control.UpdatingTheme = true;
             this.control.UpdateStylesFromTheme();
-            this.updatingTheme = false;
+            this.control.UpdatingTheme = true;
         }
 
 
