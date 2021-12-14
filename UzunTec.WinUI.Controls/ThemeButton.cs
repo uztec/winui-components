@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using UzunTec.WinUI.Controls.Helpers;
 using UzunTec.WinUI.Controls.Interfaces;
 using UzunTec.WinUI.Controls.InternalContracts;
+using UzunTec.WinUI.Controls.Themes;
 using UzunTec.WinUI.Utils;
 
 namespace UzunTec.WinUI.Controls
@@ -29,6 +30,15 @@ namespace UzunTec.WinUI.Controls
         [Category("Theme"), DefaultValue(true)]
         public bool UseThemeColors { get => this.props.UseThemeColors; set => this.props.UseThemeColors = value; }
 
+        [Category("Theme"), DefaultValue(typeof(Padding), "1; 1; 1; 1;")]
+        public Padding InternalPadding { get => this.props.InternalPadding; set => this.props.InternalPadding = value; }
+      
+        [Category("Theme"), DefaultValue(typeof(Color), "Black")]
+        public Color TextColor { get => this.props.TextColor; set => this.props.TextColor = value; }
+       
+        [Category("Theme"), DefaultValue(typeof(Color), "Gray")]
+        public Color TextColorDisabled { get => this.props.TextColorDisabled; set => this.props.TextColorDisabled = value; }
+
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
         public Color BackgroundColorDark { get => this.props.BackgroundColorDark; set => this.props.BackgroundColorDark = value; }
 
@@ -42,25 +52,68 @@ namespace UzunTec.WinUI.Controls
         public Color BackgroundColorDisabledLight { get => this.props.BackgroundColorDisabledLight; set => this.props.BackgroundColorDisabledLight = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color BackgroundColorFocusedDark { get => this.props.BackgroundColorFocusedDark; set => this.props.BackgroundColorFocusedDark = value; }
+        public Color BackgroundColorHighlightDark { get => this.props.BackgroundColorFocusedDark; set => this.props.BackgroundColorFocusedDark = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color BackgroundColorFocusedLight { get => this.props.BackgroundColorFocusedLight; set => this.props.BackgroundColorFocusedLight = value; }
+        public Color BackgroundColorHighlightLight { get => this.props.BackgroundColorFocusedLight; set => this.props.BackgroundColorFocusedLight = value; }
 
-        [Category("Theme"), DefaultValue(typeof(Color), "Red")]
-        public Color HighlightColor { get => this.props.HighlightColor; set => this.props.HighlightColor = value; }
 
-        [Category("Theme"), DefaultValue(typeof(Color), "Gray")]
-        public Color TextColorDisabled { get => this.props.TextColorDisabled; set => this.props.TextColorDisabled = value; }
 
-        [Category("Theme"), DefaultValue(typeof(Color), "Black")]
-        public Color TextColor { get => this.props.TextColor; set => this.props.TextColor = value; }
 
-        [Category("Theme"), DefaultValue(typeof(Padding), "1; 1; 1; 1;")]
-        public Padding InternalPadding { get => this.props.InternalPadding; set => this.props.InternalPadding = value; }
         #endregion
 
-       
+
+        #region Theme Buttom Props
+        [Category("Theme"), DefaultValue(typeof(Font), "Seguoe UI")]
+        public new Font Font { get => this.btnProps.TextFont; set => this.btnProps.TextFont = value; }
+
+        [Category("Theme"), DefaultValue(typeof(FontClass), "Body")]
+        public FontClass TextFontClass { get => this.btnProps.TextFontClass; set => this.btnProps.TextFontClass = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Red")]
+        public Color TextColorHighlight { get => this.btnProps.TextColorHighlight; set => this.btnProps.TextColorHighlight = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Red")]
+        public Color BorderColor { get => this.btnProps.BorderColor; set => this.btnProps.BorderColor = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Red")]
+        public Color BorderColorHighlight { get => this.btnProps.BorderColorHighlight; set => this.btnProps.BorderColorHighlight = value; }
+        [Category("Theme"), DefaultValue(typeof(Color), "Red")]
+        public Color BorderColorDisabled { get => this.btnProps.BorderColorDisabled; set => this.btnProps.BorderColorDisabled = value; }
+
+        [Category("Theme"), DefaultValue(typeof(int), "0")]
+        public int BorderWidth { get => this.btnProps.BorderWidth; set => this.btnProps.BorderWidth = value; }
+
+        [Category("Theme"), DefaultValue(typeof(ColorVariant), "Dark")]
+        public ColorVariant TextColorVariant { get => this.btnProps.TextColorVariant; set => this.btnProps.TextColorVariant = value; }
+
+        [Category("Theme"), DefaultValue(typeof(ColorVariant), "Dark")]
+        public ColorVariant TextColorHightlightVariant { get => this.btnProps.TextColorHightlightVariant; set => this.btnProps.TextColorHightlightVariant = value; }
+
+        [Category("Theme"), DefaultValue(typeof(ColorVariant), "Dark")]
+        public ColorVariant TextColorDisabledVariant { get => this.btnProps.TextColorDisabledVariant; set => this.btnProps.TextColorDisabledVariant = value; }
+
+        [Category("Theme"), DefaultValue(typeof(ColorVariant), "Dark")]
+        public ColorVariant BackgroundColorVariant { get => this.btnProps.BackgroundColorVariant; set => this.btnProps.BackgroundColorVariant = value; }
+
+        [Category("Theme"), DefaultValue(typeof(ColorVariant), "Dark")]
+        public ColorVariant BackgroundColorHighlightVariant { get => this.btnProps.BackgroundColorHighlightVariant; set => this.btnProps.BackgroundColorHighlightVariant = value; }
+
+        [Category("Theme"), DefaultValue(typeof(ColorVariant), "Dark")]
+        public ColorVariant BackgroundColorDisabledVariant { get => this.btnProps.BackgroundColorDisabledVariant; set => this.btnProps.BackgroundColorDisabledVariant = value; }
+
+        [Category("Theme"), DefaultValue(typeof(ColorVariant), "Dark")]
+        public ColorVariant BorderColorVariant { get => this.btnProps.BorderColorVariant; set => this.btnProps.BorderColorVariant = value; }
+
+        [Category("Theme"), DefaultValue(typeof(ColorVariant), "Dark")]
+        public ColorVariant BorderColorHighlightVariant { get => this.btnProps.BorderColorHighlightVariant; set => this.btnProps.BorderColorHighlightVariant = value; }
+
+        [Category("Theme"), DefaultValue(typeof(ColorVariant), "Dark")]
+        public ColorVariant BorderColorDisabledVariant { get => this.btnProps.BorderColorDisabledVariant; set => this.btnProps.BorderColorDisabledVariant = value; }
+
+        #endregion
+
+
         [Category("Z-Custom"), DefaultValue(false)]
         public bool ReverseTextColor { get => this._reverseTextColor; set { this._reverseTextColor = value; this.Invalidate(); } }
         private bool _reverseTextColor;
@@ -70,29 +123,42 @@ namespace UzunTec.WinUI.Controls
         private bool _showBackground;
 
         private readonly ThemeControlWithTextBackgroundProperties props;
+        private readonly ThemeButtonProperties btnProps;
 
         public ThemeButton()
         {
-            this.props = new ThemeControlWithTextBackgroundProperties(this)
-            {
-                Invalidate = this.Invalidate,
-                UpdateStylesFromTheme = this.UpdateStylesFromTheme,
-            };
+            this.props = new ThemeControlWithTextBackgroundProperties(this);
+            this.btnProps = new ThemeButtonProperties(this);
             this.InternalPadding = new Padding(1);
+            this.BorderWidth = 0;
+            this.TextColorVariant = ColorVariant.Dark;
+            this.TextColorHightlightVariant = ColorVariant.Light;
+            this.TextColorDisabledVariant = ColorVariant.Light;
+            this.BackgroundColorVariant = ColorVariant.Secondary;
+            this.BackgroundColorHighlightVariant = ColorVariant.Primary;
+            this.BackgroundColorDisabledVariant = ColorVariant.Secondary;
+            this.BorderColorVariant = ColorVariant.Primary;
+            this.BorderColorHighlightVariant = ColorVariant.Primary;
+            this.BorderColorDisabledVariant = ColorVariant.Secondary;
         }
 
-        private void UpdateStylesFromTheme()
+        public void UpdateStylesFromTheme()
         {
-            this.Font = this.ThemeScheme.ControlTextFont;
-            this.TextColor = this.ThemeScheme.ControlTextColor;
-            this.TextColorDisabled = this.ThemeScheme.DisabledControlTextColor;
-            this.HighlightColor = this.ThemeScheme.ControlHighlightColor;
-            this.BackgroundColorDark = this.ThemeScheme.ControlBackgroundColorDark;
-            this.BackgroundColorLight = this.ThemeScheme.ControlBackgroundColorLight;
-            this.BackgroundColorFocusedDark = this.ThemeScheme.ControlBackgroundColorLight;
-            this.BackgroundColorFocusedLight = this.ThemeScheme.ControlBackgroundColorLight;
-            this.BackgroundColorDisabledDark = this.ThemeScheme.DisabledControlBackgroundColorDark;
-            this.BackgroundColorDisabledLight = this.ThemeScheme.DisabledControlBackgroundColorLight;
+            this.Font = this.ThemeScheme.GetFontFromClass(this.TextFontClass);
+            this.TextColor = this.ThemeScheme.GetPaletteColor(this.TextColorVariant);
+            this.TextColorDisabled = this.ThemeScheme.GetPaletteColor(this.TextColorDisabledVariant);
+            this.TextColorHighlight = this.ThemeScheme.GetPaletteColor(this.TextColorHightlightVariant);
+
+            this.BackgroundColorDark = this.ThemeScheme.GetPaletteColor(this.BackgroundColorVariant, true);
+            this.BackgroundColorLight = this.ThemeScheme.GetPaletteColor(this.BackgroundColorVariant, false);
+            this.BackgroundColorHighlightDark = this.ThemeScheme.GetPaletteColor(this.BackgroundColorHighlightVariant, true);
+            this.BackgroundColorHighlightLight = this.ThemeScheme.GetPaletteColor(this.BackgroundColorHighlightVariant, false);
+            this.BackgroundColorDisabledDark = this.ThemeScheme.GetPaletteColor(this.BackgroundColorDisabledVariant, true);
+            this.BackgroundColorDisabledLight = this.ThemeScheme.GetPaletteColor(this.BackgroundColorDisabledVariant, false);
+
+            this.BorderColor = this.ThemeScheme.GetPaletteColor(this.BorderColorVariant, true);
+            this.BorderColorHighlight = this.ThemeScheme.GetPaletteColor(this.BorderColorHighlightVariant, true);
+            this.BorderColorDisabled = this.ThemeScheme.GetPaletteColor(this.BorderColorDisabledVariant, true);
         }
 
         protected override void OnCreateControl()
@@ -103,6 +169,10 @@ namespace UzunTec.WinUI.Controls
             GotFocus += (sender, args) => this.Invalidate();
             MouseEnter += (sender, args) => { MouseHovered = true; this.Invalidate(); };
             MouseLeave += (sender, args) => { MouseHovered = false; this.Invalidate(); };
+        }
+
+        public void UpdateRects()
+        {
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
@@ -132,7 +202,7 @@ namespace UzunTec.WinUI.Controls
                 textRect = this.CalculateTextRect(buttonRect, imageRect);// textRect;
             }
 
-            Brush textBrush = (this.Enabled && this.MouseHovered) ? ThemeSchemeManager.Instance.GetHighlightBrush(this)
+            Brush textBrush = (this.Enabled && (this.Focused || this.MouseHovered)) ? ThemeSchemeManager.Instance.GetHighlightBrush(this)
                     : this._reverseTextColor ? ThemeSchemeManager.Instance.GetDisabledBackgroundBrush(this)
                     : ThemeSchemeManager.Instance.GetTextBrush(this);
 
