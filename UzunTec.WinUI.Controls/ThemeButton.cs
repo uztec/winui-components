@@ -61,10 +61,6 @@ namespace UzunTec.WinUI.Controls
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
         public Color BackgroundColorFocusedLight { get => this.props.BackgroundColorFocusedLight; set => this.props.BackgroundColorFocusedLight = value; }
-
-
-
-
         #endregion
 
 
@@ -112,6 +108,7 @@ namespace UzunTec.WinUI.Controls
 
         [Category("Theme"), DefaultValue(typeof(ColorVariant), "Dark")]
         public ColorVariant BorderColorDisabledVariant { get => this.btnProps.BorderColorDisabledVariant; set => this.btnProps.BorderColorDisabledVariant = value; }
+        
         [Category("Theme"), DefaultValue(false)]
         public bool Transparent { get => this.btnProps.Transparent; set => this.btnProps.Transparent = value; }
 
@@ -135,7 +132,6 @@ namespace UzunTec.WinUI.Controls
             this.BorderColorVariant = ColorVariant.Primary;
             this.BorderColorHighlightVariant = ColorVariant.Primary;
             this.BorderColorDisabledVariant = ColorVariant.Secondary;
-
             this.TextFontClass = FontClass.Body;
         }
 

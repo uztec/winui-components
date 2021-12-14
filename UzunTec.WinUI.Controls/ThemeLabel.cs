@@ -22,11 +22,24 @@ namespace UzunTec.WinUI.Controls
 
         [Browsable(false)]
         public bool MouseHovered { get; private set; }
-
+        [Browsable(false)]
+        public bool UpdatingTheme { get; set; }
 
         #region Theme Properties
         [Category("Theme"), DefaultValue(true)]
         public bool UseThemeColors { get => this.props.UseThemeColors; set => this.props.UseThemeColors = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Padding), "1; 1; 1; 1;")]
+        public Padding InternalPadding { get => this.props.InternalPadding; set => this.props.InternalPadding = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Black")]
+        public Color TextColor { get => this.props.TextColor; set => this.props.TextColor = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Gray")]
+        public Color TextColorDisabled { get => this.props.TextColorDisabled; set => this.props.TextColorDisabled = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Font), "Seguoe UI")]
+        public new Font Font { get => this.props.TextFont; set { this.props.TextFont = value; base.Font = value; } }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
         public Color BackgroundColorDark { get => this.props.BackgroundColorDark; set => this.props.BackgroundColorDark = value; }
@@ -46,52 +59,48 @@ namespace UzunTec.WinUI.Controls
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
         public Color BackgroundColorFocusedLight { get => this.props.BackgroundColorFocusedLight; set => this.props.BackgroundColorFocusedLight = value; }
 
-        [Category("Theme"), DefaultValue(typeof(Color), "Red")]
-        public Color HighlightColor { get => this.props.HighlightColor; set => this.props.HighlightColor = value; }
-
-        [Category("Theme"), DefaultValue(typeof(Color), "Gray")]
-        public Color TextColorDisabled { get => this.props.TextColorDisabled; set => this.props.TextColorDisabled = value; }
-
-        [Category("Theme"), DefaultValue(typeof(Color), "Black")]
-        public Color TextColor { get => this.props.TextColor; set => this.props.TextColor = value; }
-
-        [Category("Theme"), DefaultValue(typeof(Padding), "1; 1; 1; 1;")]
-        public Padding InternalPadding { get => this.props.InternalPadding; set => this.props.InternalPadding = value; }
         #endregion
 
+        #region Theme Buttom Props
+        [Category("Theme"), DefaultValue(typeof(FontClass), "Body")]
+        public FontClass TextFontClass { get => this.btnProps.TextFontClass; set => this.btnProps.TextFontClass = value; }
 
-        [Category("Z-Custom"), DefaultValue(false)]
-        public bool ShowBackground { get => this._showBackground; set { this._showBackground = value; this.Invalidate(); } }
-        private bool _showBackground;
+        [Category("Theme"), DefaultValue(typeof(ColorVariant), "Dark")]
+        public ColorVariant TextColorVariant { get => this.btnProps.TextColorVariant; set => this.btnProps.TextColorVariant = value; }
 
+        [Category("Theme"), DefaultValue(true)]
+        public bool Transparent { get => this.btnProps.Transparent; set => this.btnProps.Transparent = value; }
+
+        #endregion
 
         private readonly ThemeControlWithTextBackgroundProperties props;
+        private readonly ThemeButtonProperties btnProps;
+
 
         public ThemeLabel()
         {
-            this.props = new ThemeControlWithTextBackgroundProperties(this)
-            {
-                Invalidate = this.Invalidate,
-                UpdateStylesFromTheme = this.UpdateStylesFromTheme,
-            };
-            this.Invalidate();
+            this.props = new ThemeControlWithTextBackgroundProperties(this);
+            this.btnProps = new ThemeButtonProperties(this);
             this.InternalPadding = new Padding(1);
-            this._showBackground = false;
+            this.Transparent = true;
+            this.TextFontClass = FontClass.Body;
+            this.TextColorVariant = ColorVariant.Dark;
         }
 
-        private void UpdateStylesFromTheme()
+        public void UpdateStylesFromTheme()
         {
+            // Variants
+            this.Font = this.ThemeScheme.GetFontFromClass(this.TextFontClass);
+            this.TextColor = this.ThemeScheme.GetPaletteColor(this.TextColorVariant);
+
             // Theme
-            this.Font = this.ThemeScheme.ControlTextFont;
-            this.TextColor = this.ThemeScheme.ControlTextColorDark;
             this.TextColorDisabled = this.ThemeScheme.ControlTextColorDisabled;
-            this.HighlightColor = this.ThemeScheme.ControlHighlightColor;
             this.BackgroundColorDark = this.ThemeScheme.ControlBackgroundColorDark;
             this.BackgroundColorLight = this.ThemeScheme.ControlBackgroundColorLight;
-            this.BackgroundColorFocusedDark = this.ThemeScheme.ControlBackgroundColorLight;
-            this.BackgroundColorFocusedLight = this.ThemeScheme.ControlBackgroundColorLight;
-            this.BackgroundColorDisabledDark = this.ThemeScheme.DisabledControlBackgroundColorDark;
-            this.BackgroundColorDisabledLight = this.ThemeScheme.DisabledControlBackgroundColorLight;
+            this.BackgroundColorFocusedDark = this.ThemeScheme.ControlBackgroundColorFocusedLight;
+            this.BackgroundColorFocusedLight = this.ThemeScheme.ControlBackgroundColorFocusedLight;
+            this.BackgroundColorDisabledDark = this.ThemeScheme.ControlBackgroundColorDisabledDark;
+            this.BackgroundColorDisabledLight = this.ThemeScheme.ControlBackgroundColorDisabledLight;
         }
 
         protected override void OnCreateControl()
@@ -102,12 +111,16 @@ namespace UzunTec.WinUI.Controls
             MouseLeave += (sender, args) => { MouseHovered = false; this.Invalidate(); };
         }
 
+        public void UpdateRects()
+        {
+        }
+
         protected override void OnPaint(PaintEventArgs pevent)
         {
             Graphics g = pevent.Graphics;
             g.Clear(this.GetParentColor());
 
-            if (this._showBackground)
+            if (!this.Transparent)
             {
                 g.FillBackground(this, false);
             }

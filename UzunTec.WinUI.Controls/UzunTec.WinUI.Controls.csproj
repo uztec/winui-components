@@ -46,6 +46,9 @@
     <Compile Include="InternalContracts\ThemeButtonProperties.cs" />
     <Compile Include="InternalContracts\ThemeControlWithPrefixSuffixProperties.cs" />
     <Compile Include="ThemeConstants.cs" />
+    <Compile Include="ThemeLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Themes\FontFamilyManager.cs" />
     <Compile Include="InternalContracts\SideIconData.cs" />
     <Compile Include="InternalContracts\ThemeControlProperties.cs" />
