@@ -21,6 +21,7 @@ namespace UzunTec.WinUI.Controls.Helpers
         {
             FillBackground(g, ctrl, ctrl.ClientRectangle, lineBottom);
         }
+
         internal static void FillBackground(this Graphics g, IThemeControlWithTextBackground ctrl, RectangleF bgRect, bool lineBottom = true)
         {
 

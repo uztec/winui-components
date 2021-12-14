@@ -6,6 +6,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using UzunTec.WinUI.Controls.Interfaces;
 using UzunTec.WinUI.Controls.InternalContracts;
+using UzunTec.WinUI.Controls.Themes;
 using UzunTec.WinUI.Utils;
 
 namespace UzunTec.WinUI.Controls
@@ -117,19 +118,15 @@ namespace UzunTec.WinUI.Controls
 
 
         private RectangleF headerRect, headerClientRect, bodyRect, textRect, dateRect, iconsRect;
-        private readonly ThemeControlWithTextBackgroundProperties props;
+        private readonly ThemeControlProperties props;
         private readonly Dictionary<string, SideIconData> icons;
         public EventHandler<string> IconClick;
 
 
         public Postit()
         {
-            this.props = new ThemeControlWithTextBackgroundProperties(this)
-            {
-                Invalidate = this.Invalidate,
-                UpdateStylesFromTheme = this.UpdateStylesFromTheme,
-                UseThemeColors = false,
-            };
+            this.props = new ThemeControlProperties(this);
+            
             icons = new Dictionary<string, SideIconData>();
 
             _headerColorDark = Color.LightYellow;
@@ -156,7 +153,7 @@ namespace UzunTec.WinUI.Controls
             this.InternalPadding = new Padding(10, 10, 3, 3);
         }
 
-        private void UpdateStylesFromTheme()
+        public void UpdateStylesFromTheme()
         {
             this.Font = this.ThemeScheme.ControlTextFont;
             this.TextColor = this.ThemeScheme.ControlTextColor;
@@ -208,7 +205,7 @@ namespace UzunTec.WinUI.Controls
         }
 
 
-        private void UpdateRects()
+        public void UpdateRects()
         {
             headerRect = new RectangleF(0, 0, Width, _headerSize);
             headerClientRect = headerRect.ApplyPadding(Padding);

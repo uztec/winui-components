@@ -72,12 +72,15 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             set
             {
                 this._hintFontClass = value;
-                this.control.UpdateRects();
-                this.control.Invalidate();
+                if (this._useThemeColors)
+                {
+                    this.control.UpdateStylesFromTheme();
+                    this.control.UpdateRects();
+                    this.control.Invalidate();
+                }
             }
         }
         protected FontClass _hintFontClass;
-
 
         public string PlaceholderHintText
         {

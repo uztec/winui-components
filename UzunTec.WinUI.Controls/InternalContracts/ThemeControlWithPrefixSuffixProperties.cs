@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using UzunTec.WinUI.Controls.Interfaces;
-using UzunTec.WinUI.Controls.Themes;
 
 namespace UzunTec.WinUI.Controls.InternalContracts
 {

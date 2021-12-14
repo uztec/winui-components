@@ -14,7 +14,7 @@ namespace UzunTec.WinUI.Controls.Interfaces
         Padding InternalPadding { get; }
 
         void UpdateRects();
-        void UpdateStylesFromTheme()
+        void UpdateStylesFromTheme();
 
 
         // Control Base Properties

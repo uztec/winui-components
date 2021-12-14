@@ -73,9 +73,14 @@ namespace UzunTec.WinUI.Controls.Themes
             this.HintControlInternalPadding = new Padding(4);
         }
 
-        internal Font GetFontFromClass(FontClass hintFontClass)
+        public Font GetFontFromClass(FontClass fontClass)
         {
-            throw new NotImplementedException();
+            return this.FontClasses[fontClass];
+        }
+
+        public Color GetPaletteColor(ColorVariant variant, bool dark = true)
+        {
+            return this.Palette.GetColor(variant, dark);
         }
 
         /*
