@@ -28,12 +28,14 @@ namespace UzunTec.WinUI.Controls
         [Browsable(false)]
         public bool UpdatingTheme { get; set; }
 
-        #region Theme Properties
         [Category("Theme"), DefaultValue(true)]
         public bool UseThemeColors { get => this.props.UseThemeColors; set => this.props.UseThemeColors = value; }
 
         [Category("Theme"), DefaultValue(typeof(Padding), "1; 1; 1; 1;")]
         public Padding InternalPadding { get => this.props.InternalPadding; set => this.props.InternalPadding = value; }
+
+
+        #region Theme Properties - Text and Background
 
         [Category("Theme"), DefaultValue(typeof(Color), "Black")]
         public Color TextColor { get => this.props.TextColor; set => this.props.TextColor = value; }
@@ -64,7 +66,8 @@ namespace UzunTec.WinUI.Controls
         #endregion
 
 
-        #region Theme Buttom Props
+        #region Theme Properties - Button Specific Properties
+
         [Category("Theme"), DefaultValue(typeof(FontClass), "Body")]
         public FontClass TextFontClass { get => this.btnProps.TextFontClass; set => this.btnProps.TextFontClass = value; }
 
