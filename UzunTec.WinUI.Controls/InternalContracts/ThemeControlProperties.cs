@@ -9,19 +9,17 @@ namespace UzunTec.WinUI.Controls.InternalContracts
     {
         protected readonly IThemeControl control;
         protected bool updatingTheme;
-        internal Action UpdateStylesFromTheme { get; set; }
 
         internal ThemeControlProperties(IThemeControl control)
         {
             this.control = control;
             control.HandleCreated += Control_HandleCreated;
-            this.UpdateStylesFromTheme = delegate () { };
 
             ThemeSchemeManager.Instance.Changed += (s, t) =>
             {
                 if (this._useThemeColors)
                 {
-                    this.DoUpdate();
+                    this.DoUpdateStylesFromTheme();
                     control.UpdateRects();
                     control.Invalidate();
                 }
@@ -36,14 +34,14 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             this.updatingTheme = true;
             if (this._useThemeColors)
             {
-                this.DoUpdate();
+                this.DoUpdateStylesFromTheme();
             }
         }
 
-        private void DoUpdate()
+        protected void DoUpdateStylesFromTheme()
         {
             this.updatingTheme = true;
-            this.UpdateStylesFromTheme();
+            this.control.UpdateStylesFromTheme();
             this.updatingTheme = false;
         }
 
@@ -57,7 +55,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             {
                 if (value && !this._useThemeColors)
                 {
-                    this.DoUpdate();
+                    this.DoUpdateStylesFromTheme();
                     this.control.Invalidate();
                 }
                 this._useThemeColors = value;
