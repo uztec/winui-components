@@ -73,6 +73,9 @@
     </Compile>
     <Compile Include="Themes\ThemeScheme.cs" />
     <Compile Include="Themes\ThemeSchemeManager.cs" />
+    <Compile Include="ThemeTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\calendarDark.png" />

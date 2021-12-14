@@ -7,7 +7,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
     {
         internal ThemeControlWithPrefixSuffixProperties(IThemeControlWithPrefixSuffix control) : base(control) { }
 
-        public string Prefix
+        public string PrefixText
         {
             get => _prefixText;
             set { _prefixText = value; this.control.UpdateRects(); this.control.Invalidate(); }
@@ -21,7 +21,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
         }
         private Font _prefixFont;
 
-        public string Suffix
+        public string SuffixText
         {
             get => _suffixText;
             set { _suffixText = value; this.control.UpdateRects(); this.control.Invalidate(); }
@@ -35,11 +35,19 @@ namespace UzunTec.WinUI.Controls.InternalContracts
         }
         private Font _suffixFont;
 
-        public Color PrefixSuffixTextColor
+        public Color PrefixTextColor 
         {
-            get => _prefixSuffixTextColor;
-            set { _prefixSuffixTextColor = value; this.control.Invalidate(); }
+            get => _prefixTextColor;
+            set { _prefixTextColor = value; this.control.Invalidate(); }
         }
-        private Color _prefixSuffixTextColor;
+        private Color _prefixTextColor;
+
+        public Color SuffixTextColor
+        {
+            get => _suffixTextColor;
+            set { _suffixTextColor = value; this.control.Invalidate(); }
+        }
+        private Color _suffixTextColor;
+
     }
 }

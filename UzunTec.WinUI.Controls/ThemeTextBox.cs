@@ -36,9 +36,25 @@ namespace UzunTec.WinUI.Controls
         [Browsable(false)]
         public bool MouseHovered { get; private set; }
 
-        #region Theme Properties
+        [Browsable(false)]
+        public bool UpdatingTheme { get; set; }
+
         [Category("Theme"), DefaultValue(true)]
         public bool UseThemeColors { get => this.props.UseThemeColors; set => this.props.UseThemeColors = value; }
+
+        #region Theme Properties - Text and Background
+
+        [Category("Theme"), DefaultValue(typeof(Padding), "1; 1; 1; 1;")]
+        public Padding InternalPadding { get => this.props.InternalPadding; set => this.props.InternalPadding = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Black")]
+        public Color TextColor { get => this.props.TextColor; set => this.props.TextColor = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Gray")]
+        public Color TextColorDisabled { get => this.props.TextColorDisabled; set => this.props.TextColorDisabled = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Font), "Seguoe UI")]
+        public new Font Font { get => this.props.TextFont; set => this.props.TextFont = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
         public Color BackgroundColorDark { get => this.props.BackgroundColorDark; set => this.props.BackgroundColorDark = value; }
@@ -57,24 +73,25 @@ namespace UzunTec.WinUI.Controls
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
         public Color BackgroundColorFocusedLight { get => this.props.BackgroundColorFocusedLight; set => this.props.BackgroundColorFocusedLight = value; }
+        #endregion
 
-        [Category("Theme"), DefaultValue(typeof(Color), "Red")]
-        public Color HighlightColor { get => this.props.HighlightColor; set => this.props.HighlightColor = value; }
 
-        [Category("Theme"), DefaultValue(typeof(Color), "Gray")]
-        public Color TextColorDisabled { get => this.props.TextColorDisabled; set => this.props.TextColorDisabled = value; }
-
-        [Category("Theme"), DefaultValue(typeof(Color), "Black")]
-        public Color TextColor { get => this.props.TextColor; set => this.props.TextColor = value; }
-
-        [Category("Theme"), DefaultValue(typeof(Padding), "5; 5; 5; 5;")]
-        public Padding InternalPadding { get => this.props.InternalPadding; set => this.props.InternalPadding = value; }
-
+        #region Theme Properties - Hint And Placeholder
+ 
         [Category("Theme"), DefaultValue(typeof(Color), "Black")]
         public Color HintColor { get => this.props.HintColor; set => this.props.HintColor = value; }
+       
+        [Category("Theme"), DefaultValue(typeof(Color), "Red")]
+        public Color HintHighlightColor { get => this.props.HintHighlightColor; set => this.props.HintHighlightColor = value; }
+        
+        [Category("Theme"), DefaultValue(typeof(Color), "Black")]
+        public Color HintDisabledColor { get => this.props.HintDisabledColor; set => this.props.HintDisabledColor = value; }
 
         [Category("Theme"), DefaultValue(typeof(Font), "Segoe UI; 6pt")]
         public Font HintFont { get => this.props.HintFont; set => this.props.HintFont = value; }
+       
+        [Category("Theme"), DefaultValue(typeof(Font), "Segoe UI; 6pt")]
+        public FontClass HintFontClass { get => this.props.HintFontClass; set => this.props.HintFontClass = value; }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Black")]
         public Color PlaceholderColor { get => this.props.PlaceholderColor; set => this.props.PlaceholderColor = value; }
@@ -82,26 +99,34 @@ namespace UzunTec.WinUI.Controls
         [Category("Theme"), DefaultValue(typeof(Font), "Segoe UI; 15pt")]
         public Font PlaceholderFont { get => this.props.PlaceholderFont; set => this.props.PlaceholderFont = value; }
 
-        [Category("Theme"), DefaultValue(typeof(Color), "Black")]
-        public Color HintDisabledColor { get => this.props.HintDisabledColor; set => this.props.HintDisabledColor = value; }
+        [Category("Theme"), DefaultValue(typeof(string), "")]
+        public string PlaceholderHintText { get => this.props.PlaceholderHintText; set => this.props.PlaceholderHintText = value; }
+        
+        [Category("Theme"), DefaultValue(typeof(string), "")]
+        public bool ShowHint { get => this.props.ShowHint; set => this.props.ShowHint = value; }
 
         #endregion
 
-        [Category("Z-Custom"), DefaultValue(typeof(string), "")]
-        public string PlaceholderHintText
-        {
-            get => _placeholderHintText;
-            set { _placeholderHintText = value; Invalidate(); }
-        }
-        private string _placeholderHintText = string.Empty;
+        #region Theme Properties - Prefix And Suffix
+        public string PrefixText { get => this.prefixSuffixProps.PrefixText; set => this.prefixSuffixProps.PrefixText = value }
+        public Color PrefixTextColor { get => this.prefixSuffixProps.PrefixTextColor; set => this.prefixSuffixProps.PrefixTextColor = value }
+        public Font PrefixFont { get => this.prefixSuffixProps.PrefixFont; set => this.prefixSuffixProps.PrefixFont = value }
+        public Color PrefixTextHighlightColor { get => this.prefixSuffixProps.PrefixTextHighlightColor; set => this.prefixSuffixProps.PrefixTextHighlightColor = value }
+        public Color PrefixTextColorDisabled { get => this.prefixSuffixProps.PrefixTextColorDisabled; set => this.prefixSuffixProps.PrefixTextColorDisabled = value }
+        public FontClass PrefixFontClass { get => this.prefixSuffixProps.PrefixFontClass; set => this.prefixSuffixProps.PrefixFontClass = value }
+        public ColorVariant PrefixTextColorVariant { get => this.prefixSuffixProps.PrefixTextColorVariant; set => this.prefixSuffixProps.PrefixTextColorVariant = value }
+        public ColorVariant PrefixTextColorHightlightVariant { get => this.prefixSuffixProps.PrefixTextColorHightlightVariant; set => this.prefixSuffixProps.PrefixTextColorHightlightVariant = value }
+        public string SuffixText { get => this.prefixSuffixProps.SuffixText; set => this.prefixSuffixProps.SuffixText = value }
+        public Color SuffixTextColor { get => this.prefixSuffixProps.SuffixTextColor; set => this.prefixSuffixProps.SuffixTextColor = value }
+        public Font SuffixFont { get => this.prefixSuffixProps.SuffixFont; set => this.prefixSuffixProps.SuffixFont = value }
+        public Color SuffixTextHighlightColor { get => this.prefixSuffixProps.SuffixTextHighlightColor; set => this.prefixSuffixProps.SuffixTextHighlightColor = value }
+        public Color SuffixTextColorDisabled { get => this.prefixSuffixProps.SuffixTextColorDisabled; set => this.prefixSuffixProps.SuffixTextColorDisabled = value }
+        public FontClass SufixFontClass { get => this.prefixSuffixProps.SufixFontClass; set => this.prefixSuffixProps.SufixFontClass = value }
+        public ColorVariant SuffixTextColorVariant { get => this.prefixSuffixProps.SuffixTextColorVariant; set => this.prefixSuffixProps.SuffixTextColorVariant = value }
+        public ColorVariant SuffixTextColorHightlightVariant { get => this.prefixSuffixProps.SuffixTextColorHightlightVariant; set => this.prefixSuffixProps.SuffixTextColorHightlightVariant = value }
 
-        [Category("Z-Custom"), DefaultValue(true)]
-        public bool ShowHint
-        {
-            get => _showHint;
-            set { _showHint = value; this.UpdateRects(); Invalidate(); }
-        }
-        private bool _showHint;
+        #endregion
+
 
         [Category("Z-Custom"), DefaultValue(typeof(Image), "")]
         public Image PrependIcon
@@ -133,18 +158,20 @@ namespace UzunTec.WinUI.Controls
         }
         private float _appendIconMargin;
 
+
         private RectangleF textRect, hintRect, prefixRect, suffixRect;
         private bool hasHint, hasPrefix, hasSuffix;
         private readonly SideIconData prependIconData = new SideIconData();
         private readonly SideIconData appendIconData = new SideIconData();
 
 
-        private readonly ThemeControlWithHintProperties props;
+        private readonly ThemeControlWithHintPlaceHolderProperties props;
         private readonly ThemeControlWithPrefixSuffixProperties prefixSuffixProps;
 
         public ThemeTextBox()
         {
-            this.props = new ThemeControlWithHintProperties(this);
+            this.props = new ThemeControlWithHintPlaceHolderProperties(this);
+            this.prefixSuffixProps = new ThemeControlWithPrefixSuffixProperties(this);
 
             // Control Defaults
             _placeholderHintText = "";
@@ -156,7 +183,7 @@ namespace UzunTec.WinUI.Controls
             this._appendIconMargin = 5;
         }
 
-        private void UpdateStylesFromTheme()
+        public void UpdateStylesFromTheme()
         {
             // Theme
             Font = ThemeScheme.ControlTextFont;
@@ -203,7 +230,7 @@ namespace UzunTec.WinUI.Controls
             SizeChanged += (sender, args) => { UpdateRects(); SetTextRect(textRect); };
         }
 
-        private void UpdateRects()
+        public void UpdateRects()
         {
             hasHint = _showHint && !string.IsNullOrEmpty(_placeholderHintText);
             hasPrefix = !string.IsNullOrEmpty(_prefixText);
