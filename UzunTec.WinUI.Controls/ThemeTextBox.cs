@@ -109,21 +109,53 @@ namespace UzunTec.WinUI.Controls
         #endregion
 
         #region Theme Properties - Prefix And Suffix
+
+        [Category("Theme"), DefaultValue(typeof(string), "")]
         public string PrefixText { get => this.prefixSuffixProps.PrefixText; set => this.prefixSuffixProps.PrefixText = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Black")]
         public Color PrefixTextColor { get => this.prefixSuffixProps.PrefixTextColor; set => this.prefixSuffixProps.PrefixTextColor = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Font), "Segoe UI; 6pt")]
         public Font PrefixFont { get => this.prefixSuffixProps.PrefixFont; set => this.prefixSuffixProps.PrefixFont = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Green")]
         public Color PrefixTextHighlightColor { get => this.prefixSuffixProps.PrefixTextHighlightColor; set => this.prefixSuffixProps.PrefixTextHighlightColor = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Gray")]
         public Color PrefixTextColorDisabled { get => this.prefixSuffixProps.PrefixTextColorDisabled; set => this.prefixSuffixProps.PrefixTextColorDisabled = value; }
+
+        [Category("Theme"), DefaultValue(typeof(FontClass), "H1")]
         public FontClass PrefixFontClass { get => this.prefixSuffixProps.PrefixFontClass; set => this.prefixSuffixProps.PrefixFontClass = value; }
+
+        [Category("Theme"), DefaultValue(typeof(ColorVariant), "Dark")]
         public ColorVariant PrefixTextColorVariant { get => this.prefixSuffixProps.PrefixTextColorVariant; set => this.prefixSuffixProps.PrefixTextColorVariant = value; }
+
+        [Category("Theme"), DefaultValue(typeof(ColorVariant), "Dark")]
         public ColorVariant PrefixTextColorHightlightVariant { get => this.prefixSuffixProps.PrefixTextColorHightlightVariant; set => this.prefixSuffixProps.PrefixTextColorHightlightVariant = value; }
+
+        [Category("Theme"), DefaultValue(typeof(string), "")]
         public string SuffixText { get => this.prefixSuffixProps.SuffixText; set => this.prefixSuffixProps.SuffixText = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Black")]
         public Color SuffixTextColor { get => this.prefixSuffixProps.SuffixTextColor; set => this.prefixSuffixProps.SuffixTextColor = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Font), "Segoe UI; 6pt")]
         public Font SuffixFont { get => this.prefixSuffixProps.SuffixFont; set => this.prefixSuffixProps.SuffixFont = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Green")]
         public Color SuffixTextHighlightColor { get => this.prefixSuffixProps.SuffixTextHighlightColor; set => this.prefixSuffixProps.SuffixTextHighlightColor = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Gray")]
         public Color SuffixTextColorDisabled { get => this.prefixSuffixProps.SuffixTextColorDisabled; set => this.prefixSuffixProps.SuffixTextColorDisabled = value; }
-        public FontClass SufixFontClass { get => this.prefixSuffixProps.SufixFontClass; set => this.prefixSuffixProps.SufixFontClass = value; }
+
+        [Category("Theme"), DefaultValue(typeof(FontClass), "H1")]
+        public FontClass SufixFontClass { get => this.prefixSuffixProps.SuffixFontClass; set => this.prefixSuffixProps.SuffixFontClass = value; }
+
+        [Category("Theme"), DefaultValue(typeof(ColorVariant), "Dark")]
         public ColorVariant SuffixTextColorVariant { get => this.prefixSuffixProps.SuffixTextColorVariant; set => this.prefixSuffixProps.SuffixTextColorVariant = value; }
+
+        [Category("Theme"), DefaultValue(typeof(ColorVariant), "Dark")]
         public ColorVariant SuffixTextColorHightlightVariant { get => this.prefixSuffixProps.SuffixTextColorHightlightVariant; set => this.prefixSuffixProps.SuffixTextColorHightlightVariant = value; }
         #endregion
 
@@ -185,33 +217,43 @@ namespace UzunTec.WinUI.Controls
 
         public void UpdateStylesFromTheme()
         {
+            // Variants
+            PrefixTextColor = ThemeScheme.GetPaletteColor(this.PrefixTextColorVariant);
+            PrefixTextHighlightColor = ThemeScheme.GetPaletteColor(this.PrefixTextColorHightlightVariant);
+            SuffixTextColor = ThemeScheme.GetPaletteColor(this.SuffixTextColorVariant);
+            SuffixTextHighlightColor = ThemeScheme.GetPaletteColor(this.SuffixTextColorHightlightVariant);
+
+            PrefixFont = ThemeScheme.GetFontFromClass(this.PrefixFontClass);
+            SuffixFont = ThemeScheme.GetFontFromClass(this.SufixFontClass);
+
+            HintFont = ThemeScheme.GetFontFromClass(this.HintFontClass);
+
             // Theme
             Font = ThemeScheme.ControlTextFont;
             TextColor = ThemeScheme.ControlTextColorDark;
             TextColorDisabled = ThemeScheme.ControlTextColorDisabled;
 
-            BackgroundColorFocusedDark = ThemeScheme.ControlBackgroundColorLight;
-            BackgroundColorFocusedLight = ThemeScheme.ControlBackgroundColorLight;
-
-            HintColor = ThemeScheme.ControlHintTextColor;
-            HintFont = ThemeScheme.ControlHintFont;
-            HintDisabledColor = ThemeScheme.ThemeHighlightColor;
-
-            HighlightColor = ThemeScheme.ControlHighlightColor;
-
-            PlaceholderFont = ThemeScheme.ControlPlaceholderFont;
-            PlaceholderColor = ThemeScheme.ControlPlaceholderColor;
-
             BackgroundColorDark = ThemeScheme.ControlBackgroundColorDark;
             BackgroundColorLight = ThemeScheme.ControlBackgroundColorLight;
-            BackgroundColorDisabledDark = ThemeScheme.DisabledControlBackgroundColorDark;
-            BackgroundColorDisabledLight = ThemeScheme.DisabledControlBackgroundColorLight;
+            BackgroundColorFocusedDark = ThemeScheme.ControlBackgroundColorDisabledDark;
+            BackgroundColorFocusedLight = ThemeScheme.ControlBackgroundColorDisabledLight;
+            BackgroundColorDisabledDark = ThemeScheme.ControlBackgroundColorDisabledDark;
+            BackgroundColorDisabledLight = ThemeScheme.ControlBackgroundColorDisabledLight;
 
-            _prefixFont = ThemeScheme.ControlHintFont;
-            _suffixFont = ThemeScheme.ControlHintFont;
-            _prefixSuffixTextColor = ThemeScheme.PrefixSuffixTextColor;
+            HintColor = ThemeScheme.ControlHintTextColor;
+            HintHighlightColor = ThemeScheme.ThemeHighlightColor;
+            HintDisabledColor = ThemeScheme.ControlHintTextColorDisabled;
 
-            this.InternalPadding = ThemeScheme.HintControlInternalPadding;
+            PrefixTextColorDisabled = ThemeScheme.ControlTextColorDisabled;
+            SuffixTextColorDisabled = ThemeScheme.ControlTextColorDisabled;
+
+            PlaceholderFont = ThemeScheme.ControlPlaceholderFont;
+            PlaceholderColor = ThemeScheme.ControlPlaceholderTextColor;
+
+            //SelectionColorDark = 
+            //SelectionColorLight =
+
+            this.InternalPadding = ThemeConstants.DefaultHintControlInternalPadding;
         }
 
         protected override void OnCreateControl()
@@ -232,9 +274,9 @@ namespace UzunTec.WinUI.Controls
 
         public void UpdateRects()
         {
-            hasHint = _showHint && !string.IsNullOrEmpty(_placeholderHintText);
-            hasPrefix = !string.IsNullOrEmpty(_prefixText);
-            hasSuffix = !string.IsNullOrEmpty(_suffixText);
+            hasHint = ShowHint && !string.IsNullOrEmpty(PlaceholderHintText);
+            hasPrefix = !string.IsNullOrEmpty(PrefixText);
+            hasSuffix = !string.IsNullOrEmpty(SuffixText);
 
             Graphics g = CreateGraphics();
 
@@ -265,7 +307,7 @@ namespace UzunTec.WinUI.Controls
 
             if (hasPrefix)
             {
-                SizeF prefixSize = g.MeasureString(_prefixText, _prefixFont, ClientRectangle.Width);
+                SizeF prefixSize = g.MeasureString(PrefixText, PrefixFont, ClientRectangle.Width);
                 PointF prefixLcation = new PointF(this.textRect.Left, this.textRect.Bottom - prefixSize.Height);
                 this.prefixRect = new RectangleF(prefixLcation, prefixSize);
                 this.textRect = this.textRect.ApplyPadding(prefixRect.Width, 0, 0, 0);
@@ -273,7 +315,7 @@ namespace UzunTec.WinUI.Controls
 
             if (hasSuffix)
             {
-                SizeF suffixSize = g.MeasureString(_suffixText, _suffixFont, ClientRectangle.Width);
+                SizeF suffixSize = g.MeasureString(SuffixText, SuffixFont, ClientRectangle.Width);
                 PointF suffixLcation = new PointF(this.textRect.Right - suffixSize.Width, this.textRect.Bottom - suffixSize.Height);
                 this.suffixRect = new RectangleF(suffixLcation, suffixSize);
                 this.textRect = this.textRect.ApplyPadding(0, 0, suffixSize.Width, 0);
@@ -304,29 +346,29 @@ namespace UzunTec.WinUI.Controls
                 g.ResetClip();
                 //g.FillRectangle(Brushes.White, textRect);
             }
-            else if (!string.IsNullOrWhiteSpace(_placeholderHintText) && !Focused)
+            else if (!string.IsNullOrWhiteSpace(PlaceholderHintText) && !Focused)
             {
                 Brush placeHolderBrush = Enabled ? new SolidBrush(this.PlaceholderColor) : textBrush;
                 g.Clip = new Region(this.textRect);
-                g.DrawString(this._placeholderHintText, this.PlaceholderFont, placeHolderBrush, this.textRect);
+                g.DrawString(this.PlaceholderHintText, this.PlaceholderFont, placeHolderBrush, this.textRect);
                 g.ResetClip();
                 // g.FillRectangle(Brushes.Brown, textRect);
             }
 
             if (this.hasPrefix)
             {
-                Brush prefixSuffixBrush = new SolidBrush(this._prefixSuffixTextColor);
+                Brush prefixSuffixBrush = new SolidBrush(this.PrefixTextColor);
                 g.Clip = new Region(this.prefixRect);
-                g.DrawString(this._prefixText, this._prefixFont, prefixSuffixBrush, this.prefixRect);
+                g.DrawString(this.PrefixText, this.PrefixFont, prefixSuffixBrush, this.prefixRect);
                 g.ResetClip();
             }
 
             if (this.hasSuffix)
             {
-                Brush prefixSuffixBrush = new SolidBrush(this._prefixSuffixTextColor);
+                Brush prefixSuffixBrush = new SolidBrush(this.SuffixTextColor);
                 // g.FillRectangle(prefixSuffixBrush, suffixRect);
                 g.Clip = new Region(this.suffixRect);
-                g.DrawString(this._suffixText, this._suffixFont, prefixSuffixBrush, this.suffixRect);
+                g.DrawString(this.SuffixText, this.SuffixFont, prefixSuffixBrush, this.suffixRect);
                 g.ResetClip();
             }
 

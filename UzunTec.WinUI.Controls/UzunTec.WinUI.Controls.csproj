@@ -94,7 +94,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="Resources\Roboto-Black.ttf" />
     <None Include="Resources\Roboto-BlackItalic.ttf" />
     <None Include="Resources\Roboto-Bold.ttf" />

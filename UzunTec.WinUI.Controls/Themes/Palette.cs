@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using UzunTec.Utils.Common;
 
 namespace UzunTec.WinUI.Controls.Themes
 {
@@ -47,9 +46,16 @@ namespace UzunTec.WinUI.Controls.Themes
             return output;
         }
 
-        public void SetColor(ColorVariant variant, params Color[] colors)
+        public void SetColor(ColorVariant variant, params Color[] colorSet)
         {
-            this.colors.AddOrUpdate(variant, colors);
+            if (this.colors.ContainsKey(variant))
+            {
+                this.colors[variant] = colorSet;
+            }
+            else
+            {
+                this.colors.Add(variant, colorSet);
+            }
         }
     }
 }
