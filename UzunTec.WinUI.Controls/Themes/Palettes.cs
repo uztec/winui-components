@@ -6,6 +6,7 @@ namespace UzunTec.WinUI.Controls.Themes
     {
         public static Palette Flat = new Palette();
         public static Palette Aussie = new Palette();
+        public static Palette SGLight = new Palette();
 
         static Palettes()
         {
@@ -26,6 +27,15 @@ namespace UzunTec.WinUI.Controls.Themes
             Aussie.SetColor(ColorVariant.Danger, Color.FromArgb(235, 77, 75), Color.FromArgb(255, 121, 121));
             Aussie.SetColor(ColorVariant.Light, Color.FromArgb(236, 240, 241));
             Aussie.SetColor(ColorVariant.Dark, Color.FromArgb(0, 0, 0));
+
+            SGLight.SetColor(ColorVariant.Primary, Color.FromArgb(19, 15, 64), Color.FromArgb(48, 51, 107));
+            SGLight.SetColor(ColorVariant.Secondary, Color.FromArgb(199, 236, 238), Color.FromArgb(223, 249, 251));
+            SGLight.SetColor(ColorVariant.Info, Color.FromArgb(34, 166, 179), Color.FromArgb(126, 214, 223));
+            SGLight.SetColor(ColorVariant.Success, Color.FromArgb(106, 176, 76), Color.FromArgb(186, 220, 88));
+            SGLight.SetColor(ColorVariant.Warning, Color.FromArgb(249, 202, 36), Color.FromArgb(246, 229, 141));
+            SGLight.SetColor(ColorVariant.Danger, Color.FromArgb(235, 77, 75), Color.FromArgb(255, 121, 121));
+            SGLight.SetColor(ColorVariant.Light, Color.FromArgb(236, 240, 241));
+            SGLight.SetColor(ColorVariant.Dark, Color.FromArgb(0, 0, 0));
         }
     }
 }

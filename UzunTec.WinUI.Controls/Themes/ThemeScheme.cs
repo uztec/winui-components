@@ -45,7 +45,7 @@ namespace UzunTec.WinUI.Controls.Themes
 
         public ThemeScheme()
         {
-            this.Palette = Palettes.Aussie;
+            this.Palette = Palettes.SGLight;
 
             this.FontClasses = new Dictionary<FontClass, Font>
             {
@@ -73,9 +73,9 @@ namespace UzunTec.WinUI.Controls.Themes
 
 
 
-            this.ThemeHighlightColor = this.Palette.GetColor(ColorVariant.Primary, false);
-            this.ControlTextColorDark = this.Palette.GetColor(ColorVariant.Dark);
-            this.ControlTextColorLight = this.Palette.GetColor(ColorVariant.Light);
+            this.ThemeHighlightColor = this.Palette.GetColor(ColorVariant.Primary, false); //
+            this.ControlTextColorDark = this.Palette.GetColor(ColorVariant.Dark); //
+            this.ControlTextColorLight = this.Palette.GetColor(ColorVariant.Light); //
             this.ControlTextColorDisabled = this.Palette.GetColor(ColorVariant.Secondary);
             this.ControlBackgroundColorDark = Color.FromArgb(25, 31, 41);
             this.ControlBackgroundColorLight = Color.FromArgb(25, 31, 41);
