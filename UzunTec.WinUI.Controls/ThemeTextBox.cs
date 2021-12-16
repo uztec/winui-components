@@ -159,6 +159,12 @@ namespace UzunTec.WinUI.Controls
         public ColorVariant SuffixTextColorHightlightVariant { get => this.prefixSuffixProps.SuffixTextColorHightlightVariant; set => this.prefixSuffixProps.SuffixTextColorHightlightVariant = value; }
         #endregion
 
+        // TODO: 
+        [Category("Theme"), DefaultValue(typeof(Color), "Control")]
+        public Color SelectionColorDark { get; set; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Control")]
+        public Color SelectionColorLight { get; set; }
 
         [Category("Z-Custom"), DefaultValue(typeof(Image), "")]
         public Image PrependIcon
@@ -250,8 +256,8 @@ namespace UzunTec.WinUI.Controls
             PlaceholderFont = ThemeScheme.ControlPlaceholderFont;
             PlaceholderColor = ThemeScheme.ControlPlaceholderTextColor;
 
-            //SelectionColorDark = 
-            //SelectionColorLight =
+            SelectionColorDark = ThemeScheme.ThemeSelectionColorDark;
+            SelectionColorLight = ThemeScheme.ThemeSelectionColorLight;
 
             this.InternalPadding = ThemeConstants.DefaultHintControlInternalPadding;
         }

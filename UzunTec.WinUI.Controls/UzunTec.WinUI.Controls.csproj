@@ -45,6 +45,9 @@
     <Compile Include="InternalContracts\ThemeControlWithHintPlaceHolderProperties.cs" />
     <Compile Include="InternalContracts\ThemeButtonProperties.cs" />
     <Compile Include="InternalContracts\ThemeControlWithPrefixSuffixProperties.cs" />
+    <Compile Include="ThemeComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ThemeConstants.cs" />
     <Compile Include="ThemeLabel.cs">
       <SubType>Component</SubType>
