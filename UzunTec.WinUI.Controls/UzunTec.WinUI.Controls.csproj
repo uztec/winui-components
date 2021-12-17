@@ -49,6 +49,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ThemeConstants.cs" />
+    <Compile Include="ThemeDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ThemeDataGridView.Designer.cs">
+      <DependentUpon>ThemeDataGridView.cs</DependentUpon>
+    </Compile>
     <Compile Include="ThemeLabel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -75,6 +81,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Themes\ThemeScheme.cs" />
+    <Compile Include="Themes\ThemeSchemeLightBlue.cs" />
     <Compile Include="Themes\ThemeSchemeManager.cs" />
     <Compile Include="ThemeTextBox.cs">
       <SubType>Component</SubType>

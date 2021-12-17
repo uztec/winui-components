@@ -281,7 +281,6 @@ namespace UzunTec.WinUI.Controls
             DrawItem += CustomDrawItem;
             DropDownStyle = ComboBoxStyle.DropDownList;
             DrawMode = DrawMode.OwnerDrawVariable;
-
         }
 
         private void CustomMeasureItem(object sender, MeasureItemEventArgs e)
