@@ -18,7 +18,7 @@ namespace UzunTec.WinUI.Controls.Interfaces
         Font SuffixFont { get; }
         Color SuffixTextHighlightColor { get; }
         Color SuffixTextColorDisabled { get; }
-        FontClass SufixFontClass { get; }
+        FontClass SuffixFontClass { get; }
         ColorVariant SuffixTextColorVariant { get; }
         ColorVariant SuffixTextColorHightlightVariant { get; }
       

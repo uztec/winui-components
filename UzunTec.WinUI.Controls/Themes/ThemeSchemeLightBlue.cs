@@ -1,9 +1,7 @@
 ﻿using System.Drawing;
-using System.Windows.Forms;
-using UzunTec.WinUI.Controls.Themes;
 using UzunTec.WinUI.Utils;
 
-namespace UzunTec.WinUI.Controls
+namespace UzunTec.WinUI.Controls.Themes
 {
     public class ThemeSchemeLightBlue : ThemeScheme
     {

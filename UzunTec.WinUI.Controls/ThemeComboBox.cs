@@ -144,7 +144,7 @@ namespace UzunTec.WinUI.Controls
         public Color SuffixTextColorDisabled { get => this.prefixSuffixProps.SuffixTextColorDisabled; set => this.prefixSuffixProps.SuffixTextColorDisabled = value; }
 
         [Category("Theme"), DefaultValue(typeof(FontClass), "H1")]
-        public FontClass SufixFontClass { get => this.prefixSuffixProps.SuffixFontClass; set => this.prefixSuffixProps.SuffixFontClass = value; }
+        public FontClass SuffixFontClass { get => this.prefixSuffixProps.SuffixFontClass; set => this.prefixSuffixProps.SuffixFontClass = value; }
 
         [Category("Theme"), DefaultValue(typeof(ColorVariant), "Dark")]
         public ColorVariant SuffixTextColorVariant { get => this.prefixSuffixProps.SuffixTextColorVariant; set => this.prefixSuffixProps.SuffixTextColorVariant = value; }
@@ -218,6 +218,9 @@ namespace UzunTec.WinUI.Controls
             this._itemTextAlign = ContentAlignment.MiddleLeft;
             Size = ThemeConstants.DefaultControlSize.ToSize();
             ItemHeight = 44;
+            this.PrefixFontClass = FontClass.Tiny;
+            this.SuffixFontClass = FontClass.Tiny;
+            this.HintFontClass = FontClass.Small;
         }
 
         public void UpdateStylesFromTheme()
@@ -229,7 +232,7 @@ namespace UzunTec.WinUI.Controls
             SuffixTextHighlightColor = ThemeScheme.GetPaletteColor(this.SuffixTextColorHightlightVariant);
 
             PrefixFont = ThemeScheme.GetFontFromClass(this.PrefixFontClass);
-            SuffixFont = ThemeScheme.GetFontFromClass(this.SufixFontClass);
+            SuffixFont = ThemeScheme.GetFontFromClass(this.SuffixFontClass);
 
             HintFont = ThemeScheme.GetFontFromClass(this.HintFontClass);
 

@@ -59,10 +59,19 @@ namespace UzunTec.WinUI.Controls.InternalContracts
 
         public FontClass PrefixFontClass
         {
-            get => _prefixFontClass;
-            set { _prefixFontClass = value; this.control.UpdateRects(); this.control.Invalidate(); }
+            get => this._prefixFontClass;
+            set
+            {
+                this._prefixFontClass = value;
+                if (this._useThemeColors)
+                {
+                    this.DoUpdateStylesFromTheme();
+                    this.control.UpdateRects();
+                    this.control.Invalidate();
+                }
+            }
         }
-        private FontClass _prefixFontClass;
+        protected FontClass _prefixFontClass;
 
         public ColorVariant PrefixTextColorVariant
         {
@@ -102,10 +111,19 @@ namespace UzunTec.WinUI.Controls.InternalContracts
 
         public FontClass SuffixFontClass
         {
-            get => _suffixFontClass;
-            set { _suffixFontClass = value; this.control.UpdateRects(); this.control.Invalidate(); }
+            get => this._suffixFontClass;
+            set
+            {
+                this._suffixFontClass = value;
+                if (this._useThemeColors)
+                {
+                    this.DoUpdateStylesFromTheme();
+                    this.control.UpdateRects();
+                    this.control.Invalidate();
+                }
+            }
         }
-        private FontClass _suffixFontClass;
+        protected FontClass _suffixFontClass;
 
         public ColorVariant SuffixTextColorVariant
         {

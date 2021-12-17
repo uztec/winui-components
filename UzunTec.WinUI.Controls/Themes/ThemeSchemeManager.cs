@@ -23,7 +23,7 @@ namespace UzunTec.WinUI.Controls.Themes
 
         private ThemeScheme GetFirstTheme()
         {
-            return new ThemeScheme();
+            return new ThemeSchemeLightBlue();
         }
 
         public ThemeScheme GetTheme()
