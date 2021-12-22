@@ -40,6 +40,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormWithNc.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Interfaces\IThemeControlWithPrefixSuffix.cs" />
     <Compile Include="Interfaces\IThemeControlWithHintPlaceholder.cs" />
     <Compile Include="InternalContracts\ThemeControlWithHintPlaceHolderProperties.cs" />
