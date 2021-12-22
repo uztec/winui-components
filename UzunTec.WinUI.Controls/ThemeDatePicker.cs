@@ -29,13 +29,16 @@ namespace UzunTec.WinUI.Controls
         [Browsable(false)]
         public bool MouseHovered { get; private set; }
 
-        #region Theme Properties
+        [Browsable(false)]
+        public bool UpdatingTheme { get; set; }
+
         [Category("Theme"), DefaultValue(true)]
         public bool UseThemeColors { get => this.props.UseThemeColors; set => this.props.UseThemeColors = value; }
 
-        [Category("Theme"), DefaultValue(typeof(Padding), "5; 5; 5; 5;")]
+        [Category("Theme"), DefaultValue(typeof(Padding), "1; 1; 1; 1;")]
         public Padding InternalPadding { get => this.props.InternalPadding; set => this.props.InternalPadding = value; }
 
+        #region Theme Properties
         [Category("Theme"), DefaultValue(typeof(Color), "Black")]
         public Color TextColor { get => this.props.TextColor; set => this.props.TextColor = value; }
 
@@ -109,6 +112,7 @@ namespace UzunTec.WinUI.Controls
             base.MinimumSize = new Size(1, 1);
             base.Font = new Font(FontFamily.GenericSansSerif, 28);       // To Adjust the Height
             this.Size = ThemeConstants.DefaultControlSize.ToSize();
+            this.HintFontClass = FontClass.Small;
             this.Format = DateTimePickerFormat.Custom;
             this.CustomFormat = "dd-MMM-yyyy";
             this.PlaceholderHintText = "";
@@ -128,15 +132,15 @@ namespace UzunTec.WinUI.Controls
 
             this.BackgroundColorDark = this.ThemeScheme.ControlBackgroundColorDark;
             this.BackgroundColorLight = this.ThemeScheme.ControlBackgroundColorLight;
-            this.BackgroundColorDisabledDark = this.ThemeScheme.DisabledControlBackgroundColorDark;
-            this.BackgroundColorDisabledLight = this.ThemeScheme.DisabledControlBackgroundColorLight;
+            this.BackgroundColorDisabledDark = this.ThemeScheme.ControlBackgroundColorDisabledDark;
+            this.BackgroundColorDisabledLight = this.ThemeScheme.ControlBackgroundColorDisabledLight;
             this.BackgroundColorFocusedDark = ThemeScheme.ControlBackgroundColorLight;
             this.BackgroundColorFocusedLight = ThemeScheme.ControlBackgroundColorLight;
 
             this.HintColor = this.ThemeScheme.ControlHintTextColor;
             this.HintFont = this.ThemeScheme.GetFontFromClass(this.HintFontClass);
             this.HintDisabledColor = this.ThemeScheme.ThemeHighlightColor;
-            this.HintHighlightColor = this.ThemeScheme.ControlHighlightColor;
+            this.HintHighlightColor = this.ThemeScheme.ThemeHighlightColor;
         }
 
         protected override void OnCreateControl()

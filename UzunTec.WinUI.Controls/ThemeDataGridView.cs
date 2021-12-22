@@ -79,7 +79,7 @@ namespace UzunTec.WinUI.Controls
 
         public void UpdateRects()
         {
-            throw new NotImplementedException();
+
         }
     }
 }

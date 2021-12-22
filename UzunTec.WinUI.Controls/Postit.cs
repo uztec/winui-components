@@ -14,10 +14,13 @@ namespace UzunTec.WinUI.Controls
     public class Postit : Control, IThemeControl
     {
         [Browsable(false), ReadOnly(true)]
-        public new Color BackColor { get => this.BackgroundColorDark; set => this.BackgroundColorDark = value; }
+        public new Color BackColor { get => this.BodyColorDark; set { this.BodyColorDark = value; } }
 
         [Browsable(false), ReadOnly(true)]
-        public new Color ForeColor { get => this.TextColor; set => this.TextColor = value; }
+        public new Color ForeColor { get => this.BodyTextColor; set { this.BodyTextColor = value; } }
+
+        [Browsable(false), ReadOnly(true)]
+        public new Size MinimumSize { get; set; }
 
         [Browsable(false)]
         public ThemeScheme ThemeScheme => ThemeSchemeManager.Instance.GetTheme();
@@ -25,100 +28,107 @@ namespace UzunTec.WinUI.Controls
         [Browsable(false)]
         public bool MouseHovered { get; private set; }
 
-        #region Theme Properties
+        [Browsable(false)]
+        public bool UpdatingTheme { get; set; }
+
         [Category("Theme"), DefaultValue(true)]
         public bool UseThemeColors { get => this.props.UseThemeColors; set => this.props.UseThemeColors = value; }
 
-        [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color BackgroundColorDark { get => this.props.BackgroundColorDark; set => this.props.BackgroundColorDark = value; }
-
-        [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color BackgroundColorLight { get => this.props.BackgroundColorLight; set => this.props.BackgroundColorLight = value; }
-
-        [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color BackgroundColorDisabledDark { get => this.props.BackgroundColorDisabledDark; set => this.props.BackgroundColorDisabledDark = value; }
-
-        [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color BackgroundColorDisabledLight { get => this.props.BackgroundColorDisabledLight; set => this.props.BackgroundColorDisabledLight = value; }
-
-        [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color BackgroundColorFocusedDark { get => this.props.BackgroundColorFocusedDark; set => this.props.BackgroundColorFocusedDark = value; }
-
-        [Category("Theme"), DefaultValue(typeof(Color), "Control")]
-        public Color BackgroundColorFocusedLight { get => this.props.BackgroundColorFocusedLight; set => this.props.BackgroundColorFocusedLight = value; }
-
-        [Category("Theme"), DefaultValue(typeof(Color), "Red")]
-        public Color HighlightColor { get => this.props.HighlightColor; set => this.props.HighlightColor = value; }
-
-        [Category("Theme"), DefaultValue(typeof(Color), "Gray")]
-        public Color TextColorDisabled { get => this.props.TextColorDisabled; set => this.props.TextColorDisabled = value; }
-
-        [Category("Theme"), DefaultValue(typeof(Color), "Black")]
-        public Color TextColor { get => this.props.TextColor; set => this.props.TextColor = value; }
-
         [Category("Theme"), DefaultValue(typeof(Padding), "1; 1; 1; 1;")]
         public Padding InternalPadding { get => this.props.InternalPadding; set => this.props.InternalPadding = value; }
+
+
+        #region Theme Properties
+        [Category("Theme"), DefaultValue(typeof(Color), "Control")]
+        public Color HeaderColorDark { get => this.postitProps.HeaderColorDark; set => this.postitProps.HeaderColorDark = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Control")]
+        public Color HeaderColorLight { get => this.postitProps.HeaderColorLight; set => this.postitProps.HeaderColorLight = value; }
+
+        [Category("Theme"), DefaultValue(typeof(ColorVariant), "Warning")]
+        public ColorVariant HeaderColorVariant { get => this.postitProps.HeaderColorVariant; set => this.postitProps.HeaderColorVariant = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Control")]
+        public Color BodyColorDark { get => this.postitProps.BodyColorDark; set => this.postitProps.BodyColorDark = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Control")]
+        public Color BodyColorLight { get => this.postitProps.BodyColorLight; set => this.postitProps.BodyColorLight = value; }
+
+        [Category("Theme"), DefaultValue(typeof(ColorVariant), "Warning")]
+        public ColorVariant PostitBackgroundColorVariant { get => this.postitProps.PostitBackgroundColorVariant; set => this.postitProps.PostitBackgroundColorVariant = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Control")]
+        public Color HeaderTextColor { get => this.postitProps.HeaderTextColor; set => this.postitProps.HeaderTextColor = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Control")]
+        public Color BodyTextColor { get => this.postitProps.BodyTextColor; set => this.postitProps.BodyTextColor = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Control")]
+        public Color DateTextColor { get => this.postitProps.DateTextColor; set => this.postitProps.DateTextColor = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Red")]
+        public Font HeaderFont { get => this.postitProps.HeaderFont; set => this.postitProps.HeaderFont = value; }
+
+        [Category("Theme"), DefaultValue(typeof(FontClass), "H1")]
+        public FontClass HeaderFontClass { get => this.postitProps.HeaderFontClass; set => this.postitProps.HeaderFontClass = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Red")]
+        public Font DateFont { get => this.postitProps.DateFont; set => this.postitProps.DateFont = value; }
+
+        [Category("Theme"), DefaultValue(typeof(FontClass), "H1")]
+        public FontClass DateFontClass { get => this.postitProps.DateFontClass; set => this.postitProps.DateFontClass = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Red")]
+        public Font BodyFont { get => this.postitProps.BodyFont; set => this.postitProps.BodyFont = value; }
+
+        [Category("Theme"), DefaultValue(typeof(FontClass), "H1")]
+        public FontClass BodyFontClass { get => this.postitProps.BodyFontClass; set => this.postitProps.BodyFontClass = value; }
+
+        [Category("Theme"), DefaultValue(typeof(Color), "Gray")]
+        public Color BorderColor { get => this.postitProps.BorderColor; set => this.postitProps.BorderColor = value; }
+
+        [Category("Theme"), DefaultValue(typeof(ColorVariant), "Dark")]
+        public ColorVariant BorderColorVariant { get => this.postitProps.BorderColorVariant; set => this.postitProps.BorderColorVariant = value; }
+
+        [Category("Theme"), DefaultValue(typeof(int), "0")]
+        public int BorderWidth { get => this.postitProps.BorderWidth; set => this.postitProps.BorderWidth = value; }
+
+        [Category("Theme"), DefaultValue(10)]
+        public int Lighten { get => this.postitProps.Lighten; set { this.postitProps.Lighten = value; } }
+
+        [Category("Z-Custom"), DefaultValue(false)]
+        public bool PostitFormat { get => this.postitProps.PostitFormat; set { this.postitProps.PostitFormat = value; } }
         #endregion
 
 
-
-        private Color _headerColorDark;
-        [Category("Custom"), DefaultValue(typeof(Color), "LightYellow")]
-        public Color HeaderColorDark { get => _headerColorDark; set { _headerColorDark = value; Invalidate(); } }
-
-        private Color _headerColorLight;
-        [Category("Custom"), DefaultValue(typeof(Color), "LightYellow")]
-        public Color HeaderColorLight { get => _headerColorLight; set { _headerColorLight = value; Invalidate(); } }
-
-        private Color _headerTextColor;
-        [Category("Custom"), DefaultValue(typeof(Color), "Black")]
-        public Color HeaderTextColor { get => _headerTextColor; set { _headerTextColor = value; Invalidate(); } }
-
-        private Color _dateColor;
-        [Category("Custom"), DefaultValue(typeof(Color), "Black")]
-        public Color DateColor { get => _dateColor; set { _dateColor = value; Invalidate(); } }
-
         public int _headerSize;
-        [Category("Custom"), DefaultValue(40)]
+        [Category("Z-Custom"), DefaultValue(40)]
         public int HeaderSize { get => _headerSize; set { _headerSize = Math.Max(value, 10); Invalidate(); } }
 
-
-        private Font _headerFont;
-        [Category("Custom"), DefaultValue(typeof(Font), "Arial; 14pt")]
-        public Font HeaderFont { get => _headerFont; set { _headerFont = value; Invalidate(); } }
-
-        private Font _dateFont;
-        [Category("Custom"), DefaultValue(typeof(Font), "Comic Sans MS; 9pt; style=Bold")]
-        public Font DateFont { get => _dateFont; set { _dateFont = value; Invalidate(); } }
-
-        private Font _textFont;
-        [Category("Custom"), DefaultValue(typeof(Font), "Modern No. 20; 12pt; style=Italic")]
-        public override Font Font { get => _textFont; set { _textFont = value; Invalidate(); } }
-
-
         private string _text;
-        [Category("Custom"), DefaultValue("")]
+        [Category("Z-Custom"), DefaultValue("")]
         public override string Text { get => _text; set { _text = value; Invalidate(); } }
 
         public string _headerText;
-        [Category("Custom"), DefaultValue(typeof(string), "Title")]
+        [Category("Z-Custom"), DefaultValue(typeof(string), "Title")]
         public string HeaderText { get => _headerText; set { _headerText = value; Invalidate(); } }
 
         private DateTime? _date;
-        [Category("Custom")]
+        [Category("Z-Custom")]
         public DateTime? Date { get => _date; set { _date = value; Invalidate(); } }
 
         public string _dateFormat;
-        [Category("Custom"), DefaultValue(typeof(string), "dd-MMM-yyyy")]
+        [Category("Z-Custom"), DefaultValue(typeof(string), "dd-MMM-yyyy")]
         public string DateFormat { get => _dateFormat; set { _dateFormat = value; Invalidate(); } }
 
         public int _iconMargin;
-        [Category("Custom"), DefaultValue(5)]
+        [Category("Z-Custom"), DefaultValue(5)]
         public int IconMargin { get => _iconMargin; set { _iconMargin = value; Invalidate(); } }
 
 
         private RectangleF headerRect, headerClientRect, bodyRect, textRect, dateRect, iconsRect;
         private readonly ThemeControlProperties props;
+        private readonly ThemePostitProperties postitProps;
         private readonly Dictionary<string, SideIconData> icons;
         public EventHandler<string> IconClick;
 
@@ -126,45 +136,72 @@ namespace UzunTec.WinUI.Controls
         public Postit()
         {
             this.props = new ThemeControlProperties(this);
-            
+            this.postitProps = new ThemePostitProperties(this);
+
             icons = new Dictionary<string, SideIconData>();
 
-            _headerColorDark = Color.LightYellow;
-            _headerColorLight = Color.LightYellow;
-            _headerTextColor = Color.Black;
-            _headerFont = new Font("Arial", 13);
-            _headerText = "Title";
-            _headerSize = 53;
+            Lighten = 55;
+            PostitFormat = true;
 
-            _date = DateTime.Today;
-            _dateFont = new Font("Comic Sans MS", 9);
-            _dateFormat = "dd-MMM-yyyy";
-            _dateColor = Color.Black;
+            HeaderText = "Title";
+            HeaderSize = 53;
 
-            _textFont = new Font("Modern No. 20", 12, FontStyle.Italic);
+            Date = DateTime.Today;
+            DateFormat = "dd-MMM-yyyy";
+            DateFont = ThemeScheme.GetFontFromClass(FontClass.Small);
 
-            this.BackgroundColorDark = Color.LightYellow;
-            this.BackgroundColorLight = Color.LightYellow;
-            this.TextColor = Color.Black;
             Size = new Size(250, 200);
-            _iconMargin = 5;
+            IconMargin = 5;
 
+            this.HeaderFontClass = FontClass.H1;
+            this.BodyFontClass = FontClass.Styled;
+            this.PostitBackgroundColorVariant = ColorVariant.Warning;
+            this.HeaderColorVariant = ColorVariant.Info;
+
+            HeaderFont = ThemeScheme.GetFontFromClass(HeaderFontClass);
+            DateFont = ThemeScheme.GetFontFromClass(DateFontClass);
+            BodyFont = ThemeScheme.GetFontFromClass(BodyFontClass);
 
             this.InternalPadding = new Padding(10, 10, 3, 3);
         }
 
         public void UpdateStylesFromTheme()
         {
-            this.Font = this.ThemeScheme.ControlTextFont;
-            this.TextColor = this.ThemeScheme.ControlTextColor;
-            this.TextColorDisabled = this.ThemeScheme.DisabledControlTextColor;
-            this.HighlightColor = this.ThemeScheme.ControlHighlightColor;
-            this.BackgroundColorDark = this.ThemeScheme.ControlBackgroundColorDark;
-            this.BackgroundColorLight = this.ThemeScheme.ControlBackgroundColorLight;
-            this.BackgroundColorFocusedDark = this.ThemeScheme.ControlBackgroundColorLight;
-            this.BackgroundColorFocusedLight = this.ThemeScheme.ControlBackgroundColorLight;
-            this.BackgroundColorDisabledDark = this.ThemeScheme.DisabledControlBackgroundColorDark;
-            this.BackgroundColorDisabledLight = this.ThemeScheme.DisabledControlBackgroundColorLight;
+            if (PostitFormat)
+            {
+                // Variants
+                BodyColorDark = ThemeScheme.GetPaletteColor(PostitBackgroundColorVariant, true).Lighten(Lighten);
+                BodyColorLight = ThemeScheme.GetPaletteColor(PostitBackgroundColorVariant, false).Lighten(Lighten);
+
+                HeaderTextColor = ThemeScheme.ControlTextColorDark;
+                BodyTextColor = ThemeScheme.ControlTextColorDark;
+                DateTextColor = ThemeScheme.ControlTextColorDark;
+
+                BorderColor = ThemeScheme.GetPaletteColor(BorderColorVariant);
+
+                BorderWidth = 0;
+            }
+            else
+            {
+                // Variants
+                HeaderColorDark = ThemeScheme.GetPaletteColor(HeaderColorVariant);
+                HeaderColorLight = ThemeScheme.GetPaletteColor(HeaderColorVariant);
+                BorderColor = ThemeScheme.GetPaletteColor(BorderColorVariant);
+
+                HeaderTextColor = ThemeScheme.ControlTextColorLight;
+                DateTextColor = ThemeScheme.ControlTextColorLight;
+                BodyTextColor = ThemeScheme.ControlTextColorDark;
+
+                //Theme
+                BodyColorDark = ThemeScheme.CellBackgroundColor;
+                BodyColorLight = ThemeScheme.CellBackgroundColor;
+
+                BorderWidth = 0;
+            }
+
+            HeaderFont = ThemeScheme.GetFontFromClass(HeaderFontClass);
+            DateFont = ThemeScheme.GetFontFromClass(DateFontClass);
+            BodyFont = ThemeScheme.GetFontFromClass(BodyFontClass);
         }
 
         protected override void OnCreateControl()
@@ -215,7 +252,7 @@ namespace UzunTec.WinUI.Controls
             string date = _date?.ToString(_dateFormat);
             if (date != null)
             {
-                SizeF sizeDate = CreateGraphics().MeasureString(date, _dateFont);
+                SizeF sizeDate = CreateGraphics().MeasureString(date, DateFont);
                 dateRect = new RectangleF(headerClientRect.Right - sizeDate.Width,
                                         headerClientRect.Bottom - sizeDate.Height,
                                         sizeDate.Width,
@@ -249,26 +286,34 @@ namespace UzunTec.WinUI.Controls
         {
             Graphics g = pevent.Graphics;
 
-            Brush brushHeader = new LinearGradientBrush(headerRect, _headerColorDark, _headerColorLight, LinearGradientMode.Vertical);
-            g.FillRectangle(brushHeader, headerRect);
+            if (PostitFormat)
+            {
+                Brush backgroundBrush = new LinearGradientBrush(this.ClientRectangle, this.BodyColorDark, this.BodyColorLight, LinearGradientMode.Vertical);
+                g.FillRectangle(backgroundBrush, this.ClientRectangle);
+            }
+            else
+            {
+                Brush brushHeader = new LinearGradientBrush(this.headerRect, HeaderColorDark, HeaderColorLight, LinearGradientMode.Vertical);
+                g.FillRectangle(brushHeader, this.headerRect);
 
-            Brush brushHeaderText = new SolidBrush(_headerTextColor);
-            g.DrawString(_headerText, _headerFont, brushHeaderText, headerClientRect);
+                Brush backgroundBrush = new LinearGradientBrush(this.bodyRect, this.BodyColorDark, this.BodyColorLight, LinearGradientMode.Vertical);
+                g.FillRectangle(backgroundBrush, this.bodyRect);
+            }
 
-            Brush backgroundBrush = ThemeSchemeManager.Instance.GetBackgroundBrush(this);
-            g.FillRectangle(backgroundBrush, bodyRect);
+            Brush brushHeaderText = new SolidBrush(HeaderTextColor);
+            g.DrawString(_headerText, HeaderFont, brushHeaderText, headerClientRect);
 
-            Brush brushText = new SolidBrush(this.TextColor);
+            Brush brushText = new SolidBrush(this.BodyTextColor);
             g.Clip = new Region(textRect);
             g.Clip.Exclude(iconsRect);
-            g.DrawString(_text, _textFont, brushText, textRect);
+            g.DrawString(_text, BodyFont, brushText, textRect);
             g.ResetClip();
 
             string date = _date?.ToString(_dateFormat);
             if (date != null)
             {
-                Brush brushDate = new SolidBrush(_dateColor);
-                g.DrawString(date, _dateFont, brushDate, dateRect);
+                Brush brushDate = new SolidBrush(DateTextColor);
+                g.DrawString(date, DateFont, brushDate, dateRect);
             }
 
             foreach (SideIconData iconData in icons.Values)

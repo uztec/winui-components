@@ -29,7 +29,7 @@ namespace UzunTec.WinUI.Controls.Themes
             this.ControlHintTextColor = Color.FromArgb(133, 143, 154);
             this.ControlHintTextColorDisabled = Color.FromArgb(133, 143, 154);
             this.ControlPlaceholderTextColor = Color.FromArgb(133, 143, 154);
-            this.ThemeSelectionColorDark = this.Palette.GetColor(ColorVariant.Primary, true);
+            this.ThemeSelectionColorDark = Color.FromArgb(176, 189, 199);
             this.ThemeSelectionColorLight = this.Palette.GetColor(ColorVariant.Primary, false);
             this.ThemeSelectionColorExtraLight = this.Palette.GetColor(ColorVariant.Primary, false).Lighten(50);
 
@@ -41,7 +41,7 @@ namespace UzunTec.WinUI.Controls.Themes
             this.FormTitlePanelBackgroundColorDark = Color.FromArgb(14, 25, 36);
             this.FormTitlePanelBackgroundColorLight = Color.FromArgb(14, 25, 36);
             this.FormControlButtonHoverColor = Color.FromArgb(62, 88, 115);
-            this.CellBackgroundColor = Color.FromArgb(176, 189, 199);
+            this.CellBackgroundColor = Color.FromArgb(240, 240, 240);
 
             //this.FormTitleBarFont = ThemeSchemeManager.Instance.GetFont("Segoe UI SemiBold", 17.25F, FontStyle.Bold);
             //this.ControlTextFont = ThemeSchemeManager.Instance.GetFont("Segoe UI", 13);

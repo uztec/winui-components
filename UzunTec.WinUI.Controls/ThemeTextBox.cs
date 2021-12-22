@@ -23,6 +23,9 @@ namespace UzunTec.WinUI.Controls
         [Browsable(false), ReadOnly(true)]
         public new BorderStyle BorderStyle { get; }
 
+        [Browsable(false), ReadOnly(true)]
+        public new bool MultiLine { get; }
+
         [Browsable(false)]
         public new Color ForeColor { get => TextColor; set => TextColor = value; }
 
@@ -276,6 +279,8 @@ namespace UzunTec.WinUI.Controls
             MouseEnter += (sender, args) => { MouseHovered = true; Invalidate(); };
             MouseLeave += (sender, args) => { MouseHovered = false; Invalidate(); };
             SizeChanged += (sender, args) => { UpdateRects(); SetTextRect(textRect); };
+
+            base.Multiline = true;
         }
 
         public void UpdateRects()

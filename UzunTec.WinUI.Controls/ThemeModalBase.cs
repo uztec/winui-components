@@ -12,7 +12,6 @@ namespace UzunTec.WinUI.Controls
         [Browsable(false), ReadOnly(true)]
         public new FormBorderStyle FormBorderStyle { get; private set; }
 
-
         [Browsable(false)]
         public ThemeScheme ThemeScheme => ThemeSchemeManager.Instance.GetTheme();
 
@@ -20,11 +19,13 @@ namespace UzunTec.WinUI.Controls
         public Color BorderColorDark { get => _borderColorDark; set { _borderColorDark = value; Invalidate(); } }
         private Color _borderColorDark;
 
-
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
         public Color BorderColorLight { get => _borderColorLight; set { _borderColorLight = value; Invalidate(); } }
         private Color _borderColorLight;
 
+        [Category("Theme"), DefaultValue(typeof(ColorVariant), "Warning")]
+        public ColorVariant BorderColorVariant { get => _borderColorVariant; set { _borderColorVariant = value; Invalidate(); } }
+        private ColorVariant _borderColorVariant;
 
         [Category("Z-Custom"), DefaultValue(typeof(Padding), "5; 5; 5; 5;")]
         public new Padding Padding { get => _internalPadding; set { SetPadding(value); Invalidate(); } }
@@ -47,12 +48,13 @@ namespace UzunTec.WinUI.Controls
 
             ControlBox = false;
             Padding = new Padding(5);
-            _borderWidth = 3;
+            BorderWidth = 3;
+            BorderColorVariant = ColorVariant.Dark;
 
             // Theme
             BackColor = ThemeScheme.FormBackgroundColor;
-            BorderColorDark = ThemeScheme.ControlHintTextColor;
-            BorderColorLight = ThemeScheme.ControlHintTextColor;
+            BorderColorDark = ThemeScheme.GetPaletteColor(_borderColorVariant, true);
+            BorderColorLight = ThemeScheme.GetPaletteColor(_borderColorVariant, false);
         }
 
         protected override void OnCreateControl()
