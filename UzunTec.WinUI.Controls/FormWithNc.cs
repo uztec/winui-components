@@ -63,6 +63,9 @@ namespace UzunTec.WinUI.Controls
         public const int EM_SETCUEBANNER = 0x1501;
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern int SendMessage(IntPtr hWnd, int msg, int wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
+      
+        [DllImport("uxtheme.dll", ExactSpelling = true, CharSet = CharSet.Unicode)]
+        public static extern int SetWindowTheme(IntPtr hWnd, string pszSubAppName, string pszSubIdList);
 
         /// <summary>
         /// Occurs when the frame area (including Title Bar, excluding the client area) is redrawn."
@@ -109,6 +112,12 @@ namespace UzunTec.WinUI.Controls
             base.OnCreateControl();
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
 
+        }
+
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+            SetWindowTheme(this.Handle, string.Empty, string.Empty);
         }
 
 
@@ -180,7 +189,11 @@ namespace UzunTec.WinUI.Controls
         {
             base.OnClosed(e);
             NcPaint = null;
-            ReleaseDC(this.Handle, wndHdc);
+            try
+            {
+                ReleaseDC(this.Handle, wndHdc);
+            }
+            catch { }
         }
     }
 }
