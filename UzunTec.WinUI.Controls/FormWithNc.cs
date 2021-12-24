@@ -92,7 +92,10 @@ namespace UzunTec.WinUI.Controls
         public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
 
 
-        public Padding NonClientArea { get => this._nonClientArea; set { this._nonClientArea = value; this.InvalidateAll(); } }
+        public Padding NonClientAreaAdjust { get => this._nonClientArea; set { this._nonClientArea = value; this.InvalidateAll(); } }
+
+        public int NcHeight { get; private set; }
+
         private Padding _nonClientArea;
 
         public FormWithNc()
@@ -146,8 +149,11 @@ namespace UzunTec.WinUI.Controls
 
                 RectangleF recF = ncGrapichs.VisibleClipBounds;
 
-                PaintEventArgs ncPaintEventArgs = new PaintEventArgs(ncGrapichs, new Rectangle((int)recF.X, (int)recF.Y, (int)recF.Width, (int)recF.Height));
-                OnNcPaint(ncPaintEventArgs);
+                if (!this.Disposing)
+                {
+                    PaintEventArgs ncPaintEventArgs = new PaintEventArgs(ncGrapichs, new Rectangle((int)recF.X, (int)recF.Y, (int)recF.Width, (int)recF.Height));
+                    OnNcPaint(ncPaintEventArgs);
+                }
                 this.Refresh();
 
             }
@@ -157,6 +163,7 @@ namespace UzunTec.WinUI.Controls
                 {
                     NCCALCSIZE_PARAMS rcsize = (NCCALCSIZE_PARAMS)Marshal.PtrToStructure(m.LParam, typeof(NCCALCSIZE_PARAMS));
                     AdjustClientRect(ref rcsize.rcNewWindow);
+                    this.NcHeight = rcsize.rcClient.Top - rcsize.rcOldWindow.Top;
                     Marshal.StructureToPtr(rcsize, m.LParam, false);
                 }
                 else
@@ -189,11 +196,7 @@ namespace UzunTec.WinUI.Controls
         {
             base.OnClosed(e);
             NcPaint = null;
-            try
-            {
-                ReleaseDC(this.Handle, wndHdc);
-            }
-            catch { }
+            ReleaseDC(this.Handle, wndHdc);
         }
     }
 }

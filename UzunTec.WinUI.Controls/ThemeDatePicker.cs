@@ -66,8 +66,6 @@ namespace UzunTec.WinUI.Controls
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
         public Color BackgroundColorFocusedLight { get => this.props.BackgroundColorFocusedLight; set => this.props.BackgroundColorFocusedLight = value; }
 
-
-
         [Category("Theme"), DefaultValue(typeof(Color), "Black")]
         public Color HintColor { get => this.props.HintColor; set => this.props.HintColor = value; }
 
@@ -110,7 +108,7 @@ namespace UzunTec.WinUI.Controls
 
             // Control Defaults
             base.MinimumSize = new Size(1, 1);
-            base.Font = new Font(FontFamily.GenericSansSerif, 28);       // To Adjust the Height
+            base.Font = this.ThemeScheme.ControlTextFont;       // To Adjust the Height
             this.Size = ThemeConstants.DefaultControlSize.ToSize();
             this.HintFontClass = FontClass.Small;
             this.Format = DateTimePickerFormat.Custom;
@@ -139,7 +137,7 @@ namespace UzunTec.WinUI.Controls
 
             this.HintColor = this.ThemeScheme.ControlHintTextColor;
             this.HintFont = this.ThemeScheme.GetFontFromClass(this.HintFontClass);
-            this.HintDisabledColor = this.ThemeScheme.ThemeHighlightColor;
+            this.HintDisabledColor = this.ThemeScheme.ControlHintTextColorDisabled;
             this.HintHighlightColor = this.ThemeScheme.ThemeHighlightColor;
         }
 
@@ -155,6 +153,7 @@ namespace UzunTec.WinUI.Controls
             MouseEnter += (sender, args) => { MouseHovered = true; this.Invalidate(); };
             MouseLeave += (sender, args) => { MouseHovered = false; this.Invalidate(); };
             SizeChanged += (sender, args) => { this.UpdateRects(); };
+            this.ValueChanged += (sender, args) => { this.Invalidate(); };
 
         }
         public void UpdateRects()
