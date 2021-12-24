@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
+using UzunTec.WinUI.Controls;
 
 namespace UzunTec.WinUI.TestApp
 {
-    public partial class Form1 : Form
+    public partial class Form1 : ThemeBaseForm
     {
         public Form1()
         {
@@ -15,5 +16,15 @@ namespace UzunTec.WinUI.TestApp
             //this.comboBox3.DataSource = new[] { 1, 2, 3, 4, 5 };
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var x = this.RectClient;
+            var a = this.RectClient2;
+            var b = this.RectNewWindow;
+            var c = this.RectOldWindow;
+
+
+
+        }
     }
 }

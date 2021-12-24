@@ -117,8 +117,6 @@ namespace UzunTec.WinUI.Controls
             this._textAlign = ContentAlignment.MiddleCenter;
             this.ShowHint = true;
             this.InternalPadding = ThemeConstants.DefaultHintControlInternalPadding;
-
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
         }
 
         public void UpdateStylesFromTheme()

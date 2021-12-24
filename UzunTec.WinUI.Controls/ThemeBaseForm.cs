@@ -2,15 +2,16 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using UzunTec.WinUI.Controls.Themes;
-using UzunTec.WinUI.Utils;
 
 namespace UzunTec.WinUI.Controls
 {
     public partial class ThemeBaseForm : FormWithNc
     {
+        private const int HEADER_HEIGHT = 25;
+
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
         public string TextTitle { get => this._textTitle; set { this._textTitle = value; this.Invalidate(); } }
         private string _textTitle;
@@ -28,7 +29,7 @@ namespace UzunTec.WinUI.Controls
         private Color _borderColorLight;
 
         [Category("Theme"), DefaultValue(typeof(int), "47")]
-        public int BorderWidth { get => _borderWidth; set { _borderWidth = value; this.Invalidate(); } }
+        public int BorderWidth { get => _borderWidth; set { _borderWidth = value; this.UpdateNonClientArea(); } }
         private int _borderWidth;
 
         [Category("Theme"), DefaultValue(typeof(Color), "Black")]
@@ -55,7 +56,7 @@ namespace UzunTec.WinUI.Controls
         private Color _titlePanelColorLight;
 
         [Category("Theme"), DefaultValue(typeof(int), "47")]
-        public int HeaderPanelHeight { get => _headerPanelHeight; set { _headerPanelHeight = value; this.Invalidate(); } }
+        public int HeaderPanelHeight { get => _headerPanelHeight; set { _headerPanelHeight = value; this.UpdateNonClientArea(); } }
         private int _headerPanelHeight;
 
         [Category("Theme"), DefaultValue(typeof(Color), "Black")]
@@ -108,8 +109,11 @@ namespace UzunTec.WinUI.Controls
             this.ControlBox = false;
             //this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
             //base.Padding = new Padding(5);
-            BorderWidth = 1;
-            HeaderPanelHeight = 60;
+            _borderWidth = 1;
+            _headerPanelHeight = 60;
+
+
+            this.AdjustNonClientArea(new Padding(-4, 56, -4, -4));
 
             this.UpdateStylesFromTheme();
             this.UpdateRects();
@@ -119,13 +123,11 @@ namespace UzunTec.WinUI.Controls
         {
             //base.Padding = new Padding(0);
             base.OnCreateControl();
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+
+            SizeChanged += (s,e) => this.UpdateRects();
 
             this.UpdateStylesFromTheme();
-            this.UpdateRects();
-        }
-
-        private void ThemeBaseForm_SizeChanged(object sender, EventArgs e)
-        {
             this.UpdateRects();
         }
 
@@ -151,22 +153,34 @@ namespace UzunTec.WinUI.Controls
             //this.btnCloseIcon.Text = "\uEF2C";
         }
 
+
+        protected override void OnNcAreaChanged(EventArgs e)
+        {
+            this.UpdateNonClientArea();
+        }
+        protected void UpdateNonClientArea()
+        {
+            int ncHeight = HEADER_HEIGHT + this._headerPanelHeight;
+            int heightAdjust = ncHeight - this.NonClientArea.Top;
+
+            int borderLeftAdjust = this._borderWidth - this.NonClientArea.Left;
+            int borderRightAdjust = this._borderWidth - this.NonClientArea.Right;
+            int borderBottomAdjust = this._borderWidth - this.NonClientArea.Bottom;
+
+            // this.AdjustNonClientArea(new Padding(borderLeftAdjust, heightAdjust, borderRightAdjust, borderBottomAdjust));
+            //this.UpdateRects();
+            //this.Invalidate();
+        }
+
+
         private void UpdateRects()
         {
             hasHeaderText = !string.IsNullOrEmpty(TextHeader);
             hasTitle = !string.IsNullOrEmpty(TextTitle);
 
-            const float HEADER_HEIGHT = 25;
-
             this.headerRect = new RectangleF(0, 0, this.ClientRectangle.Width + (BorderWidth * 2), HEADER_HEIGHT);
 
             this.titleRect = new RectangleF(0, headerRect.Height, this.ClientRectangle.Width + (BorderWidth * 2), HeaderPanelHeight);
-
-            float ncHeaderAdjust = this.headerRect.Height + this.titleRect.Height - this.NcHeight;
-
-            this.NonClientAreaAdjust = new Padding(BorderWidth-8, (int)ncHeaderAdjust, BorderWidth-8, BorderWidth-8);
-
-            this.Invalidate();
         }
 
         protected override void OnNcPaint(PaintEventArgs e)

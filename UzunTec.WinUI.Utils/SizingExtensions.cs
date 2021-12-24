@@ -30,6 +30,25 @@ namespace UzunTec.WinUI.Utils
             return output;
         }
 
+
+
+        public static Padding AddPadding(this Padding padding, params Padding[] paddings)
+        {
+            int left = padding.Left;
+            int top = padding.Top;
+            int right = padding.Right;
+            int bottom = padding.Bottom;
+
+            foreach (Padding pd in paddings)
+            {
+                left += pd.Left;
+                top += pd.Top;
+                right += pd.Right;
+                bottom += pd.Bottom;
+            }
+            return new Padding(left, top, right, bottom);
+        }
+
         public static Point ApplyPadding(this Point point, Padding padding)
         {
             Point output = new Point(point.X, point.Y);

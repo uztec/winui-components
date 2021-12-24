@@ -41,7 +41,6 @@ namespace UzunTec.WinUI.Controls
             this.Name = "ThemeBaseForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormBase";
-            this.SizeChanged += new System.EventHandler(this.ThemeBaseForm_SizeChanged);
             this.ResumeLayout(false);
 
         }

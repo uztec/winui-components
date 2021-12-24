@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using UzunTec.WinUI.Utils;
 
 namespace UzunTec.WinUI.Controls
 {
@@ -46,14 +47,7 @@ namespace UzunTec.WinUI.Controls
         private Graphics ncGrapichs = null;
         private IntPtr wndHdc;
 
-        struct RECT { public int Left, Top, Right, Bottom; }
-        struct NCCALCSIZE_PARAMS
-        {
-            public RECT rcNewWindow;
-            public RECT rcOldWindow;
-            public RECT rcClient;
-            IntPtr lppos;
-        }
+       
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
         public extern static void ReleaseCapture();
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
@@ -63,7 +57,7 @@ namespace UzunTec.WinUI.Controls
         public const int EM_SETCUEBANNER = 0x1501;
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern int SendMessage(IntPtr hWnd, int msg, int wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
-      
+
         [DllImport("uxtheme.dll", ExactSpelling = true, CharSet = CharSet.Unicode)]
         public static extern int SetWindowTheme(IntPtr hWnd, string pszSubAppName, string pszSubIdList);
 
@@ -72,6 +66,7 @@ namespace UzunTec.WinUI.Controls
         /// </summary>
         [Description("Occurs when The frame area (including Title Bar, excluding the client area) needs repainting."), Category("Appearance")]
         public event PaintEventHandler NcPaint;
+        public event EventHandler NcAreaChanged;
 
 
         //Get Desktop Window Handle
@@ -91,12 +86,21 @@ namespace UzunTec.WinUI.Controls
         [DllImport("User32.dll")]
         public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
 
+        public Padding NonClientArea { get; private set; }
+        public object RectClient2 { get; private set; }
+        public Rectangle RectNewWindow { get; private set; }
+        public Rectangle RectOldWindow { get; private set; }
+        public Rectangle RectClient { get; private set; }
 
-        public Padding NonClientAreaAdjust { get => this._nonClientArea; set { this._nonClientArea = value; this.InvalidateAll(); } }
+        private Padding _nonClientAreaAdjust = new Padding(0);
 
-        public int NcHeight { get; private set; }
 
-        private Padding _nonClientArea;
+        public void AdjustNonClientArea(Padding padding)
+        {
+            this._nonClientAreaAdjust = _nonClientAreaAdjust.AddPadding(padding);
+            //this.NonClientArea = this.NonClientArea.AddPadding(padding);
+            this.InvalidateAll();
+        }
 
         public FormWithNc()
         {
@@ -114,7 +118,6 @@ namespace UzunTec.WinUI.Controls
         {
             base.OnCreateControl();
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
-
         }
 
         protected override void OnHandleCreated(EventArgs e)
@@ -163,27 +166,58 @@ namespace UzunTec.WinUI.Controls
                 {
                     NCCALCSIZE_PARAMS rcsize = (NCCALCSIZE_PARAMS)Marshal.PtrToStructure(m.LParam, typeof(NCCALCSIZE_PARAMS));
                     AdjustClientRect(ref rcsize.rcNewWindow);
-                    this.NcHeight = rcsize.rcClient.Top - rcsize.rcOldWindow.Top;
                     Marshal.StructureToPtr(rcsize, m.LParam, false);
+
+                    this.RectNewWindow = rcsize.rcNewWindow.ToRectangle();
+                    this.RectOldWindow = rcsize.rcOldWindow.ToRectangle();
+                    this.RectClient = rcsize.rcClient.ToRectangle();
+
+                    this.CheckNCArea (new Padding(rcsize.rcClient.Left - rcsize.rcOldWindow.Left,
+                                                    rcsize.rcClient.Top - rcsize.rcOldWindow.Top,
+                                                    rcsize.rcOldWindow.Right - rcsize.rcClient.Right,
+                                                    rcsize.rcOldWindow.Bottom - rcsize.rcClient.Bottom));
+
                 }
                 else
                 {
                     RECT rcsize = (RECT)Marshal.PtrToStructure(m.LParam, typeof(RECT));
                     AdjustClientRect(ref rcsize);
                     Marshal.StructureToPtr(rcsize, m.LParam, false);
+                    this.RectClient2 = rcsize.ToRectangle();
+
                 }
                 m.Result = new IntPtr(1);
                 return;
             }
         }
 
-
+   
         private void AdjustClientRect(ref RECT rcClient)
         {
-            rcClient.Left += this._nonClientArea.Left;
-            rcClient.Top += this._nonClientArea.Top;
-            rcClient.Right -= this._nonClientArea.Right;
-            rcClient.Bottom -= this._nonClientArea.Bottom;
+            rcClient.Left += this._nonClientAreaAdjust.Left;
+            rcClient.Top += this._nonClientAreaAdjust.Top;
+            rcClient.Right -= this._nonClientAreaAdjust.Right;
+            rcClient.Bottom -= this._nonClientAreaAdjust.Bottom;
+        }
+
+        private void CheckNCArea(Padding newNcArea)
+        {
+            bool equals = newNcArea.Left == this.NonClientArea.Left
+                            && newNcArea.Top == this.NonClientArea.Top
+                            && newNcArea.Right == this.NonClientArea.Right
+                            && newNcArea.Bottom == this.NonClientArea.Bottom;
+
+            this.NonClientArea = new Padding(newNcArea.Left, newNcArea.Top, newNcArea.Right, newNcArea.Bottom);
+
+            if (!equals)
+            {
+                this.OnNcAreaChanged(EventArgs.Empty);
+            }
+        }
+
+        protected virtual void OnNcAreaChanged(EventArgs e)
+        {
+            NcAreaChanged?.Invoke(this, e);
         }
 
         [EditorBrowsable(EditorBrowsableState.Advanced)]
