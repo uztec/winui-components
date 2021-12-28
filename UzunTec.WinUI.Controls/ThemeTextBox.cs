@@ -24,7 +24,7 @@ namespace UzunTec.WinUI.Controls
         public new BorderStyle BorderStyle { get; }
 
         [Browsable(false), ReadOnly(true)]
-        public new bool MultiLine { get; }
+        public bool MultiLine { get; }
 
         [Browsable(false)]
         public new Color ForeColor { get => TextColor; set => TextColor = value; }
@@ -439,41 +439,11 @@ namespace UzunTec.WinUI.Controls
         private void SetTextRect(RectangleF rect)
         {
             RECT rc = new RECT(rect.ApplyPadding(4, 0, 0, 0));
-            SendMessage(Handle, EM_SETRECT, 0, ref rc);
+            Win32ApiFunction.SendMessage(Handle, Win32ApiConstants.EM_SETRECT, 0, ref rc);
         }
 
-        [DllImport(@"User32.dll", EntryPoint = @"SendMessage", CharSet = CharSet.Auto)]
-        private static extern int SendMessage(IntPtr hWnd, uint msg, int wParam, ref RECT lParam);
+     
 
-
-        // Padding
-        private const int EM_SETRECT = 0xB3;
-        //        Win32ApiConstants.EM_SETRECT
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct RECT
-        {
-            public readonly int Left;
-            public readonly int Top;
-            public readonly int Right;
-            public readonly int Bottom;
-
-            private RECT(int left, int top, int right, int bottom)
-            {
-                Left = left;
-                Top = top;
-                Right = right;
-                Bottom = bottom;
-            }
-
-            public RECT(Rectangle r) : this(r.Left, r.Top, r.Right, r.Bottom)
-            {
-            }
-
-            public RECT(RectangleF r) : this(r.ToRect(true))
-            {
-            }
-        }
     }
 
 }
