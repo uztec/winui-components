@@ -10,7 +10,7 @@ namespace UzunTec.WinUI.Controls.Themes
         {
             this.ControlTextFont = this.FontClasses[FontClass.Body];
             this.FormTitleFont = this.FontClasses[FontClass.H1];
-            this.FormHeaderTextFont = this.FontClasses[FontClass.Body];
+            this.FormHeaderTextFont = this.FontClasses[FontClass.H5];
             this.ControlPlaceholderFont = this.FontClasses[FontClass.Body];
             this.GridFont = this.FontClasses[FontClass.Body];
             this.GridHeaderFont = this.FontClasses[FontClass.H4];
