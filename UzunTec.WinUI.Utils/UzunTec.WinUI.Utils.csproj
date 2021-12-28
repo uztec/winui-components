@@ -43,6 +43,7 @@
     <Compile Include="SizingExtensions.cs" />
     <Compile Include="Win32ApiConstants.cs" />
     <Compile Include="Win32ApiExtensions.cs" />
+    <Compile Include="Win32ApiFunction.cs" />
     <Compile Include="Win32Structures.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
