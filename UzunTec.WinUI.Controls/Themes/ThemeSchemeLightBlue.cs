@@ -5,7 +5,6 @@ namespace UzunTec.WinUI.Controls.Themes
 {
     public class ThemeSchemeLightBlue : ThemeScheme
     {
-
         public ThemeSchemeLightBlue()
         {
             this.ControlTextFont = this.FontClasses[FontClass.Body];

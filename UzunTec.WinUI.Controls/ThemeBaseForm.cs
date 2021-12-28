@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using UzunTec.WinUI.Controls.Helpers;
 using UzunTec.WinUI.Controls.InternalContracts;
@@ -33,10 +32,6 @@ namespace UzunTec.WinUI.Controls
         [Category("Theme"), DefaultValue(typeof(Color), "Black")]
         public Color HeaderTextColor { get => _headerTextColor; set { _headerTextColor = value; this.Invalidate(); } }
         private Color _headerTextColor;
-
-        [Category("Theme"), DefaultValue(typeof(Color), "Black")]
-        public Font HeaderTextFont { get => _headerTextFont; set { _headerTextFont = value; this.Invalidate(); } }
-        private Font _headerTextFont;
 
         [Category("Theme"), DefaultValue(typeof(Color), "LightYellow")]
         public Color HeaderColorDark { get => _headerColorDark; set { _headerColorDark = value; this.Invalidate(); } }
@@ -71,12 +66,39 @@ namespace UzunTec.WinUI.Controls
         #endregion
 
         [Category("Z-Custom"), DefaultValue(typeof(Color), "Control")]
-        public string TextTitle { get => this._textTitle; set { this._textTitle = value; this.Invalidate(); } }
-        private string _textTitle;
+        public string Title { get => this._titleText; set { this._titleText = value; this.Invalidate(); } }
+        private string _titleText;
 
-        [Category("Z-Custom"), DefaultValue(typeof(Color), "Control")]
-        public string TextHeader { get => this._textHeader; set { this._textHeader = value; this.Invalidate(); } }
-        private string _textHeader;
+        [Category("Z-Custom"), DefaultValue(true)]
+        public bool ShowTitlePanel { get => _showTitlePanel; set { _showTitlePanel = value; this.UpdateRects(); this.Invalidate(); } }
+        private bool _showTitlePanel;
+
+        [Category("Z-Custom"), DefaultValue(true)]
+        public bool ShowClose { get => _showClose; set { _showClose = value; this.UpdateRects(); this.Invalidate(); } }
+        private bool _showClose;
+
+        [Category("Z-Custom"), DefaultValue(true)]
+        public bool ShowMaximize { get => _showMaximize; set { _showMaximize = value; this.UpdateRects(); this.Invalidate(); } }
+        private bool _showMaximize;
+
+        [Category("Z-Custom"), DefaultValue(true)]
+        public bool ShowMinimize { get => _showMinimize; set { _showMinimize = value; this.UpdateRects(); this.Invalidate(); } }
+        private bool _showMinimize;
+
+        [Category("Z-Custom"), DefaultValue(typeof(ContentAlignment), "BottomLeft")]
+        public ContentAlignment TitleTextAlign { get => this._titleTextAlign; set { this._titleTextAlign = value; this.Invalidate(); } }
+        private ContentAlignment _titleTextAlign;
+
+        [Category("Z-Custom"), DefaultValue(typeof(ContentAlignment), "MiddleLeft")]
+        public ContentAlignment HeaderTextAlign { get => this._headerTextAlign; set { this._headerTextAlign = value; this.UpdateNcRects();  this.InvalidateNc(); } }
+        private ContentAlignment _headerTextAlign;
+
+        [Browsable(false)]
+        public ThemeScheme ThemeScheme => ThemeSchemeManager.Instance.GetTheme();
+
+        [Category("Z-Custom"), DefaultValue(typeof(Image), "")]
+        public Image LogoImage { get => this.logoImageData.image; set { this.logoImageData.image = value; this.UpdateRects(); this.Invalidate(); } }
+
 
         [Category("Z-Custom"), DefaultValue(typeof(Color), "Control")]
         public new Padding Padding { get => this._padding; set { this._padding = value; this.SetBasePadding(value); this.Invalidate(); } }
@@ -85,56 +107,24 @@ namespace UzunTec.WinUI.Controls
         {
             base.Padding = value.AddPadding(new Padding(0, (int)this.HeaderPanelHeight, 0, 0));
         }
-
         private Padding _padding;
 
-
-        [Category("Z-Custom"), DefaultValue(true)]
-        public bool ShowTitlePanel { get => showTitlePanel; set { showTitlePanel = value; this.UpdateRects(); this.Invalidate(); } }
-
-        [Category("Z-Custom"), DefaultValue(true)]
-        public bool ShowClose { get => showClose; set { showClose = value; this.UpdateRects(); this.Invalidate(); } }
-        private string close;
-
-        [Category("Z-Custom"), DefaultValue(true)]
-        public bool ShowMaximize { get => showMaximize; set { showMaximize = value; this.UpdateRects(); this.Invalidate(); } }
-        private string maximize;
-
-        [Category("Z-Custom"), DefaultValue(true)]
-        public bool ShowMinimize { get => showMinimize; set { showMinimize = value; this.UpdateRects(); this.Invalidate(); } }
-        private string minimize;
-
-        [Category("Z-Custom"), DefaultValue(typeof(Image), "")]
-        public Image LogoImage { get => this.logoImageData.image; set { this.logoImageData.image = value; this.UpdateRects(); this.Invalidate(); } }
-
-        [Category("Z-Custom"), DefaultValue(typeof(ContentAlignment), "BottomLeft")]
-        public ContentAlignment TitleTextAlign { get => this._titleTextAlign; set { this._titleTextAlign = value; this.Invalidate(); } }
-        private ContentAlignment _titleTextAlign;
-
-        [Category("Z-Custom"), DefaultValue(typeof(ContentAlignment), "MiddleLeft")]
-        public ContentAlignment HeaderTextAlign { get => this._headerTextAlign; set { this._headerTextAlign = value; this.Invalidate(); } }
-        private ContentAlignment _headerTextAlign;
-
-        [Browsable(false)]
-        public ThemeScheme ThemeScheme => ThemeSchemeManager.Instance.GetTheme();
-
-        private RectangleF textHeaderRect, textTitleRect, titleRect, headerRect, closeRect, maximizeRect, minimizeRect, logoTitleRect;
-        private bool showTitlePanel, showClose, showMaximize, showMinimize, hasHeaderText, hasTitle;
+        private RectangleF butttonsRect, textTitleRect, titleRect, textHeaderRect, headerRect, logoTitleRect;
+        private bool hasHeaderText, hasTitle;
         private readonly SideIconData logoImageData = new SideIconData();
         private readonly Dictionary<string, SideIconData> icons;
-        public EventHandler<string> buttonClick;
+
 
         public ThemeBaseForm()
         {
             this.ControlBox = false;
-            //this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
-            //base.Padding = new Padding(5);
-            _borderWidth = 1;
-            _headerPanelHeight = 60;
-            //showClose = true;
-            //showMinimize = true;
-            //showMaximize = true;
-            //showTitlePanel = true;
+            this._borderWidth = 10;
+            this._headerPanelHeight = 60;
+            this._showClose = true;
+            this._showMinimize = true;
+            this._showMaximize = true;
+            this._showTitlePanel = true;
+
             this._titleTextAlign = ContentAlignment.MiddleLeft;
             this._headerTextAlign = ContentAlignment.MiddleLeft;
 
@@ -145,23 +135,21 @@ namespace UzunTec.WinUI.Controls
                 { "minimize", new SideIconData{ text = "\u2584"} },
             };
 
-            this.AdjustNonClientArea(new Padding(-4, -6, -4, -4));
-
-            this.SetBasePadding(this._padding);
-
-            InitializeComponent();
-
             this.UpdateStylesFromTheme();
             this.UpdateRects();
+
+            this.SetBasePadding(this._padding);
+            this.AdjustNonClientArea(new Padding(-4, -6, -4, -4));
+            InitializeComponent();
         }
 
         protected override void OnCreateControl()
         {
             //base.Padding = new Padding(0);
             base.OnCreateControl();
-            //this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
 
-            SizeChanged += (s,e) => this.UpdateRects();
+            SizeChanged += (s, e) => this.UpdateRects();
 
             this.UpdateStylesFromTheme();
             this.UpdateRects();
@@ -173,7 +161,7 @@ namespace UzunTec.WinUI.Controls
             this.HeaderColorDark = this.ThemeScheme.FormHeaderColorDark;
             this.HeaderColorLight = this.ThemeScheme.FormHeaderColorLight;
             this.HeaderTextColor = this.ThemeScheme.FormHeaderTextColor;
-            this.HeaderTextFont = this.ThemeScheme.FormHeaderTextFont;
+            this.Font = this.ThemeScheme.FormHeaderTextFont;
 
             this.TitlePanelColorDark = this.ThemeScheme.FormTitlePanelBackgroundColorDark;
             this.TitlePanelColorLight = this.ThemeScheme.FormTitlePanelBackgroundColorLight;
@@ -207,16 +195,52 @@ namespace UzunTec.WinUI.Controls
 
         private void UpdateRects()
         {
-            hasHeaderText = !string.IsNullOrEmpty(TextHeader);
-            hasTitle = !string.IsNullOrEmpty(TextTitle);
+            UpdateNcRects();
+            UpdateClientRects();
+        }
+
+        private void UpdateNcRects()
+        {
+            hasHeaderText = !string.IsNullOrEmpty(this.Text);
 
             float buttonOffset = 0;
 
-            this.headerRect = new RectangleF(0, 0, this.ClientRectangle.Width + (BorderWidth * 2), HEADER_HEIGHT);
+            this.headerRect = new RectangleF(0, 0, this.Width + (BorderWidth * 2), HEADER_HEIGHT);
 
-            this.textHeaderRect = new RectangleF(0 + (BorderWidth * 2), 0, (this.ClientRectangle.Width + (BorderWidth * 2))/2, HEADER_HEIGHT);
+            if (this._showClose)
+            {
+                this.icons["close"].rect = new RectangleF(this.Width - BUTTON_WIDTH - buttonOffset, 0, BUTTON_WIDTH + (BorderWidth * 2), HEADER_HEIGHT);
+                buttonOffset += this.icons["close"].rect.Width;
+            }
 
-            if (this.showTitlePanel)
+            if (this._showMaximize)
+            {
+                this.icons["maximize"].rect = new RectangleF(this.Width - BUTTON_WIDTH - buttonOffset, 0, BUTTON_WIDTH + (BorderWidth * 2), HEADER_HEIGHT);
+                buttonOffset += this.icons["maximize"].rect.Width;
+            }
+
+            if (this._showMinimize)
+            {
+                this.icons["minimize"].rect = new RectangleF(this.Width - BUTTON_WIDTH - buttonOffset, 0, BUTTON_WIDTH + (BorderWidth * 2), HEADER_HEIGHT);
+                buttonOffset += this.icons["minimize"].rect.Width;
+            }
+
+            this.butttonsRect = new RectangleF(this.Width - buttonOffset, 0, buttonOffset, HEADER_HEIGHT);
+
+            Graphics g = Graphics.FromHwnd(this.Handle);
+            SizeF headerTextSize = g.MeasureString(this.Text, this.Font);
+
+            float rightOffet = ((int)(this._headerTextAlign & (ContentAlignment.TopCenter | ContentAlignment.MiddleCenter | ContentAlignment.BottomCenter)) != 0) ? 10 : 10 + buttonOffset;
+            this.textHeaderRect = headerRect.ApplyPadding(10, 0, rightOffet, 0).ShrinkToSize(headerTextSize, this.HeaderTextAlign);
+
+        }
+
+
+        private void UpdateClientRects()
+        {
+            hasTitle = !string.IsNullOrEmpty(_titleText);
+
+            if (this._showTitlePanel)
             {
                 this.titleRect = new RectangleF(0, 0, this.ClientRectangle.Width + (BorderWidth * 2), HeaderPanelHeight);
 
@@ -229,30 +253,13 @@ namespace UzunTec.WinUI.Controls
                 this.textTitleRect = new RectangleF(0 + (BorderWidth * 2), 0, (this.ClientRectangle.Width + (BorderWidth * 2)) / 2, HeaderPanelHeight);
             }
 
-            if (this.showClose)
-            {
-                this.icons["close"].rect = new RectangleF(this.ClientRectangle.Width - BUTTON_WIDTH - buttonOffset, 0, BUTTON_WIDTH + (BorderWidth * 2), HEADER_HEIGHT);
-                buttonOffset += this.icons["close"].rect.Width;
-            }
 
-            if (this.showMaximize)
-            {
-                this.icons["maximize"].rect = new RectangleF(this.ClientRectangle.Width - BUTTON_WIDTH - buttonOffset, 0, BUTTON_WIDTH + (BorderWidth * 2), HEADER_HEIGHT);
-                buttonOffset += this.icons["maximize"].rect.Width;
-            }
-
-            if (this.showMinimize)
-            {
-                this.icons["minimize"].rect = new RectangleF(this.ClientRectangle.Width - BUTTON_WIDTH - buttonOffset, 0, BUTTON_WIDTH + (BorderWidth * 2), HEADER_HEIGHT);
-                buttonOffset += this.icons["minimize"].rect.Width;
-            }
         }
-
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
 
-            if (titleRect.Width > 0f && this.showTitlePanel)
+            if (titleRect.Width > 0f && this._showTitlePanel)
             {
                 Brush titleBrush = new LinearGradientBrush(titleRect, _titlePanelColorDark, _titlePanelColorLight, LinearGradientMode.ForwardDiagonal);
                 g.FillRectangle(titleBrush, titleRect);
@@ -265,10 +272,10 @@ namespace UzunTec.WinUI.Controls
             }
 
             Brush titleTextBrush = new SolidBrush(this.TitleTextColor);
-            if (!string.IsNullOrWhiteSpace(this.TextTitle) && this.showTitlePanel)
+            if (hasTitle && this._showTitlePanel)
             {
                 g.Clip = new Region(this.textTitleRect);
-                g.DrawText(this.TextTitle, this.TitleTextFont, titleTextBrush, this.textTitleRect, this.TitleTextAlign);
+                g.DrawText(this.Title, this.TitleTextFont, titleTextBrush, this.textTitleRect, this.TitleTextAlign);
                 g.ResetClip();
                 //g.FillRectangle(Brushes.Firebrick, textTitleRect);
             }
@@ -278,70 +285,59 @@ namespace UzunTec.WinUI.Controls
         {
             Graphics g = e.Graphics;
 
-            Brush borderBrush = new LinearGradientBrush(ClientRectangle, _borderColorDark, _borderColorLight, LinearGradientMode.ForwardDiagonal);
+            Brush borderBrush = new SolidBrush(_titlePanelColorDark);
+            Pen borderPen = new Pen(borderBrush, this.BorderWidth);
+            g.DrawRectangle(borderPen, e.ClipRectangle);
 
-            //g.Clear(TitlePanelColorDark);
+            Brush headerBrush = new LinearGradientBrush(headerRect, _headerColorDark, _headerColorLight, LinearGradientMode.ForwardDiagonal);
+            g.FillRectangle(headerBrush, headerRect);
 
-            if (headerRect.Width > 0f)
-            {
-                Brush headerBrush = new LinearGradientBrush(headerRect, _headerColorDark, _headerColorLight, LinearGradientMode.ForwardDiagonal);
-                g.FillRectangle(headerBrush, headerRect);
-            }
-            
             Brush headerTextBrush = new SolidBrush(this.HeaderTextColor);
-            if (!string.IsNullOrWhiteSpace(this.TextHeader))
+            if (hasHeaderText)
             {
-                g.Clip = new Region(this.textHeaderRect);
-                g.DrawText(this.TextHeader, this.HeaderTextFont, headerTextBrush, this.textHeaderRect, this.HeaderTextAlign);
-                g.ResetClip();
-                //g.FillRectangle(Brushes.LightGoldenrodYellow, textHeaderRect);
+                g.DrawText(this.Text, this.Font, headerTextBrush, this.textHeaderRect);
             }
 
-            if (this.showClose)
+            //foreach (SideIconData iconData in icons.Values)
+            //{
+            //    if (iconData.hovered)
+            //    {
+            //        g.FillRectangle(Brushes.White, iconData.rect);
+            //    }
+            //    g.DrawText(iconData.text, ThemeSchemeManager.Instance.GetFont("Segoe UI", 15), headerTextBrush, iconData.rect);
+            //}
+
+            Font buttonsFont = ThemeSchemeManager.Instance.GetFont("Segoe UI", 15);
+
+            if (this._showClose)
             {
-                g.Clip = new Region(this.icons["close"].rect);
-                g.DrawText(this.icons["close"].text, ThemeSchemeManager.Instance.GetFont("Segoe UI", 15), headerTextBrush, this.closeRect);
-                g.ResetClip();
-                //g.FillRectangle(Brushes.DarkOrange, closeRect);
+                g.DrawText(this.icons["close"].text, buttonsFont, headerTextBrush, this.icons["close"].rect);
             }
 
-            if (this.showMaximize)
+            if (this._showMaximize)
             {
-                g.Clip = new Region(this.icons["maximize"].rect);
-                g.DrawText(this.icons["maximize"].text, ThemeSchemeManager.Instance.GetFont("Segoe UI", 15), headerTextBrush, this.maximizeRect);
-                g.ResetClip();
-                //g.FillRectangle(Brushes.DimGray, maximizeRect);
+                g.DrawText(this.icons["maximize"].text, buttonsFont, headerTextBrush, this.icons["maximize"].rect);
             }
 
-            if (this.showMinimize)
+            if (this._showMinimize)
             {
-                g.Clip = new Region(this.icons["minimize"].rect);
-                g.DrawText(this.icons["minimize"].text, ThemeSchemeManager.Instance.GetFont("Segoe UI", 15), headerTextBrush, this.minimizeRect);
-                g.ResetClip();
-                //g.FillRectangle(Brushes.LawnGreen, minimizeRect);
+                g.DrawText(this.icons["minimize"].text, buttonsFont, headerTextBrush, this.icons["minimize"].rect);
             }
 
-            foreach (SideIconData iconData in icons.Values)
-            {
-                if (iconData.hovered)
-                {
-                    g.FillRectangle(Brushes.White, iconData.rect);
-                }
-                g.DrawText(iconData.text, ThemeSchemeManager.Instance.GetFont("Segoe UI", 15), headerTextBrush, iconData.rect);
-            }
-
+            //  g.FillRectangle(Brushes.DeepSkyBlue, this.butttonsRect);
         }
 
-        protected override void OnMouseMove(MouseEventArgs e)
+        protected override void OnNcMouseMove(MouseEventArgs e)
         {
-            base.OnMouseMove(e);
+            base.OnNcMouseMove(e);
 
-            if (headerRect.Contains(e.Location))
+            if (this.butttonsRect.Contains(e.Location))
             {
                 foreach (SideIconData iconData in icons.Values)
                 {
                     iconData.hovered = iconData.rect.Contains(e.Location);
                 }
+                //InvalidateNc();
             }
             else
             {
@@ -350,12 +346,11 @@ namespace UzunTec.WinUI.Controls
                     iconData.hovered = false;
                 }
             }
-            Invalidate();
         }
 
-        protected override void OnMouseClick(MouseEventArgs e)
+        protected override void OnNcMouseDown(MouseEventArgs e)
         {
-            base.OnMouseClick(e);
+            base.OnNcMouseDown(e);
             if (headerRect.Contains(e.Location))
             {
                 foreach (string key in icons.Keys)
@@ -363,32 +358,10 @@ namespace UzunTec.WinUI.Controls
                     SideIconData iconData = icons[key];
                     if (iconData.rect.Contains(e.Location))
                     {
-                        buttonClick?.Invoke(this, key);
+                        MessageBox.Show(key);
                     }
                 }
             }
-        }
-
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void btnMaximize_Click(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Normal)
-            {
-                this.WindowState = FormWindowState.Maximized;
-            }
-            else
-            {
-                this.WindowState = FormWindowState.Normal;
-            }
-        }
-
-        private void btnMinimize_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
         }
     }
 }

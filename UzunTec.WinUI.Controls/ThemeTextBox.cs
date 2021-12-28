@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using UzunTec.WinUI.Controls.Helpers;
 using UzunTec.WinUI.Controls.Interfaces;
@@ -24,7 +23,7 @@ namespace UzunTec.WinUI.Controls
         public new BorderStyle BorderStyle { get; }
 
         [Browsable(false), ReadOnly(true)]
-        public bool MultiLine { get; }
+        public new bool Multiline { get; }
 
         [Browsable(false)]
         public new Color ForeColor { get => TextColor; set => TextColor = value; }
@@ -81,19 +80,19 @@ namespace UzunTec.WinUI.Controls
 
 
         #region Theme Properties - Hint And Placeholder
- 
+
         [Category("Theme"), DefaultValue(typeof(Color), "Black")]
         public Color HintColor { get => this.props.HintColor; set => this.props.HintColor = value; }
-       
+
         [Category("Theme"), DefaultValue(typeof(Color), "Red")]
         public Color HintHighlightColor { get => this.props.HintHighlightColor; set => this.props.HintHighlightColor = value; }
-        
+
         [Category("Theme"), DefaultValue(typeof(Color), "Black")]
         public Color HintDisabledColor { get => this.props.HintDisabledColor; set => this.props.HintDisabledColor = value; }
 
         [Category("Theme"), DefaultValue(typeof(Font), "Segoe UI; 6pt")]
         public Font HintFont { get => this.props.HintFont; set => this.props.HintFont = value; }
-       
+
         [Category("Theme"), DefaultValue(typeof(Font), "Segoe UI; 6pt")]
         public FontClass HintFontClass { get => this.props.HintFontClass; set => this.props.HintFontClass = value; }
 
@@ -105,7 +104,7 @@ namespace UzunTec.WinUI.Controls
 
         [Category("Theme"), DefaultValue(typeof(string), "")]
         public string PlaceholderHintText { get => this.props.PlaceholderHintText; set => this.props.PlaceholderHintText = value; }
-        
+
         [Category("Theme"), DefaultValue(typeof(string), "")]
         public bool ShowHint { get => this.props.ShowHint; set => this.props.ShowHint = value; }
 
@@ -417,12 +416,9 @@ namespace UzunTec.WinUI.Controls
             {
                 AppendIconClick?.Invoke(this, new EventArgs());
             }
-            else
+            else if (DesignMode)
             {
-                if (DesignMode)
-                {
-                    return;
-                }
+                return;
             }
             base.OnMouseDown(e);
         }
@@ -433,16 +429,11 @@ namespace UzunTec.WinUI.Controls
             Invalidate();
         }
 
-
-
-
         private void SetTextRect(RectangleF rect)
         {
             RECT rc = new RECT(rect.ApplyPadding(4, 0, 0, 0));
             Win32ApiFunction.SendMessage(Handle, Win32ApiConstants.EM_SETRECT, 0, ref rc);
         }
-
-     
 
     }
 

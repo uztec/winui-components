@@ -42,15 +42,16 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(916, 455);
+            this.ClientSize = new System.Drawing.Size(947, 320);
+            this.HeaderTextAlign = System.Drawing.ContentAlignment.TopRight;
             this.Location = new System.Drawing.Point(0, 0);
             this.LogoImage = global::UzunTec.WinUI.TestApp.Properties.Resources.logo_cren;
+            this.Margin = new System.Windows.Forms.Padding(9, 11, 9, 11);
             this.Name = "Form1";
-            this.Text = "Form1";
-            this.TextHeader = "Teste 1";
-            this.TextTitle = "Teste 2";
+            this.Text = "CREN - Prontuário Eletrônico";
+            this.Title = "Teste 2";
             this.ResumeLayout(false);
 
         }

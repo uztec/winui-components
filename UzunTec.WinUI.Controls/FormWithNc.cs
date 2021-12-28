@@ -33,18 +33,17 @@ namespace UzunTec.WinUI.Controls
         {
             this._nonClientAreaAdjust = _nonClientAreaAdjust.AddPadding(padding);
             //this.NonClientArea = this.NonClientArea.AddPadding(padding);
-            this.InvalidateAll();
+            this.InvalidateNc();
         }
 
         public FormWithNc()
         {
             // this.ControlBox = false;
-            this.SizeChanged += (s, e) => InvalidateAll();
+            this.SizeChanged += (s, e) => InvalidateNc();
         }
 
-        private void InvalidateAll()
+        public void InvalidateNc()
         {
-            this.Invalidate();
             Win32ApiFunction.SendMessage(this.Handle, Win32ApiConstants.WM_NCPAINT, 1, 0); ;
         }
 
