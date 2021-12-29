@@ -157,6 +157,11 @@ namespace UzunTec.WinUI.Controls
             this.BorderColorDisabled = this.ThemeScheme.GetPaletteColor(this.BorderColorDisabledVariant, true);
         }
 
+        protected override void OnLayout(LayoutEventArgs levent)
+        {
+            base.OnLayout(levent);
+        }
+
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
@@ -211,7 +216,7 @@ namespace UzunTec.WinUI.Controls
                 textRect = this.CalculateTextRect(buttonRect, imageRect);// textRect;
             }
 
-            Brush textBrush = (this.Enabled && (this.Focused || this.MouseHovered)) ? ThemeSchemeManager.Instance.GetThemeHighlightBrush()
+            Brush textBrush = (this.Enabled && (this.Focused || this.MouseHovered)) ? new SolidBrush(this.TextColorHighlight)
                     : ThemeSchemeManager.Instance.GetTextBrush(this);
 
             g.DrawText(this.Text, this.Font, textBrush, textRect, textSize, this.TextAlign);

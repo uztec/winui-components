@@ -31,6 +31,7 @@ namespace UzunTec.WinUI.Controls
         {
             this.props = new ThemeControlProperties(this);
             InitializeComponent();
+            UpdateStylesFromTheme();
         }
 
         public void UpdateStylesFromTheme()

@@ -120,7 +120,6 @@ namespace UzunTec.WinUI.Controls
         private readonly SideIconData logoImageData = new SideIconData();
         private readonly Dictionary<string, SideIconData> icons;
 
-
         public ThemeBaseForm()
         {
             this.ControlBox = false;
@@ -146,7 +145,6 @@ namespace UzunTec.WinUI.Controls
 
             this.SetBasePadding(this._padding);
             this.AdjustNonClientArea(new Padding(-4, -6, -4, -4));
-            InitializeComponent();
         }
 
         protected override void OnCreateControl()
@@ -195,7 +193,6 @@ namespace UzunTec.WinUI.Controls
             this.UpdateRects();
             this.Invalidate();
         }
-
 
         private void UpdateRects()
         {
@@ -266,7 +263,7 @@ namespace UzunTec.WinUI.Controls
             if (titleRect.Width > 0f && this._showTitlePanel)
             {
                 Brush titleBrush = new LinearGradientBrush(titleRect, _titlePanelColorDark, _titlePanelColorLight, LinearGradientMode.ForwardDiagonal);
-                g.FillRectangle(titleBrush, titleRect);
+               g.FillRectangle(titleBrush, titleRect);
             }
 
             if (this.logoImageData.image != null)

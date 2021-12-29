@@ -54,9 +54,6 @@
     <Compile Include="ThemeBaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ThemeBaseForm.Designer.cs">
-      <DependentUpon>ThemeBaseForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="ThemeComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -116,9 +113,6 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ThemeBaseForm.resx">
-      <DependentUpon>ThemeBaseForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ThemeModalBase.resx">
       <DependentUpon>ThemeModalBase.cs</DependentUpon>
