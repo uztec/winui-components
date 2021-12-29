@@ -5,7 +5,7 @@ namespace UzunTec.WinUI.Utils
 {
     public static class SizingExtensions
     {
-        public static RectangleF ApplyPadding(this RectangleF rect, int padding)
+        public static RectangleF ApplyPadding(this RectangleF rect, float padding)
         {
             return ApplyPadding(rect, padding, padding, padding, padding);
         }

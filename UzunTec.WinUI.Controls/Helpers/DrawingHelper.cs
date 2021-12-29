@@ -80,7 +80,7 @@ namespace UzunTec.WinUI.Controls.Helpers
             g.Clip = new Region(rect);
             if (alignment != ContentAlignment.TopLeft)
             {
-                RectangleF textRect = rect.ShrinkToSize(textSize, alignment);
+                RectangleF textRect = rect.ShrinkToSize(textSize, alignment).ApplyPadding(-0.2f);
                 g.DrawString(text, font, textBrush, textRect, new StringFormat { Alignment = FromContentAlignment(alignment) } );
             }
             else
