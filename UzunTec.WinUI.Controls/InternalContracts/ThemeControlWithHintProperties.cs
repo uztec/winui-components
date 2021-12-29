@@ -87,12 +87,9 @@ namespace UzunTec.WinUI.Controls.InternalContracts
             get => this._placeholderHintText;
             set
             {
-                if (!this._useThemeColors || this.control.UpdatingTheme)
-                {
-                    this._placeholderHintText = value;
-                    this.control.UpdateRects();
-                    this.control.Invalidate();
-                }
+                this._placeholderHintText = value;
+                this.control.UpdateRects();
+                this.control.Invalidate();
             }
         }
         protected string _placeholderHintText;

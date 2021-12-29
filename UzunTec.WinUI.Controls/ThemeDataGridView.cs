@@ -10,13 +10,13 @@ namespace UzunTec.WinUI.Controls
 {
     public partial class ThemeDataGridView : DataGridView, IThemeControl
     {
-        [Browsable(false)]
+        [Browsable(false), ReadOnly(true)]
         public ThemeScheme ThemeScheme => ThemeSchemeManager.Instance.GetTheme();
 
-        [Browsable(false)]
+        [Browsable(false), ReadOnly(true)]
         public bool MouseHovered { get; private set; }
 
-        [Browsable(false)]
+        [Browsable(false), ReadOnly(true)]
         public bool UpdatingTheme { get; set; }
 
         [Category("Theme"), DefaultValue(true)]

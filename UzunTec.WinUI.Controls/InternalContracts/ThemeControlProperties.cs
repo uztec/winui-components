@@ -42,7 +42,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
         {
             this.control.UpdatingTheme = true;
             this.control.UpdateStylesFromTheme();
-            this.control.UpdatingTheme = true;
+            this.control.UpdatingTheme = false;
         }
 
 
