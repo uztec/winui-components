@@ -106,6 +106,6 @@ namespace UzunTec.WinUI.Controls.InternalContracts
                 }
             }
         }
-        protected bool _showHint;
+        protected bool _showHint = true;
     }
 }
