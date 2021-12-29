@@ -44,8 +44,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(947, 320);
-            this.HeaderTextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.ClientSize = new System.Drawing.Size(998, 340);
+            this.HeaderTextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.Location = new System.Drawing.Point(0, 0);
             this.LogoImage = global::UzunTec.WinUI.TestApp.Properties.Resources.logo_cren;
             this.Margin = new System.Windows.Forms.Padding(9, 11, 9, 11);

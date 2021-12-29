@@ -27,11 +27,9 @@ namespace UzunTec.WinUI.Controls
 
         private readonly ThemeControlProperties props;
 
-        public ThemeDataGridView(IContainer container)
+        public ThemeDataGridView()
         {
             this.props = new ThemeControlProperties(this);
-
-            container.Add(this);
             InitializeComponent();
         }
 
