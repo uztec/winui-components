@@ -1,9 +1,9 @@
-﻿using System;
-
-namespace UzunTec.WinUI.Utils
+﻿namespace UzunTec.WinUI.Utils
 {
     public static class Win32ApiConstants
     {
+        public const int EM_SETRECT = 0xB3;
+
         public const int
         /* FONT WEIGHT (BOLD) VALUES */
         FW_DONTCARE = 0,

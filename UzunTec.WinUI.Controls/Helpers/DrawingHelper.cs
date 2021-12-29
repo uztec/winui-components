@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 using UzunTec.WinUI.Controls.Interfaces;
+using UzunTec.WinUI.Controls.Themes;
 using UzunTec.WinUI.Utils;
 
 namespace UzunTec.WinUI.Controls.Helpers
@@ -13,15 +14,16 @@ namespace UzunTec.WinUI.Controls.Helpers
 
         private static readonly ThemeSchemeManager themeManager = ThemeSchemeManager.Instance;
 
-        internal static void FillBackground(this Graphics g, IThemeControlWithBackground ctrl)
+        internal static void FillBackground(this Graphics g, IThemeControlWithTextBackground ctrl)
         {
             FillBackground(g, ctrl, ctrl.ClientRectangle);
         }
-        internal static void FillBackground(this Graphics g, IThemeControlWithBackground ctrl, bool lineBottom)
+        internal static void FillBackground(this Graphics g, IThemeControlWithTextBackground ctrl, bool lineBottom)
         {
             FillBackground(g, ctrl, ctrl.ClientRectangle, lineBottom);
         }
-        internal static void FillBackground(this Graphics g, IThemeControlWithBackground ctrl, RectangleF bgRect, bool lineBottom = true)
+
+        internal static void FillBackground(this Graphics g, IThemeControlWithTextBackground ctrl, RectangleF bgRect, bool lineBottom = true)
         {
 
             Brush backgroundBrush = ctrl.Enabled ?
@@ -36,9 +38,9 @@ namespace UzunTec.WinUI.Controls.Helpers
             g.FillRectangle(backgroundBrush, bgRect);
         }
 
-        internal static void DrawBottomLine(this Graphics g, IThemeControl ctrl)
+        internal static void DrawBottomLine(this Graphics g, IThemeControlWithTextBackground ctrl)
         {
-            Brush lineBrush = ctrl.Focused ? themeManager.GetHighlightBrush(ctrl) : themeManager.GetTextBrush(ctrl);
+            Brush lineBrush = ctrl.Focused ? themeManager.GetThemeHighlightBrush() : themeManager.GetTextBrush(ctrl);
             g.FillRectangle(lineBrush, GetBottomLineRect(ctrl));
         }
 
@@ -123,9 +125,9 @@ namespace UzunTec.WinUI.Controls.Helpers
             pth.AddLine(TopRight, MidBottom);
 
             g.SmoothingMode = SmoothingMode.AntiAlias;
-            Brush triangleBrush = ctrl.Enabled ? ctrl.Focused ? new SolidBrush(ctrl.HighlightColor)
+            Brush triangleBrush = ctrl.Enabled ? ctrl.Focused ? new SolidBrush(ctrl.HintHighlightColor)
                   : new SolidBrush(ctrl.HintColor)
-                  : new SolidBrush(ctrl.DisabledHintColor);
+                  : new SolidBrush(ctrl.HintDisabledColor);
             g.FillPath(triangleBrush, pth);
             g.SmoothingMode = SmoothingMode.None;
         }

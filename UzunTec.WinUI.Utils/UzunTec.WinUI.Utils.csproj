@@ -32,15 +32,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColorExtensions.cs" />
     <Compile Include="ControlExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SizingExtensions.cs" />
     <Compile Include="Win32ApiConstants.cs" />
+    <Compile Include="Win32ApiExtensions.cs" />
+    <Compile Include="Win32ApiFunction.cs" />
+    <Compile Include="Win32Structures.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
