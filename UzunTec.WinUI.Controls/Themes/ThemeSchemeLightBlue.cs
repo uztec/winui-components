@@ -11,8 +11,8 @@ namespace UzunTec.WinUI.Controls.Themes
             this.FormTitleFont = this.FontClasses[FontClass.H1];
             this.FormHeaderTextFont = this.FontClasses[FontClass.H5];
             this.ControlPlaceholderFont = this.FontClasses[FontClass.Body];
-            this.GridFont = this.FontClasses[FontClass.Body];
-            this.GridHeaderFont = this.FontClasses[FontClass.H4];
+            this.GridFont = this.FontClasses[FontClass.H6];
+            this.GridHeaderFont = this.FontClasses[FontClass.H5];
 
             this.ThemeHighlightColor = Color.FromArgb(116, 173, 80);
             this.ControlTextColorDark = Color.FromArgb(47, 53, 66);
@@ -28,9 +28,9 @@ namespace UzunTec.WinUI.Controls.Themes
             this.ControlHintTextColor = Color.FromArgb(133, 143, 154);
             this.ControlHintTextColorDisabled = Color.FromArgb(133, 143, 154);
             this.ControlPlaceholderTextColor = Color.FromArgb(133, 143, 154);
-            this.ThemeSelectionColorDark = Color.FromArgb(176, 189, 199);
-            this.ThemeSelectionColorLight = this.Palette.GetColor(ColorVariant.Primary, false);
-            this.ThemeSelectionColorExtraLight = this.Palette.GetColor(ColorVariant.Primary, false).Lighten(50);
+            this.ThemeSelectionColorDark = Color.FromArgb(34, 50, 63);
+            this.ThemeSelectionColorLight = Color.FromArgb(176, 189, 199);
+            this.ThemeSelectionColorExtraLight = Color.FromArgb(235, 235, 235);
 
             this.FormBackgroundColor = Color.GhostWhite;
             this.FormHeaderTextColor = Color.FromArgb(240, 240, 240);
@@ -40,6 +40,7 @@ namespace UzunTec.WinUI.Controls.Themes
             this.FormTitlePanelBackgroundColorDark = Color.FromArgb(14, 25, 36);
             this.FormTitlePanelBackgroundColorLight = Color.FromArgb(14, 25, 36);
             this.FormControlButtonHoverColor = Color.FromArgb(62, 88, 115);
+
             this.CellBackgroundColor = Color.FromArgb(240, 240, 240);
 
             //this.FormTitleBarFont = ThemeSchemeManager.Instance.GetFont("Segoe UI SemiBold", 17.25F, FontStyle.Bold);

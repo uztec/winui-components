@@ -36,26 +36,26 @@ namespace UzunTec.WinUI.Controls
         public void UpdateStylesFromTheme()
         {
             //DataGridView Scheme
-            this.BackgroundColor = ThemeScheme.CellBackgroundColor; //BackgroundDarkColor
-            this.GridColor = ThemeScheme.CellBackgroundColor; //BackgroundDarkColor
-            this.ColumnHeadersDefaultCellStyle.Font = ThemeScheme.GridFont; //"Segoe UI Semibold", 11.25F
-            this.ColumnHeadersDefaultCellStyle.BackColor = ThemeScheme.FormTitlePanelBackgroundColorDark; //PrimaryColor
-            this.ColumnHeadersDefaultCellStyle.ForeColor = ThemeScheme.ControlTextColorLight; //TextLightColor 
-            this.ColumnHeadersDefaultCellStyle.SelectionBackColor = ThemeScheme.FormTitlePanelBackgroundColorDark; //PrimaryColor
-            this.ColumnHeadersDefaultCellStyle.SelectionForeColor = ThemeScheme.ControlTextColorLight; //TextLightColor
+            this.BackgroundColor = ThemeScheme.CellBackgroundColor;
+            this.GridColor = ThemeScheme.CellBackgroundColor;
+            this.ColumnHeadersDefaultCellStyle.Font = ThemeScheme.GridHeaderFont;
+            this.ColumnHeadersDefaultCellStyle.BackColor = ThemeScheme.FormHeaderColorDark;
+            this.ColumnHeadersDefaultCellStyle.ForeColor = ThemeScheme.ControlTextColorLight;
+            this.ColumnHeadersDefaultCellStyle.SelectionBackColor = ThemeScheme.ThemeSelectionColorDark;
+            this.ColumnHeadersDefaultCellStyle.SelectionForeColor = ThemeScheme.ControlTextColorDark;
             this.ColumnHeadersDefaultCellStyle.Padding = new Padding(2, 7, 0, 7);
             this.ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.True;
             this.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
-            this.DefaultCellStyle.Font = new Font("Segoe UI", 10);
-            this.DefaultCellStyle.BackColor = ThemeScheme.CellBackgroundColor; //BackgroundDarkColor
-            this.DefaultCellStyle.ForeColor = ThemeScheme.ControlTextColorDark; //TextDarkDefaultColor
-            this.DefaultCellStyle.SelectionBackColor = this.ThemeScheme.FormTitlePanelBackgroundColorDark; //LightPrimaryColor
-            this.DefaultCellStyle.SelectionForeColor = this.ThemeScheme.ControlTextColorDark; //TextDarkDefaultColor
+            this.DefaultCellStyle.Font = ThemeScheme.GridFont;
+            this.DefaultCellStyle.BackColor = ThemeScheme.CellBackgroundColor;
+            this.DefaultCellStyle.ForeColor = ThemeScheme.ControlTextColorDark;
+            this.DefaultCellStyle.SelectionBackColor = this.ThemeScheme.ThemeSelectionColorLight;
+            this.DefaultCellStyle.SelectionForeColor = this.ThemeScheme.ControlTextColorDark;
             this.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
 
-            this.AlternatingRowsDefaultCellStyle.BackColor = this.ThemeScheme.FormTitlePanelBackgroundColorDark; //BackgroundDarkColor
+            this.AlternatingRowsDefaultCellStyle.BackColor = this.ThemeScheme.ThemeSelectionColorExtraLight;
         }
 
         protected override void OnCreateControl()
