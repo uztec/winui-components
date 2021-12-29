@@ -358,7 +358,26 @@ namespace UzunTec.WinUI.Controls
                     SideIconData iconData = icons[key];
                     if (iconData.rect.Contains(e.Location))
                     {
-                        MessageBox.Show(key);
+                        //MessageBox.Show(key);
+                        if (key == "close")
+                        {
+                            this.Close();
+                        }
+                        if (key == "maximize")
+                        {
+                            if (WindowState == FormWindowState.Normal)
+                            {
+                                this.WindowState = FormWindowState.Maximized;
+                            }
+                            else
+                            {
+                                this.WindowState = FormWindowState.Normal;
+                            }
+                        }
+                        if (key == "minimize")
+                        {
+                            this.WindowState = FormWindowState.Minimized;
+                        }
                     }
                 }
             }
