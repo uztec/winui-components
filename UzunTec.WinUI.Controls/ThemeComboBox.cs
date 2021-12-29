@@ -318,65 +318,64 @@ namespace UzunTec.WinUI.Controls
 
         public void UpdateRects()
         {
-            if (!this.Created && !DesignMode)
+            if (this.IsHandleCreated)
             {
-                return;
+                hasHint = ShowHint && !string.IsNullOrEmpty(PlaceholderHintText);
+                hasPrefix = !string.IsNullOrEmpty(PrefixText);
+                hasSuffix = !string.IsNullOrEmpty(SuffixText);
+
+                Graphics g = CreateGraphics();
+
+                const float TRIANGLE_RECTANGLE_WIDTH = 30;
+
+                this.triangleRect = new RectangleF(this.ClientRectangle.Width - TRIANGLE_RECTANGLE_WIDTH, 0, TRIANGLE_RECTANGLE_WIDTH, this.ClientRectangle.Height);
+
+                this.textRect = this.ClientRectangle.ToRectF().ApplyPadding(this.InternalPadding);
+                this.textRect = this.textRect.ApplyPadding(0, 0, triangleRect.Width, this.ClientRectangle.Height - this.GetBottomLineRect().Y);
+
+                float hintOffset = 0;
+
+                if (this.prependIconData.image != null)
+                {
+                    float iconRectWidth = this.prependIconData.image.Width + (2 * this._prependIconMargin);
+                    this.prependIconData.rect = new RectangleF(0, 0, iconRectWidth, this.ClientRectangle.Height);
+                    hintOffset = iconRectWidth;
+                    this.textRect = this.textRect.ApplyPadding(iconRectWidth, 0, 0, 0);
+                }
+
+                if (this.appendIconData.image != null)
+                {
+                    float iconRectWidth = (this.appendIconData.image.Width + (2 * this._appendIconMargin));
+                    this.appendIconData.rect = new RectangleF(this.ClientRectangle.Width - iconRectWidth, 0, iconRectWidth, this.ClientRectangle.Height);
+                    this.triangleRect = new RectangleF(this.ClientRectangle.Width - TRIANGLE_RECTANGLE_WIDTH - iconRectWidth, 0, TRIANGLE_RECTANGLE_WIDTH, this.ClientRectangle.Height);
+                    this.textRect = this.textRect.ApplyPadding(0, 0, appendIconData.rect.Width, 0);
+                }
+
+                if (this.hasHint)
+                {
+                    this.hintRect = this.GetHintRect(g, new PointF(hintOffset, 0));
+                    this.textRect = this.textRect.ApplyPadding(0, this.hintRect.Height, 0, 0);
+                }
+
+
+                if (hasPrefix)
+                {
+                    SizeF prefixSize = g.MeasureString(PrefixText, PrefixFont, ClientRectangle.Width);
+                    PointF prefixLcation = new PointF(this.textRect.Left, this.textRect.Bottom - prefixSize.Height);
+                    this.prefixRect = new RectangleF(prefixLcation, prefixSize);
+                    this.textRect = this.textRect.ApplyPadding(prefixRect.Width, 0, 0, 0);
+                }
+
+                if (hasSuffix)
+                {
+                    SizeF suffixSize = g.MeasureString(SuffixText, SuffixFont, ClientRectangle.Width);
+                    PointF suffixLcation = new PointF(this.textRect.Right - suffixSize.Width, this.textRect.Bottom - suffixSize.Height);
+                    this.suffixRect = new RectangleF(suffixLcation, suffixSize);
+                    this.textRect = this.textRect.ApplyPadding(0, 0, suffixSize.Width, 0);
+                }
+
+                this.Invalidate();
             }
-            hasHint = ShowHint && !string.IsNullOrEmpty(PlaceholderHintText);
-            hasPrefix = !string.IsNullOrEmpty(PrefixText);
-            hasSuffix = !string.IsNullOrEmpty(SuffixText);
-
-            Graphics g = CreateGraphics();
-
-            const float TRIANGLE_RECTANGLE_WIDTH = 30;
-
-            this.triangleRect = new RectangleF(this.ClientRectangle.Width - TRIANGLE_RECTANGLE_WIDTH, 0, TRIANGLE_RECTANGLE_WIDTH, this.ClientRectangle.Height);
-
-            this.textRect = this.ClientRectangle.ToRectF().ApplyPadding(this.InternalPadding);
-            this.textRect = this.textRect.ApplyPadding(0, 0, triangleRect.Width, this.ClientRectangle.Height - this.GetBottomLineRect().Y);
-
-            float hintOffset = 0;
-
-            if (this.prependIconData.image != null)
-            {
-                float iconRectWidth = this.prependIconData.image.Width + (2 * this._prependIconMargin);
-                this.prependIconData.rect = new RectangleF(0, 0, iconRectWidth, this.ClientRectangle.Height);
-                hintOffset = iconRectWidth;
-                this.textRect = this.textRect.ApplyPadding(iconRectWidth, 0, 0, 0);
-            }
-
-            if (this.appendIconData.image != null)
-            {
-                float iconRectWidth = (this.appendIconData.image.Width + (2 * this._appendIconMargin));
-                this.appendIconData.rect = new RectangleF(this.ClientRectangle.Width - iconRectWidth, 0, iconRectWidth, this.ClientRectangle.Height);
-                this.triangleRect = new RectangleF(this.ClientRectangle.Width - TRIANGLE_RECTANGLE_WIDTH - iconRectWidth, 0, TRIANGLE_RECTANGLE_WIDTH, this.ClientRectangle.Height);
-                this.textRect = this.textRect.ApplyPadding(0, 0, appendIconData.rect.Width, 0);
-            }
-
-            if (this.hasHint)
-            {
-                this.hintRect = this.GetHintRect(g, new PointF(hintOffset, 0));
-                this.textRect = this.textRect.ApplyPadding(0, this.hintRect.Height, 0, 0);
-            }
-
-
-            if (hasPrefix)
-            {
-                SizeF prefixSize = g.MeasureString(PrefixText, PrefixFont, ClientRectangle.Width);
-                PointF prefixLcation = new PointF(this.textRect.Left, this.textRect.Bottom - prefixSize.Height);
-                this.prefixRect = new RectangleF(prefixLcation, prefixSize);
-                this.textRect = this.textRect.ApplyPadding(prefixRect.Width, 0, 0, 0);
-            }
-
-            if (hasSuffix)
-            {
-                SizeF suffixSize = g.MeasureString(SuffixText, SuffixFont, ClientRectangle.Width);
-                PointF suffixLcation = new PointF(this.textRect.Right - suffixSize.Width, this.textRect.Bottom - suffixSize.Height);
-                this.suffixRect = new RectangleF(suffixLcation, suffixSize);
-                this.textRect = this.textRect.ApplyPadding(0, 0, suffixSize.Width, 0);
-            }
-
-            this.Invalidate();
         }
 
 

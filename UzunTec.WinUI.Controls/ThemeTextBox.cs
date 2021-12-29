@@ -211,6 +211,7 @@ namespace UzunTec.WinUI.Controls
         {
             this.props = new ThemeControlWithHintPlaceHolderProperties(this);
             this.prefixSuffixProps = new ThemeControlWithPrefixSuffixProperties(this);
+            this.Multiline = true;
 
             // Control Defaults
             this.PlaceholderHintText = "";
@@ -266,7 +267,7 @@ namespace UzunTec.WinUI.Controls
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
-           //base.AutoSize = false;
+            base.AutoSize = false;
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
 
             UpdateRects();
@@ -279,57 +280,59 @@ namespace UzunTec.WinUI.Controls
             SizeChanged += (sender, args) => { UpdateRects(); SetTextRect(textRect); };
 
             base.Multiline = true;
+
         }
 
         public void UpdateRects()
         {
-            hasHint = ShowHint && !string.IsNullOrEmpty(PlaceholderHintText);
-            hasPrefix = !string.IsNullOrEmpty(PrefixText);
-            hasSuffix = !string.IsNullOrEmpty(SuffixText);
+           
+                hasHint = ShowHint && !string.IsNullOrEmpty(PlaceholderHintText);
+                hasPrefix = !string.IsNullOrEmpty(PrefixText);
+                hasSuffix = !string.IsNullOrEmpty(SuffixText);
 
-            Graphics g = CreateGraphics();
+                Graphics g = CreateGraphics();
 
-            this.textRect = this.ClientRectangle.ToRectF().ApplyPadding(this.InternalPadding);
-            this.textRect = this.textRect.ApplyPadding(0, 0, 0, this.ClientRectangle.Height - this.GetBottomLineRect().Y);
+                this.textRect = this.ClientRectangle.ToRectF().ApplyPadding(this.InternalPadding);
+                this.textRect = this.textRect.ApplyPadding(0, 0, 0, this.ClientRectangle.Height - this.GetBottomLineRect().Y);
 
-            float hintOffset = 0;
-            if (this.prependIconData.image != null)
-            {
-                float iconRectWidth = this.prependIconData.image.Width + (2 * this._prependIconMargin);
-                this.prependIconData.rect = new RectangleF(0, 0, iconRectWidth, this.ClientRectangle.Height);
-                hintOffset = iconRectWidth;
-                this.textRect = this.textRect.ApplyPadding(iconRectWidth, 0, 0, 0);
-            }
+                float hintOffset = 0;
+                if (this.prependIconData.image != null)
+                {
+                    float iconRectWidth = this.prependIconData.image.Width + (2 * this._prependIconMargin);
+                    this.prependIconData.rect = new RectangleF(0, 0, iconRectWidth, this.ClientRectangle.Height);
+                    hintOffset = iconRectWidth;
+                    this.textRect = this.textRect.ApplyPadding(iconRectWidth, 0, 0, 0);
+                }
 
-            if (this.appendIconData.image != null)
-            {
-                float iconRectWidth = this.appendIconData.image.Width + (2 * this._appendIconMargin);
-                this.appendIconData.rect = new RectangleF(this.ClientRectangle.Width - iconRectWidth, 0, iconRectWidth, this.ClientRectangle.Height);
-                this.textRect = this.textRect.ApplyPadding(0, 0, iconRectWidth, 0);
-            }
+                if (this.appendIconData.image != null)
+                {
+                    float iconRectWidth = this.appendIconData.image.Width + (2 * this._appendIconMargin);
+                    this.appendIconData.rect = new RectangleF(this.ClientRectangle.Width - iconRectWidth, 0, iconRectWidth, this.ClientRectangle.Height);
+                    this.textRect = this.textRect.ApplyPadding(0, 0, iconRectWidth, 0);
+                }
 
-            if (hasHint)
-            {
-                this.hintRect = this.GetHintRect(g, new PointF(hintOffset, 0));
-                this.textRect = this.textRect.ApplyPadding(0, hintRect.Height, 0, 0);
-            }
+                if (hasHint)
+                {
+                    this.hintRect = this.GetHintRect(g, new PointF(hintOffset, 0));
+                    this.textRect = this.textRect.ApplyPadding(0, hintRect.Height, 0, 0);
+                }
 
-            if (hasPrefix)
-            {
-                SizeF prefixSize = g.MeasureString(PrefixText, PrefixFont, ClientRectangle.Width);
-                PointF prefixLcation = new PointF(this.textRect.Left, this.textRect.Bottom - prefixSize.Height);
-                this.prefixRect = new RectangleF(prefixLcation, prefixSize);
-                this.textRect = this.textRect.ApplyPadding(prefixRect.Width, 0, 0, 0);
-            }
+                if (hasPrefix)
+                {
+                    SizeF prefixSize = g.MeasureString(PrefixText, PrefixFont, ClientRectangle.Width);
+                    PointF prefixLcation = new PointF(this.textRect.Left, this.textRect.Bottom - prefixSize.Height);
+                    this.prefixRect = new RectangleF(prefixLcation, prefixSize);
+                    this.textRect = this.textRect.ApplyPadding(prefixRect.Width, 0, 0, 0);
+                }
 
-            if (hasSuffix)
-            {
-                SizeF suffixSize = g.MeasureString(SuffixText, SuffixFont, ClientRectangle.Width);
-                PointF suffixLcation = new PointF(this.textRect.Right - suffixSize.Width, this.textRect.Bottom - suffixSize.Height);
-                this.suffixRect = new RectangleF(suffixLcation, suffixSize);
-                this.textRect = this.textRect.ApplyPadding(0, 0, suffixSize.Width, 0);
-            }
-
+                if (hasSuffix)
+                {
+                    SizeF suffixSize = g.MeasureString(SuffixText, SuffixFont, ClientRectangle.Width);
+                    PointF suffixLcation = new PointF(this.textRect.Right - suffixSize.Width, this.textRect.Bottom - suffixSize.Height);
+                    this.suffixRect = new RectangleF(suffixLcation, suffixSize);
+                    this.textRect = this.textRect.ApplyPadding(0, 0, suffixSize.Width, 0);
+                }
+            
         }
 
         protected override void OnPaint(PaintEventArgs e)

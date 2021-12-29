@@ -231,7 +231,7 @@ namespace UzunTec.WinUI.Controls
 
             this.butttonsRect = new RectangleF(this.Width - buttonOffset, 0, buttonOffset, HEADER_HEIGHT);
 
-            Graphics g = Graphics.FromHwnd(this.Handle);
+            Graphics g = CreateGraphics();
             SizeF headerTextSize = g.MeasureString(this.Text, this._textFont);
 
             float rightOffet = ((int)(this._headerTextAlign & (ContentAlignment.TopCenter | ContentAlignment.MiddleCenter | ContentAlignment.BottomCenter)) != 0) ? 10 : 10 + buttonOffset;
