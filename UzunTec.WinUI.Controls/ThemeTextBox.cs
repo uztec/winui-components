@@ -219,6 +219,9 @@ namespace UzunTec.WinUI.Controls
             Size = ThemeConstants.DefaultControlSize.ToSize();
             base.BorderStyle = BorderStyle.None;
 
+            this.PrefixFontClass = FontClass.Tiny;
+            this.SuffixFontClass = FontClass.Tiny;
+            this.HintFontClass = FontClass.Small;
             this._prependIconMargin = 5;
             this._appendIconMargin = 5;
         }

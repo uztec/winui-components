@@ -58,7 +58,7 @@ namespace UzunTec.WinUI.Controls.Themes
                 {FontClass.Body, ThemeSchemeManager.Instance.GetFont("Segoe UI", 14) },
                 {FontClass.Styled, ThemeSchemeManager.Instance.GetFont("Roboto Thin", 14, FontStyle.Italic) },
                 {FontClass.Small, ThemeSchemeManager.Instance.GetFont("Segoe UI", 8) },
-                {FontClass.Tiny, ThemeSchemeManager.Instance.GetFont("Segoe UI", 6) },
+                {FontClass.Tiny, ThemeSchemeManager.Instance.GetFont("Segoe UI", 8) },
             };
 
             this.DarkTheme = false;
