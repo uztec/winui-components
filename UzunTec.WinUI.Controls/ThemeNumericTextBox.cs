@@ -46,10 +46,6 @@ namespace UzunTec.WinUI.Controls
             this.invalidCharRegex = $"[^{chars}]";
         }
 
-
-        [DllImport("user32.dll")]
-        private static extern bool PostMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);
-
         public string Mask { get; set; }
         public bool Percentual { get; set; }
 
@@ -143,6 +139,13 @@ namespace UzunTec.WinUI.Controls
             return 0;
         }
 
+        public new void Clear()
+        {
+            this._decimalValue = 0;
+            this.Text = "";
+            base.Clear();
+        }
+
         #region Copy And Paste
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -155,21 +158,21 @@ namespace UzunTec.WinUI.Controls
                     return true;
                 case Keys.Control | Keys.V:
                 case Keys.Shift | Keys.Insert:
-                    PostMessage(this.Handle, Win32ApiConstants.WM_PASTE, 0, 0);
+                    Win32ApiFunction.PostMessage(this.Handle, Win32ApiConstants.WM_PASTE, 0, 0);
                     return true;
                 case Keys.Control | Keys.C:
                 case Keys.Control | Keys.Insert:
-                    PostMessage(this.Handle, Win32ApiConstants.WM_COPY, 0, 0);
+                    Win32ApiFunction.PostMessage(this.Handle, Win32ApiConstants.WM_COPY, 0, 0);
                     return true;
                 case Keys.Control | Keys.X:
                 case Keys.Shift | Keys.Delete:
-                    PostMessage(this.Handle, Win32ApiConstants.WM_CUT, 0, 0);
+                    Win32ApiFunction.PostMessage(this.Handle, Win32ApiConstants.WM_CUT, 0, 0);
                     return true;
                 case Keys.Control | Keys.Delete:
-                    PostMessage(this.Handle, Win32ApiConstants.WM_CLEAR, 0, 0);
+                    Win32ApiFunction.PostMessage(this.Handle, Win32ApiConstants.WM_CLEAR, 0, 0);
                     return true;
                 case Keys.Control | Keys.Z:
-                    PostMessage(this.Handle, Win32ApiConstants.WM_UNDO, 0, 0);
+                    Win32ApiFunction.PostMessage(this.Handle, Win32ApiConstants.WM_UNDO, 0, 0);
                     return true;
                 default:
                     return base.ProcessCmdKey(ref msg, keyData);
