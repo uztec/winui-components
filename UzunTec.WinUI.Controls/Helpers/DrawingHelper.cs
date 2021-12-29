@@ -65,7 +65,8 @@ namespace UzunTec.WinUI.Controls.Helpers
 
         internal static RectangleF GetHintRect(this IThemeControlWithHint ctrl, Graphics g, PointF offset = default)
         {
-            SizeF hintSize = g.MeasureString(ctrl.PlaceholderHintText, ctrl.HintFont, ctrl.ClientRectangle.Width);
+            string hintText = string.IsNullOrEmpty(ctrl.PlaceholderHintText) ? "  " : ctrl.PlaceholderHintText;
+            SizeF hintSize = g.MeasureString(hintText, ctrl.HintFont, ctrl.ClientRectangle.Width);
             return new RectangleF(offset.X + ctrl.InternalPadding.Left, offset.Y + ctrl.InternalPadding.Top, hintSize.Width, hintSize.Height);
         }
 

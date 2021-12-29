@@ -22,8 +22,8 @@ namespace UzunTec.WinUI.Controls
         [Browsable(false), ReadOnly(true)]
         public new BorderStyle BorderStyle { get; }
 
-        [Browsable(false), ReadOnly(true)]
-        public new bool Multiline { get; }
+        [Category("Z-Custom"), DefaultValue(typeof(bool), "false")]
+        public new bool Multiline { get; set; }
 
         [Browsable(false)]
         public new Color ForeColor { get => TextColor; set => TextColor = value; }
@@ -46,7 +46,6 @@ namespace UzunTec.WinUI.Controls
         [Category("Theme"), DefaultValue(typeof(Padding), "1; 1; 1; 1;")]
         public Padding InternalPadding { get => this.props.InternalPadding; set => this.props.InternalPadding = value; }
 
-
         #region Theme Properties - Text and Background
 
         [Category("Theme"), DefaultValue(typeof(Color), "Black")]
@@ -56,7 +55,7 @@ namespace UzunTec.WinUI.Controls
         public Color TextColorDisabled { get => this.props.TextColorDisabled; set => this.props.TextColorDisabled = value; }
 
         [Category("Theme"), DefaultValue(typeof(Font), "Seguoe UI")]
-        public new Font Font { get => this.props.TextFont; set => this.props.TextFont = value; }
+        public new Font Font { get => this.props.TextFont; set { this.props.TextFont = value; base.Font = value; } }
 
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
         public Color BackgroundColorDark { get => this.props.BackgroundColorDark; set => this.props.BackgroundColorDark = value; }
@@ -76,7 +75,6 @@ namespace UzunTec.WinUI.Controls
         [Category("Theme"), DefaultValue(typeof(Color), "Control")]
         public Color BackgroundColorFocusedLight { get => this.props.BackgroundColorFocusedLight; set => this.props.BackgroundColorFocusedLight = value; }
         #endregion
-
 
         #region Theme Properties - Hint And Placeholder
 
@@ -211,7 +209,7 @@ namespace UzunTec.WinUI.Controls
         {
             this.props = new ThemeControlWithHintPlaceHolderProperties(this);
             this.prefixSuffixProps = new ThemeControlWithPrefixSuffixProperties(this);
-            this.Multiline = true;
+            this.Multiline = false;
 
             // Control Defaults
             this.PlaceholderHintText = "";
@@ -288,54 +286,56 @@ namespace UzunTec.WinUI.Controls
 
         public void UpdateRects()
         {
-           
-                hasHint = ShowHint && !string.IsNullOrEmpty(PlaceholderHintText);
-                hasPrefix = !string.IsNullOrEmpty(PrefixText);
-                hasSuffix = !string.IsNullOrEmpty(SuffixText);
+            if (this.UpdatingTheme) { return; }
 
-                Graphics g = CreateGraphics();
+            hasHint = ShowHint && !string.IsNullOrEmpty(PlaceholderHintText);
+            hasPrefix = !string.IsNullOrEmpty(PrefixText);
+            hasSuffix = !string.IsNullOrEmpty(SuffixText);
 
-                this.textRect = this.ClientRectangle.ToRectF().ApplyPadding(this.InternalPadding);
-                this.textRect = this.textRect.ApplyPadding(0, 0, 0, this.ClientRectangle.Height - this.GetBottomLineRect().Y);
+            Graphics g = CreateGraphics();
 
-                float hintOffset = 0;
-                if (this.prependIconData.image != null)
-                {
-                    float iconRectWidth = this.prependIconData.image.Width + (2 * this._prependIconMargin);
-                    this.prependIconData.rect = new RectangleF(0, 0, iconRectWidth, this.ClientRectangle.Height);
-                    hintOffset = iconRectWidth;
-                    this.textRect = this.textRect.ApplyPadding(iconRectWidth, 0, 0, 0);
-                }
+            this.textRect = this.ClientRectangle.ToRectF().ApplyPadding(this.InternalPadding);
+            this.textRect = this.textRect.ApplyPadding(0, 0, 0, this.ClientRectangle.Height - this.GetBottomLineRect().Y);
 
-                if (this.appendIconData.image != null)
-                {
-                    float iconRectWidth = this.appendIconData.image.Width + (2 * this._appendIconMargin);
-                    this.appendIconData.rect = new RectangleF(this.ClientRectangle.Width - iconRectWidth, 0, iconRectWidth, this.ClientRectangle.Height);
-                    this.textRect = this.textRect.ApplyPadding(0, 0, iconRectWidth, 0);
-                }
+            float hintOffset = 0;
+            if (this.prependIconData.image != null)
+            {
+                float iconRectWidth = this.prependIconData.image.Width + (2 * this._prependIconMargin);
+                this.prependIconData.rect = new RectangleF(0, 0, iconRectWidth, this.ClientRectangle.Height);
+                hintOffset = iconRectWidth;
+                this.textRect = this.textRect.ApplyPadding(iconRectWidth, 0, 0, 0);
+            }
 
-                if (hasHint)
-                {
-                    this.hintRect = this.GetHintRect(g, new PointF(hintOffset, 0));
-                    this.textRect = this.textRect.ApplyPadding(0, hintRect.Height, 0, 0);
-                }
+            if (this.appendIconData.image != null)
+            {
+                float iconRectWidth = this.appendIconData.image.Width + (2 * this._appendIconMargin);
+                this.appendIconData.rect = new RectangleF(this.ClientRectangle.Width - iconRectWidth, 0, iconRectWidth, this.ClientRectangle.Height);
+                this.textRect = this.textRect.ApplyPadding(0, 0, iconRectWidth, 0);
+            }
 
-                if (hasPrefix)
-                {
-                    SizeF prefixSize = g.MeasureString(PrefixText, PrefixFont, ClientRectangle.Width);
-                    PointF prefixLcation = new PointF(this.textRect.Left, this.textRect.Bottom - prefixSize.Height);
-                    this.prefixRect = new RectangleF(prefixLcation, prefixSize);
-                    this.textRect = this.textRect.ApplyPadding(prefixRect.Width, 0, 0, 0);
-                }
+            if (this.ShowHint)  // -- Change... Consider hint rect even if does not have any text
+            {
+                this.hintRect = this.GetHintRect(g, new PointF(hintOffset, 0));
+                this.textRect = this.textRect.ApplyPadding(0, hintRect.Height, 0, 0);
+            }
 
-                if (hasSuffix)
-                {
-                    SizeF suffixSize = g.MeasureString(SuffixText, SuffixFont, ClientRectangle.Width);
-                    PointF suffixLcation = new PointF(this.textRect.Right - suffixSize.Width, this.textRect.Bottom - suffixSize.Height);
-                    this.suffixRect = new RectangleF(suffixLcation, suffixSize);
-                    this.textRect = this.textRect.ApplyPadding(0, 0, suffixSize.Width, 0);
-                }
-            
+            if (hasPrefix)
+            {
+                SizeF prefixSize = g.MeasureString(PrefixText, PrefixFont, ClientRectangle.Width);
+                PointF prefixLcation = new PointF(this.textRect.Left, this.textRect.Bottom - prefixSize.Height);
+                this.prefixRect = new RectangleF(prefixLcation, prefixSize);
+                this.textRect = this.textRect.ApplyPadding(prefixRect.Width, 0, 0, 0);
+            }
+
+            if (hasSuffix)
+            {
+                SizeF suffixSize = g.MeasureString(SuffixText, SuffixFont, ClientRectangle.Width);
+                PointF suffixLcation = new PointF(this.textRect.Right - suffixSize.Width, this.textRect.Bottom - suffixSize.Height);
+                this.suffixRect = new RectangleF(suffixLcation, suffixSize);
+                this.textRect = this.textRect.ApplyPadding(0, 0, suffixSize.Width, 0);
+            }
+
+            this.SetTextRect(textRect);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -408,6 +408,15 @@ namespace UzunTec.WinUI.Controls
         {
             base.OnTextChanged(e);
             Invalidate();
+        }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && this.Multiline == false)
+            {
+                e.Handled = true;
+            }
+            base.OnKeyDown(e);
         }
 
 
