@@ -49,7 +49,7 @@ namespace UzunTec.WinUI.Controls
         private Color _titlePanelColorLight;
 
         [Category("Theme"), DefaultValue(typeof(int), "47")]
-        public int HeaderPanelHeight { get => _headerPanelHeight; set { _headerPanelHeight = value; this.UpdateNonClientArea(); } }
+        public int HeaderPanelHeight { get => _headerPanelHeight; set { _headerPanelHeight = value; this.SetBasePadding(this._padding);  this.UpdateNonClientArea(); } }
         private int _headerPanelHeight;
 
 
@@ -192,8 +192,8 @@ namespace UzunTec.WinUI.Controls
             int borderBottomAdjust = this._borderWidth - this.NonClientArea.Bottom;
 
             // this.AdjustNonClientArea(new Padding(borderLeftAdjust, heightAdjust, borderRightAdjust, borderBottomAdjust));
-            //this.UpdateRects();
-            //this.Invalidate();
+            this.UpdateRects();
+            this.Invalidate();
         }
 
 
