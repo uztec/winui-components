@@ -52,6 +52,12 @@ namespace UzunTec.WinUI.Controls
         public int HeaderPanelHeight { get => _headerPanelHeight; set { _headerPanelHeight = value; this.UpdateNonClientArea(); } }
         private int _headerPanelHeight;
 
+
+        [Category("Theme"), DefaultValue(typeof(Font), "Segeo UI Light, 12")]
+        public new Font Font { get => _textFont; set { _textFont = value; this.UpdateNcRects(); this.Invalidate(); } }
+        private Font _textFont;
+
+
         [Category("Theme"), DefaultValue(typeof(Color), "Black")]
         public Font TitleTextFont { get => _titleTextFont; set { _titleTextFont = value; this.Invalidate(); } }
         private Font _titleTextFont;
@@ -90,7 +96,7 @@ namespace UzunTec.WinUI.Controls
         private ContentAlignment _titleTextAlign;
 
         [Category("Z-Custom"), DefaultValue(typeof(ContentAlignment), "MiddleLeft")]
-        public ContentAlignment HeaderTextAlign { get => this._headerTextAlign; set { this._headerTextAlign = value; this.UpdateNcRects();  this.InvalidateNc(); } }
+        public ContentAlignment HeaderTextAlign { get => this._headerTextAlign; set { this._headerTextAlign = value; this.UpdateNcRects(); this.InvalidateNc(); } }
         private ContentAlignment _headerTextAlign;
 
         [Browsable(false)]
@@ -105,7 +111,7 @@ namespace UzunTec.WinUI.Controls
 
         private void SetBasePadding(Padding value)
         {
-            base.Padding = value.AddPadding(new Padding(0, (int)this.HeaderPanelHeight, 0, 0));
+            base.Padding = value.AddPadding(new Padding(0, (int)this._headerPanelHeight, 0, 0));
         }
         private Padding _padding;
 
@@ -158,19 +164,17 @@ namespace UzunTec.WinUI.Controls
         private void UpdateStylesFromTheme()
         {
             // Theme
-            this.HeaderColorDark = this.ThemeScheme.FormHeaderColorDark;
-            this.HeaderColorLight = this.ThemeScheme.FormHeaderColorLight;
-            this.HeaderTextColor = this.ThemeScheme.FormHeaderTextColor;
-            this.Font = this.ThemeScheme.FormHeaderTextFont;
+            this._headerColorDark = this.ThemeScheme.FormHeaderColorDark;
+            this._headerColorLight = this.ThemeScheme.FormHeaderColorLight;
+            this._headerTextColor = this.ThemeScheme.FormHeaderTextColor;
+            this._textFont = this.ThemeScheme.FormHeaderTextFont;
 
-            this.TitlePanelColorDark = this.ThemeScheme.FormTitlePanelBackgroundColorDark;
-            this.TitlePanelColorLight = this.ThemeScheme.FormTitlePanelBackgroundColorLight;
-            this.TitleTextColor = this.ThemeScheme.FormTitleTextColor;
-            this.TitleTextFont = this.ThemeScheme.FormTitleFont;
+            this._titlePanelColorDark = this.ThemeScheme.FormTitlePanelBackgroundColorDark;
+            this._titlePanelColorLight = this.ThemeScheme.FormTitlePanelBackgroundColorLight;
+            this._titleTextColor = this.ThemeScheme.FormTitleTextColor;
+            this._titleTextFont = this.ThemeScheme.FormTitleFont;
 
             this.BackColor = this.ThemeScheme.FormBackgroundColor;
-            //this.btnMaximizeIcon.Text = "\u2718";
-            //this.btnCloseIcon.Text = "\uEF2C";
         }
 
 
@@ -228,7 +232,7 @@ namespace UzunTec.WinUI.Controls
             this.butttonsRect = new RectangleF(this.Width - buttonOffset, 0, buttonOffset, HEADER_HEIGHT);
 
             Graphics g = Graphics.FromHwnd(this.Handle);
-            SizeF headerTextSize = g.MeasureString(this.Text, this.Font);
+            SizeF headerTextSize = g.MeasureString(this.Text, this._textFont);
 
             float rightOffet = ((int)(this._headerTextAlign & (ContentAlignment.TopCenter | ContentAlignment.MiddleCenter | ContentAlignment.BottomCenter)) != 0) ? 10 : 10 + buttonOffset;
             this.textHeaderRect = headerRect.ApplyPadding(10, 0, rightOffet, 0).ShrinkToSize(headerTextSize, this.HeaderTextAlign);
@@ -295,7 +299,7 @@ namespace UzunTec.WinUI.Controls
             Brush headerTextBrush = new SolidBrush(this.HeaderTextColor);
             if (hasHeaderText)
             {
-                g.DrawText(this.Text, this.Font, headerTextBrush, this.textHeaderRect);
+                g.DrawText(this.Text, this._textFont, headerTextBrush, this.textHeaderRect);
             }
 
             //foreach (SideIconData iconData in icons.Values)
