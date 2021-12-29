@@ -22,13 +22,13 @@ namespace UzunTec.WinUI.Controls
         [Browsable(false), ReadOnly(true)]
         public new Size MinimumSize { get; set; }
 
-        [Browsable(false)]
+        [Browsable(false), ReadOnly(true)]
         public ThemeScheme ThemeScheme => ThemeSchemeManager.Instance.GetTheme();
 
-        [Browsable(false)]
+        [Browsable(false), ReadOnly(true)]
         public bool MouseHovered { get; private set; }
 
-        [Browsable(false)]
+        [Browsable(false), ReadOnly(true)]
         public bool UpdatingTheme { get; set; }
 
         [Category("Theme"), DefaultValue(true)]

@@ -31,14 +31,13 @@ namespace UzunTec.WinUI.Controls
         [Browsable(false), ReadOnly(true)]
         public new Size MinimumSize { get; set; }
 
-
-        [Browsable(false)]
+        [Browsable(false), ReadOnly(true)]
         public ThemeScheme ThemeScheme => ThemeSchemeManager.Instance.GetTheme();
 
-        [Browsable(false)]
+        [Browsable(false), ReadOnly(true)]
         public bool MouseHovered { get; private set; }
 
-        [Browsable(false)]
+        [Browsable(false), ReadOnly(true)]
         public bool UpdatingTheme { get; set; }
 
         [Category("Theme"), DefaultValue(true)]
@@ -267,7 +266,7 @@ namespace UzunTec.WinUI.Controls
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
-            base.AutoSize = false;
+           //base.AutoSize = false;
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
 
             UpdateRects();
