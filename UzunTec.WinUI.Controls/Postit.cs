@@ -141,26 +141,28 @@ namespace UzunTec.WinUI.Controls
             icons = new Dictionary<string, SideIconData>();
 
             Lighten = 55;
+
+            this.HeaderFontClass = FontClass.H2;
+            this.BodyFontClass = FontClass.Styled;
+            this.DateFontClass = FontClass.Small;
+            this.PostitBackgroundColorVariant = ColorVariant.Warning;
+            this.HeaderColorVariant = ColorVariant.Info;
+
             PostitFormat = true;
+
+            this.DateFont = ThemeScheme.GetFontFromClass(DateFontClass);
+            this.HeaderFont = ThemeScheme.GetFontFromClass(HeaderFontClass);
+            this.DateFont = ThemeScheme.GetFontFromClass(DateFontClass);
+            this.BodyFont = ThemeScheme.GetFontFromClass(BodyFontClass);
 
             HeaderText = "Title";
             HeaderSize = 53;
 
             Date = DateTime.Today;
             DateFormat = "dd-MMM-yyyy";
-            DateFont = ThemeScheme.GetFontFromClass(FontClass.Small);
 
-            Size = new Size(250, 200);
             IconMargin = 5;
-
-            this.HeaderFontClass = FontClass.H1;
-            this.BodyFontClass = FontClass.Styled;
-            this.PostitBackgroundColorVariant = ColorVariant.Warning;
-            this.HeaderColorVariant = ColorVariant.Info;
-
-            HeaderFont = ThemeScheme.GetFontFromClass(HeaderFontClass);
-            DateFont = ThemeScheme.GetFontFromClass(DateFontClass);
-            BodyFont = ThemeScheme.GetFontFromClass(BodyFontClass);
+            Size = new Size(250, 200);
 
             this.InternalPadding = new Padding(10, 10, 3, 3);
         }

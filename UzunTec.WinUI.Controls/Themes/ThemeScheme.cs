@@ -49,8 +49,8 @@ namespace UzunTec.WinUI.Controls.Themes
 
             this.FontClasses = new Dictionary<FontClass, Font>
             {
-                {FontClass.H1, ThemeSchemeManager.Instance.GetFont("Segoe UI SemiBold", 25) },
-                {FontClass.H2, ThemeSchemeManager.Instance.GetFont("Segoe UI Semibold", 20) },
+                {FontClass.H1, ThemeSchemeManager.Instance.GetFont("Segoe UI SemiBold", 20) },
+                {FontClass.H2, ThemeSchemeManager.Instance.GetFont("Segoe UI Semibold", 15) },
                 {FontClass.H3, ThemeSchemeManager.Instance.GetFont("Segoe UI", 18, FontStyle.Italic) },
                 {FontClass.H4, ThemeSchemeManager.Instance.GetFont("Segoe UI Light", 17, FontStyle.Italic) },
                 {FontClass.H5, ThemeSchemeManager.Instance.GetFont("Segoe UI Semibold", 10) },
