@@ -260,7 +260,7 @@ namespace UzunTec.WinUI.Controls
         {
             Graphics g = e.Graphics;
 
-            if (titleRect.Width > 0f && this._showTitlePanel)
+            if (titleRect.Width > 0f && titleRect.Height > 0f && this._showTitlePanel)
             {
                 Brush titleBrush = new LinearGradientBrush(titleRect, _titlePanelColorDark, _titlePanelColorLight, LinearGradientMode.ForwardDiagonal);
                g.FillRectangle(titleBrush, titleRect);
