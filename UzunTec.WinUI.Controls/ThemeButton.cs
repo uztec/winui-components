@@ -34,6 +34,10 @@ namespace UzunTec.WinUI.Controls
         [Category("Theme"), DefaultValue(typeof(Padding), "1; 1; 1; 1;")]
         public Padding InternalPadding { get => this.props.InternalPadding; set => this.props.InternalPadding = value; }
 
+        [Category("Theme"), DefaultValue(typeof(int), "20")]
+        public int HoverLighten { get => this._hoverLighten; set { this._hoverLighten = value; } }
+        private int _hoverLighten;
+
 
         #region Theme Properties - Text and Background
 
@@ -136,6 +140,7 @@ namespace UzunTec.WinUI.Controls
             this.BorderColorHighlightVariant = ColorVariant.Primary;
             this.BorderColorDisabledVariant = ColorVariant.Secondary;
             this.TextFontClass = FontClass.Body;
+            _hoverLighten = 20;
         }
 
         public void UpdateStylesFromTheme()
@@ -147,8 +152,8 @@ namespace UzunTec.WinUI.Controls
 
             this.BackgroundColorDark = this.ThemeScheme.GetPaletteColor(this.BackgroundColorVariant, true);
             this.BackgroundColorLight = this.ThemeScheme.GetPaletteColor(this.BackgroundColorVariant, false);
-            this.BackgroundColorFocusedDark = this.ThemeScheme.GetPaletteColor(this.BackgroundColorFocusedVariant, true);
-            this.BackgroundColorFocusedLight = this.ThemeScheme.GetPaletteColor(this.BackgroundColorFocusedVariant, false);
+            this.BackgroundColorFocusedDark = this.ThemeScheme.GetPaletteColor(this.BackgroundColorFocusedVariant, true).Lighten(_hoverLighten);
+            this.BackgroundColorFocusedLight = this.ThemeScheme.GetPaletteColor(this.BackgroundColorFocusedVariant, false).Lighten(_hoverLighten);
             this.BackgroundColorDisabledDark = this.ThemeScheme.GetPaletteColor(this.BackgroundColorDisabledVariant, true);
             this.BackgroundColorDisabledLight = this.ThemeScheme.GetPaletteColor(this.BackgroundColorDisabledVariant, false);
 
