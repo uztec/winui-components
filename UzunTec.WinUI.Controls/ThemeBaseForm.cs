@@ -268,7 +268,7 @@ namespace UzunTec.WinUI.Controls
 
             if (this.logoImageData.image != null)
             {
-                g.DrawImage(logoImageData.image, logoTitleRect);
+                g.DrawImage(logoImageData.image, logoTitleRect.ShrinkToSize(this.logoImageData.image.Size, ContentAlignment.MiddleCenter));
                 //g.FillRectangle(Brushes.DarkMagenta, logoTitleRect);
             }
 
