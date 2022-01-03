@@ -35,7 +35,7 @@ namespace UzunTec.WinUI.Controls
         public Padding InternalPadding { get => this.props.InternalPadding; set => this.props.InternalPadding = value; }
 
         [Category("Theme"), DefaultValue(typeof(int), "20")]
-        public int HoverLighten { get => this._hoverLighten; set { this._hoverLighten = value; } }
+        public int HoverLighten { get => this._hoverLighten; set => this._hoverLighten = value; }
         private int _hoverLighten;
 
 
@@ -115,7 +115,7 @@ namespace UzunTec.WinUI.Controls
 
         [Category("Theme"), DefaultValue(typeof(ColorVariant), "Dark")]
         public ColorVariant BorderColorDisabledVariant { get => this.btnProps.BorderColorDisabledVariant; set => this.btnProps.BorderColorDisabledVariant = value; }
-        
+
         [Category("Theme"), DefaultValue(false)]
         public bool Transparent { get => this.btnProps.Transparent; set => this.btnProps.Transparent = value; }
 
@@ -140,7 +140,7 @@ namespace UzunTec.WinUI.Controls
             this.BorderColorHighlightVariant = ColorVariant.Primary;
             this.BorderColorDisabledVariant = ColorVariant.Secondary;
             this.TextFontClass = FontClass.Body;
-            _hoverLighten = 20;
+            this._hoverLighten = 20;
         }
 
         public void UpdateStylesFromTheme()
@@ -170,34 +170,46 @@ namespace UzunTec.WinUI.Controls
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+            this.SetStyle(ControlStyles.SupportsTransparentBackColor | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+            this.BackColor = Color.Transparent;
             LostFocus += (sender, args) => { MouseHovered = false; this.Invalidate(); };
             GotFocus += (sender, args) => this.Invalidate();
             MouseEnter += (sender, args) => { MouseHovered = true; this.Invalidate(); };
             MouseLeave += (sender, args) => { MouseHovered = false; this.Invalidate(); };
-        }
 
+        }
         public void UpdateRects()
         {
         }
 
-        protected override void OnPaint(PaintEventArgs pevent)
+        protected override void OnPaintBackground(PaintEventArgs e)
         {
-            Graphics g = pevent.Graphics;
-            g.Clear(this.GetParentColor());
+            base.OnPaintBackground(e);
+            Graphics g = e.Graphics;
 
             if (!this.Transparent)
             {
                 g.FillBackground(this, false);
             }
+            else if (MouseHovered)
+            {
+                g.FillRectangle(new SolidBrush(Color.FromArgb(this._hoverLighten, 0, 0, 0)), this.ClientRectangle);
+            }
 
+        }
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+
+            InvokePaintBackground(this, e);
+          
             g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
             g.SmoothingMode = SmoothingMode.AntiAlias;
             RectangleF buttonRect = ClientRectangle.ToRectF();
 
             if (this.BorderWidth > 0)
             {
-                Brush borderBrush = this.Enabled ? 
+                Brush borderBrush = this.Enabled ?
                     (this.Focused || this.MouseHovered) ? new SolidBrush(this.BorderColorHighlight)
                     : new SolidBrush(this.BorderColor)
                     : new SolidBrush(this.BorderColorDisabled);
@@ -225,6 +237,7 @@ namespace UzunTec.WinUI.Controls
                     : ThemeSchemeManager.Instance.GetTextBrush(this);
 
             g.DrawText(this.Text, this.Font, textBrush, textRect, textSize, this.TextAlign);
+
         }
 
         private RectangleF CalculateTextRect(RectangleF buttonRect, RectangleF imageRect)
