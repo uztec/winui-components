@@ -33,7 +33,7 @@ namespace UzunTec.WinUI.Controls
         private Color _borderColorLight;
 
         [Category("Z-Custom"), DefaultValue(typeof(int), "5")]
-        public float BorderWidth { get => _borderWidth; set { _borderWidth = value; this.UpdateRects(); this.Invalidate(); } }
+        public float BorderWidth { get => _borderWidth; set { _borderWidth = value; this.SetBasePadding(_padding); this.UpdateRects(); this.Invalidate(); } }
         private float _borderWidth;
 
         [Category("Z-Custom"), DefaultValue(typeof(Color), "White")]
@@ -68,6 +68,14 @@ namespace UzunTec.WinUI.Controls
 
         [Category("Z-Custom"), DefaultValue(true)]
         public bool ShowMinimize { get => this.icons["minimize"].visible; set { this.icons["minimize"].visible = value; this.UpdateRects(); this.Invalidate(); } }
+
+        [Category("Z-Custom"), DefaultValue(typeof(Padding), "0;0;0;0")]
+        public new Padding Padding { get => this._padding; set { this._padding = value; this.SetBasePadding(value); this.Invalidate(); } }
+        private void SetBasePadding(Padding value)
+        {
+            base.Padding = value.AddPadding(new Padding((int)this._borderWidth, HEADER_HEIGHT, (int)this._borderWidth, (int)this._borderWidth));
+        }
+        private Padding _padding;
 
 
         private RectangleF textHeaderRect, headerRect, borderRect;
