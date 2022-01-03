@@ -124,6 +124,24 @@
   <data name="calendarWhite" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\calendarwhite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="close_off_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\close-off-dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="close_on" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\close-on.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="maximize_off_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\maximize-off-dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="maximize_on" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\maximize-on.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="minimize_off_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\minimize-off-dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="minimize_on" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\minimize-on.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Roboto_Black" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Roboto-Black.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
