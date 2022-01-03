@@ -117,7 +117,7 @@ namespace UzunTec.WinUI.Controls
 
             if (this._showTitlePanel)
             {
-                this.titleRect = new RectangleF(0, 0, this.ClientRectangle.Width + (BorderWidth * 2), _titlePanelHeight);
+                this.titleRect = new RectangleF(0, 25, this.ClientRectangle.Width, _titlePanelHeight);
 
                 if (this.logoImageData.image != null)
                 {
@@ -131,6 +131,7 @@ namespace UzunTec.WinUI.Controls
         }
         protected override void OnPaint(PaintEventArgs e)
         {
+            base.OnPaint(e); 
             Graphics g = e.Graphics;
 
             if (titleRect.Width > 0f && titleRect.Height > 0f && this._showTitlePanel)

@@ -25,27 +25,27 @@ namespace UzunTec.WinUI.Controls
         public new bool ShowIcon { get; }
 
         [Category("Z-Custom"), DefaultValue(typeof(Color), "DarkGray")]
-        public Color BorderColorDark { get => _borderColorDark; set { _borderColorDark = value; this.Invalidate(); } }
+        public Color BorderColorDark { get => _borderColorDark; set { _borderColorDark = value; this.UpdateRects(); this.Invalidate(); } }
         private Color _borderColorDark;
 
         [Category("Z-Custom"), DefaultValue(typeof(Color), "Blue")]
-        public Color BorderColorLight { get => _borderColorLight; set { _borderColorLight = value; this.Invalidate(); } }
+        public Color BorderColorLight { get => _borderColorLight; set { _borderColorLight = value; this.UpdateRects(); this.Invalidate(); } }
         private Color _borderColorLight;
 
-        [Category("Theme"), DefaultValue(typeof(int), "5")]
-        public float BorderWidth { get => _borderWidth; set { _borderWidth = value; this.UpdateRects(); } }
+        [Category("Z-Custom"), DefaultValue(typeof(int), "5")]
+        public float BorderWidth { get => _borderWidth; set { _borderWidth = value; this.UpdateRects(); this.Invalidate(); } }
         private float _borderWidth;
 
         [Category("Z-Custom"), DefaultValue(typeof(Color), "White")]
-        public Color HeaderTextColor { get => _headerTextColor; set { _headerTextColor = value; this.Invalidate(); } }
+        public Color HeaderTextColor { get => _headerTextColor; set { _headerTextColor = value; this.UpdateRects(); this.Invalidate(); } }
         private Color _headerTextColor;
 
         [Category("Z-Custom"), DefaultValue(typeof(Color), "DarkGray")]
-        public Color HeaderColorDark { get => _headerColorDark; set { _headerColorDark = value; this.Invalidate(); } }
+        public Color HeaderColorDark { get => _headerColorDark; set { _headerColorDark = value; this.UpdateRects(); this.Invalidate(); } }
         private Color _headerColorDark;
 
-        [Category("Theme"), DefaultValue(typeof(Color), "Blue")]
-        public Color HeaderColorLight { get => _headerColorLight; set { _headerColorLight = value; this.Invalidate(); } }
+        [Category("Z-Custom"), DefaultValue(typeof(Color), "Blue")]
+        public Color HeaderColorLight { get => _headerColorLight; set { _headerColorLight = value; this.UpdateRects(); this.Invalidate(); } }
         private Color _headerColorLight;
 
         [Category("Z-Custom"), DefaultValue(typeof(Font), "Segeo UI Light, 12")]
@@ -120,8 +120,8 @@ namespace UzunTec.WinUI.Controls
             hasHeaderText = !string.IsNullOrEmpty(this.Text);
 
             this.headerRect = new RectangleF(0, 0, this.ClientRectangle.Width, HEADER_HEIGHT);
-            this.borderRect = new RectangleF(0, HEADER_HEIGHT, this.ClientRectangle.Width, this.ClientRectangle.Height - HEADER_HEIGHT);
-            this.borderRect = this.borderRect.ApplyPadding(-(float)_borderWidth / 2);
+            this.borderRect = new RectangleF(_borderWidth / 2, HEADER_HEIGHT - (_borderWidth /2), this.ClientRectangle.Width - (_borderWidth), this.ClientRectangle.Height - HEADER_HEIGHT);
+            this.borderRect = this.borderRect.ApplyPadding(_borderWidth / 4);
 
             float buttonOffset = BUTTON_MARGIN_RIGHT;
             foreach (SideIconData iconData in this.icons.Values)
@@ -141,7 +141,7 @@ namespace UzunTec.WinUI.Controls
             this.borderBrushDark = new SolidBrush(this._borderColorDark);
             this.borderPenLight = new Pen(borderBrushLight, this._borderWidth / 2);
             this.borderPenDark = new Pen(borderBrushDark, this._borderWidth / 2);
-            this.headerBrush = new LinearGradientBrush(headerRect, _headerColorDark, _headerColorLight, LinearGradientMode.ForwardDiagonal);
+            this.headerBrush = new LinearGradientBrush(headerRect, _headerColorDark, _headerColorLight, LinearGradientMode.Vertical);
             this.headerTextBrush = new SolidBrush(this._headerTextColor);
 
         }
@@ -152,9 +152,8 @@ namespace UzunTec.WinUI.Controls
             base.OnPaint(e);
 
             Graphics g = e.Graphics;
-
-            g.DrawRectangle(this.borderPenLight, this.borderRect.ToRect(true));
-            g.DrawRectangle(this.borderPenDark, this.borderRect.ApplyPadding(-this._borderWidth / 2).ToRect(true));
+            g.DrawRectangle(this.borderPenLight, this.borderRect.ToRect());
+            g.DrawRectangle(this.borderPenDark, this.borderRect.ApplyPadding(-this._borderWidth / 2).ToRect());
             g.FillRectangle(headerBrush, headerRect);
 
             if (hasHeaderText)
@@ -171,6 +170,9 @@ namespace UzunTec.WinUI.Controls
             g.SmoothingMode = SmoothingMode.Default;
 
             //g.DrawRectangle(new Pen(Brushes.Orange, 0.5f), this.fullNcRect);
+
+          
+
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
