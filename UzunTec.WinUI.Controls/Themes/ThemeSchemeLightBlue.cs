@@ -38,7 +38,7 @@ namespace UzunTec.WinUI.Controls.Themes
             this.FormHeaderColorLight = Color.FromArgb(26, 41, 53);
             this.FormTitleTextColor = Color.FromArgb(240, 240, 240);
             this.FormTitlePanelBackgroundColorDark = Color.FromArgb(14, 25, 36);
-            this.FormTitlePanelBackgroundColorLight = Color.FromArgb(14, 25, 36);
+            this.FormTitlePanelBackgroundColorLight = Color.FromArgb(14, 25, 36).Lighten(60);
             this.FormControlButtonHoverColor = Color.FromArgb(62, 88, 115);
 
             this.CellBackgroundColor = Color.FromArgb(240, 240, 240);
