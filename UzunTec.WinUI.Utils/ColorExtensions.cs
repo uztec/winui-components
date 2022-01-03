@@ -19,5 +19,10 @@ namespace UzunTec.WinUI.Utils
             int B = c.B - darkness;
             return Color.FromArgb(c.A, R < 0 ? 0 : R, G < 0 ? 0 : G, B < 0 ? 0 : B);
         }
+
+        public static Color LightenOrDarken(this Color c, int lightness)
+        {
+            return (lightness >= 0) ? Lighten(c, lightness) : Darken(c, -lightness);
+        }
     }
 }

@@ -152,8 +152,8 @@ namespace UzunTec.WinUI.Controls
 
             this.BackgroundColorDark = this.ThemeScheme.GetPaletteColor(this.BackgroundColorVariant, true);
             this.BackgroundColorLight = this.ThemeScheme.GetPaletteColor(this.BackgroundColorVariant, false);
-            this.BackgroundColorFocusedDark = this.ThemeScheme.GetPaletteColor(this.BackgroundColorFocusedVariant, true).Lighten(_hoverLighten);
-            this.BackgroundColorFocusedLight = this.ThemeScheme.GetPaletteColor(this.BackgroundColorFocusedVariant, false).Lighten(_hoverLighten);
+            this.BackgroundColorFocusedDark = this.ThemeScheme.GetPaletteColor(this.BackgroundColorFocusedVariant, true);
+            this.BackgroundColorFocusedLight = this.ThemeScheme.GetPaletteColor(this.BackgroundColorFocusedVariant, false);
             this.BackgroundColorDisabledDark = this.ThemeScheme.GetPaletteColor(this.BackgroundColorDisabledVariant, true);
             this.BackgroundColorDisabledLight = this.ThemeScheme.GetPaletteColor(this.BackgroundColorDisabledVariant, false);
 
@@ -172,14 +172,58 @@ namespace UzunTec.WinUI.Controls
             base.OnCreateControl();
             this.SetStyle(ControlStyles.SupportsTransparentBackColor | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
             this.BackColor = Color.Transparent;
-            LostFocus += (sender, args) => { MouseHovered = false; this.Invalidate(); };
-            GotFocus += (sender, args) => this.Invalidate();
-            MouseEnter += (sender, args) => { MouseHovered = true; this.Invalidate(); };
-            MouseLeave += (sender, args) => { MouseHovered = false; this.Invalidate(); };
+            LostFocus += (sender, args) => { MouseHovered = false; this.UpdateRects(); this.Invalidate(); };
+            GotFocus += (sender, args) => { this.UpdateRects(); this.Invalidate(); };
+            MouseEnter += (sender, args) => { MouseHovered = true; this.UpdateRects(); this.Invalidate(); };
+            MouseLeave += (sender, args) => { MouseHovered = false; this.UpdateRects(); this.Invalidate(); };
+            this.UpdateRects();
 
         }
+
+        private RectangleF buttonRect, textRect, imageRect, borderRect;
+        private Pen borderPen;
+        private SizeF textSize;
+        private Brush textBrush, backgroundBrush;
+
+
         public void UpdateRects()
         {
+            if (IsHandleCreated)
+            {
+                this.buttonRect = ClientRectangle.ToRectF();
+
+                Brush borderBrush = this.Enabled ?
+                       (this.Focused) ? new SolidBrush(this.BorderColorHighlight)
+                       : new SolidBrush(this.BorderColor)
+                       : new SolidBrush(this.BorderColorDisabled);
+
+                int border = (this.Focused) ? this.BorderWidth + 1 : this.BorderWidth;
+                this.borderPen = (border > 0)? new Pen(borderBrush, border) : null;
+                this.borderRect = this.buttonRect.ApplyPadding((float)border / 2); 
+                this.textRect = buttonRect.ApplyPadding(this.InternalPadding);
+
+                Graphics g = CreateGraphics();
+                this.textSize = g.MeasureString(this.Text, this.Font, buttonRect.Size);
+
+                if (this.Image != null)
+                {
+                    this.imageRect = this.CalculateImageRect(buttonRect, textSize);
+                    imageRect = imageRect.ShrinkToSize(this.Image.Size, this.ImageAlign);
+                    textRect = this.CalculateTextRect(buttonRect, imageRect);
+                }
+
+                this.textBrush = (this.Enabled && this.MouseHovered) ? new SolidBrush(this.TextColorHighlight)
+                        : ThemeSchemeManager.Instance.GetTextBrush(this);
+
+                this.backgroundBrush = this.Enabled ?
+                            this.MouseHovered ? new LinearGradientBrush(this.ClientRectangle,
+                                                            this.BackgroundColorFocusedDark.LightenOrDarken(this._hoverLighten),
+                                                            this.BackgroundColorFocusedLight.LightenOrDarken(this._hoverLighten),
+                                                            LinearGradientMode.Vertical)
+                            /* Normal */   : new LinearGradientBrush(this.ClientRectangle, this.BackgroundColorDark, this.BackgroundColorLight, LinearGradientMode.Vertical)
+                            /* Disabled */ : new LinearGradientBrush(this.ClientRectangle, this.BackgroundColorDisabledDark, this.BackgroundColorDisabledLight, LinearGradientMode.Vertical);
+
+            }
         }
 
         protected override void OnPaintBackground(PaintEventArgs e)
@@ -189,7 +233,7 @@ namespace UzunTec.WinUI.Controls
 
             if (!this.Transparent)
             {
-                g.FillBackground(this, false);
+                g.FillRectangle(backgroundBrush, this.ClientRectangle);
             }
             else if (MouseHovered)
             {
@@ -202,42 +246,19 @@ namespace UzunTec.WinUI.Controls
             Graphics g = e.Graphics;
 
             InvokePaintBackground(this, e);
-          
-            g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            RectangleF buttonRect = ClientRectangle.ToRectF();
 
-            if (this.BorderWidth > 0)
+            if (this.borderPen != null)
             {
-                Brush borderBrush = this.Enabled ?
-                    (this.Focused || this.MouseHovered) ? new SolidBrush(this.BorderColorHighlight)
-                    : new SolidBrush(this.BorderColor)
-                    : new SolidBrush(this.BorderColorDisabled);
-
-                Region borderRegion = new Region(this.ClientRectangle);
-                buttonRect = buttonRect.ApplyPadding(new Padding(this.BorderWidth));
-                borderRegion.Exclude(buttonRect);
-                g.FillRegion(borderBrush, borderRegion);
+                g.DrawRectangle(this.borderPen, this.borderRect.ToRect());
             }
-
-            buttonRect = buttonRect.ApplyPadding(this.InternalPadding);
-            RectangleF textRect = buttonRect;
-            SizeF textSize = g.MeasureString(this.Text, this.Font, buttonRect.Size);
 
             if (this.Image != null)
-            {
-                RectangleF imageRect = this.CalculateImageRect(buttonRect, textSize);// textRect;
-                imageRect = imageRect.ShrinkToSize(this.Image.Size, this.ImageAlign);
+            {               
                 g.DrawImageUnscaled(this.Image, Point.Ceiling(imageRect.Location));
-
-                textRect = this.CalculateTextRect(buttonRect, imageRect);// textRect;
             }
-
-            Brush textBrush = (this.Enabled && (this.Focused || this.MouseHovered)) ? new SolidBrush(this.TextColorHighlight)
-                    : ThemeSchemeManager.Instance.GetTextBrush(this);
-
+            g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
             g.DrawText(this.Text, this.Font, textBrush, textRect, textSize, this.TextAlign);
-
         }
 
         private RectangleF CalculateTextRect(RectangleF buttonRect, RectangleF imageRect)

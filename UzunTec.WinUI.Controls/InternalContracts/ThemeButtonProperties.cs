@@ -16,6 +16,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
                 if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._textColorHighlight = value;
+                    this.control.UpdateRects();
                     this.control.Invalidate();
                 }
             }
@@ -30,6 +31,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
                 if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._borderColor = value;
+                    this.control.UpdateRects();
                     this.control.Invalidate();
                 }
             }
@@ -45,6 +47,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
                 if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._borderColorDisabled = value;
+                    this.control.UpdateRects();
                     this.control.Invalidate();
                 }
             }
@@ -60,6 +63,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
                 if (!this._useThemeColors || this.control.UpdatingTheme)
                 {
                     this._borderColorHighlight = value;
+                    this.control.UpdateRects();
                     this.control.Invalidate();
                 }
             }
@@ -77,6 +81,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
                 if (this._useThemeColors)
                 {
                     this.DoUpdateStylesFromTheme();
+                    this.control.UpdateRects();
                     this.control.Invalidate();
                 }
             }
@@ -96,6 +101,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
                 if (this._useThemeColors)
                 {
                     this.DoUpdateStylesFromTheme();
+                    this.control.UpdateRects();
                     this.control.Invalidate();
                 }
             }
@@ -111,6 +117,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
                 if (this._useThemeColors)
                 {
                     this.DoUpdateStylesFromTheme();
+                    this.control.UpdateRects();
                     this.control.Invalidate();
                 }
             }
@@ -144,6 +151,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
                 if (this._useThemeColors)
                 {
                     this.DoUpdateStylesFromTheme();
+                    this.control.UpdateRects();
                     this.control.Invalidate();
                 }
             }
@@ -159,6 +167,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
                 if (this._useThemeColors)
                 {
                     this.DoUpdateStylesFromTheme();
+                    this.control.UpdateRects();
                     this.control.Invalidate();
                 }
             }
@@ -174,6 +183,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
                 if (this._useThemeColors)
                 {
                     this.DoUpdateStylesFromTheme();
+                    this.control.UpdateRects();
                     this.control.Invalidate();
                 }
             }
@@ -190,6 +200,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
                 if (this._useThemeColors)
                 {
                     this.DoUpdateStylesFromTheme();
+                    this.control.UpdateRects();
                     this.control.Invalidate();
                 }
             }
@@ -205,16 +216,18 @@ namespace UzunTec.WinUI.Controls.InternalContracts
                 if (this._useThemeColors)
                 {
                     this.DoUpdateStylesFromTheme();
+                    this.control.UpdateRects();
                     this.control.Invalidate();
                 }
             }
         }
         protected ColorVariant _borderColorDisabledVariant;
 
-        public int BorderWidth { get => _borderWidth; set { _borderWidth = value; this.control.Invalidate(); } }
+                    
+        public int BorderWidth { get => _borderWidth; set { _borderWidth = value; this.control.UpdateRects();  this.control.Invalidate(); } }
         private int _borderWidth;
 
-        public bool Transparent { get => _transparent; set { _transparent = value; this.control.Invalidate(); } }
+        public bool Transparent { get => _transparent; set { _transparent = value;  this.control.Invalidate(); } }
         private bool _transparent;
 
 
