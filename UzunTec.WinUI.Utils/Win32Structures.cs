@@ -16,6 +16,14 @@ namespace UzunTec.WinUI.Utils
         public IntPtr lppos;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MARGINS
+    {
+        public int Left;
+        public int Right;
+        public int Top;
+        public int Bottom;
+    }
 
     [StructLayout(LayoutKind.Sequential)]
     public struct RECT
