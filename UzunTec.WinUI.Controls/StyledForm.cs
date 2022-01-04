@@ -53,8 +53,7 @@ namespace UzunTec.WinUI.Controls
         private Font _textFont;
 
         [Category("Z-Custom"), DefaultValue("")]
-        public new string Text { get => _text; set { _text = value; this.UpdateRects(); this.Invalidate(); } }
-        private string _text;
+        public new string Text { get => base.Text; set { base.Text = value; this.UpdateRects(); this.Invalidate(); } }
 
         [Category("Z-Custom"), DefaultValue(typeof(ContentAlignment), "MiddleLeft")]
         public ContentAlignment HeaderTextAlign { get => this._headerTextAlign; set { this._headerTextAlign = value; this.UpdateRects(); this.Invalidate(); } }
@@ -108,7 +107,6 @@ namespace UzunTec.WinUI.Controls
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
-            base.Text = "";
             base.ControlBox = false;
             base.ShowIcon = false;
             base.FormBorderStyle = FormBorderStyle.None;
@@ -196,7 +194,7 @@ namespace UzunTec.WinUI.Controls
 
             if (hasHeaderText)
             {
-                g.DrawText(this._text, this._textFont, headerTextBrush, this.textHeaderRect);
+                g.DrawText(this.Text, this._textFont, headerTextBrush, this.textHeaderRect);
             }
 
             g.SmoothingMode = SmoothingMode.AntiAlias;
