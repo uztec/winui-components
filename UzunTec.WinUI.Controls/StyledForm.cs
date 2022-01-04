@@ -18,12 +18,6 @@ namespace UzunTec.WinUI.Controls
         private const int HEADER_HEIGHT = 25;
         private const int LEFT_TEXT_PADDING = 10;
 
-        [Browsable(false), ReadOnly(true)]
-        public new bool ControlBox { get; }
-
-        [Browsable(false), ReadOnly(true)]
-        public new bool ShowIcon { get; }
-
         [Category("Z-Custom"), DefaultValue(typeof(Color), "DarkGray")]
         public Color BorderColorDark { get => _borderColorDark; set { _borderColorDark = value; this.UpdateRects(); this.Invalidate(); } }
         private Color _borderColorDark;
@@ -107,8 +101,6 @@ namespace UzunTec.WinUI.Controls
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
-            base.ControlBox = false;
-            base.ShowIcon = false;
             base.FormBorderStyle = FormBorderStyle.None;
             this.DoubleBuffered = true;
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
