@@ -3,6 +3,7 @@
     public static class Win32ApiConstants
     {
         public const int EM_SETRECT = 0xB3;
+        public const int HT_CAPTION = 0x2;
 
         public const int
         /* FONT WEIGHT (BOLD) VALUES */
@@ -536,6 +537,7 @@
         HTNOWHERE = 0,
         HTCLIENT = 1,
         HTLEFT = 10,
+        HTRIGHT = 11,
         HTBOTTOM = 15,
         HTBOTTOMLEFT = 16,
         HTBOTTOMRIGHT = 17,

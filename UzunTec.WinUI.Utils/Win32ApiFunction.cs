@@ -17,6 +17,9 @@ namespace UzunTec.WinUI.Utils
         [DllImport(@"User32.dll", EntryPoint = @"SendMessage", CharSet = CharSet.Auto)]
         public static extern int SendMessage(IntPtr hWnd, uint msg, int wParam, ref RECT lParam);
 
+        [DllImport(@"User32.dll", EntryPoint = @"SendMessage", CharSet = CharSet.Auto)]
+        public static extern int SendMessage(IntPtr hWnd, uint msg, ref RECT wParam, int lParam);
+
         [DllImport("user32.dll")]
         public static extern bool PostMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);
 
@@ -35,5 +38,10 @@ namespace UzunTec.WinUI.Utils
         [DllImport("User32.dll")]
         public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern void DisableProcessWindowsGhosting();
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmExtendFrameIntoClientArea(IntPtr hWnd, ref MARGINS pMargins);
     }
 }

@@ -39,9 +39,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FormWithNc.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Interfaces\IThemeControlWithPrefixSuffix.cs" />
     <Compile Include="Interfaces\IThemeControlWithHintPlaceholder.cs" />
     <Compile Include="InternalContracts\ThemePostitProperties.cs" />
@@ -50,6 +47,9 @@
     <Compile Include="InternalContracts\ThemeControlWithPrefixSuffixProperties.cs" />
     <Compile Include="Postit.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="StyledForm.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="ThemeBaseForm.cs">
       <SubType>Form</SubType>
@@ -106,6 +106,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\minimize-on.png" />
+    <None Include="Resources\minimize-off-dark.png" />
+    <None Include="Resources\maximize-on.png" />
+    <None Include="Resources\maximize-off-dark.png" />
+    <None Include="Resources\close-on.png" />
+    <None Include="Resources\close-off-dark.png" />
     <Content Include="Resources\calendarDark.png" />
     <Content Include="Resources\calendarWhite.png" />
   </ItemGroup>

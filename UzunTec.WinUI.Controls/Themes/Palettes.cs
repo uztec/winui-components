@@ -33,7 +33,8 @@ namespace UzunTec.WinUI.Controls.Themes
             SGLight.SetColor(ColorVariant.Info, Color.FromArgb(34, 166, 179), Color.FromArgb(126, 214, 223));
             SGLight.SetColor(ColorVariant.Success, Color.FromArgb(106, 176, 76), Color.FromArgb(186, 220, 88));
             SGLight.SetColor(ColorVariant.Warning, Color.FromArgb(249, 202, 36), Color.FromArgb(246, 229, 141));
-            SGLight.SetColor(ColorVariant.Danger, Color.FromArgb(235, 77, 75), Color.FromArgb(255, 121, 121));
+            //SGLight.SetColor(ColorVariant.Danger, Color.FromArgb(235, 77, 75), Color.FromArgb(255, 121, 121)); OLD
+            SGLight.SetColor(ColorVariant.Danger, Color.FromArgb(181, 30, 29), Color.FromArgb(235, 77, 75));
             SGLight.SetColor(ColorVariant.Light, Color.FromArgb(236, 240, 241));
             SGLight.SetColor(ColorVariant.Dark, Color.FromArgb(14, 25, 36));
         }
