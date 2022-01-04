@@ -79,6 +79,7 @@ namespace UzunTec.WinUI.Controls
             this._showTitlePanel = true;
             this._titleTextAlign = ContentAlignment.MiddleLeft;
             this._logoImageAlign = ContentAlignment.MiddleRight;
+            this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
 
             this.UpdateStylesFromTheme();
             this.UpdateRects();
