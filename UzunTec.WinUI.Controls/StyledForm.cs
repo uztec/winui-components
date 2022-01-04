@@ -94,7 +94,7 @@ namespace UzunTec.WinUI.Controls
             this._headerColorLight = Color.Blue;
             this._headerTextColor = Color.White;
             this._textFont = new Font(FontFamily.GenericSansSerif, 10);
-                        
+
             this.icons = new Dictionary<string, SideIconData>
             {
                 { "close", new SideIconData{ image = Properties.Resources.close_off_dark, imageHovered = Properties.Resources.close_on, visible = true } },
@@ -128,7 +128,7 @@ namespace UzunTec.WinUI.Controls
             hasHeaderText = !string.IsNullOrEmpty(this.Text);
 
             this.headerRect = new RectangleF(0, 0, this.ClientRectangle.Width, HEADER_HEIGHT);
-            this.borderRect = new RectangleF(_borderWidth / 2, HEADER_HEIGHT - (_borderWidth /2), this.ClientRectangle.Width - (_borderWidth), this.ClientRectangle.Height - HEADER_HEIGHT);
+            this.borderRect = new RectangleF(_borderWidth / 2, HEADER_HEIGHT - (_borderWidth / 2), this.ClientRectangle.Width - (_borderWidth), this.ClientRectangle.Height - HEADER_HEIGHT);
             this.borderRect = this.borderRect.ApplyPadding(_borderWidth / 4);
 
             float buttonOffset = BUTTON_MARGIN_RIGHT;
@@ -179,7 +179,7 @@ namespace UzunTec.WinUI.Controls
 
             //g.DrawRectangle(new Pen(Brushes.Orange, 0.5f), this.fullNcRect);
 
-          
+
 
         }
 
@@ -208,34 +208,40 @@ namespace UzunTec.WinUI.Controls
 
             if (headerRect.Contains(e.Location))
             {
-                foreach (string key in icons.Keys)
+                if (icons["close"].rect.Contains(e.Location))
                 {
-                    SideIconData iconData = icons[key];
-                    if (iconData.rect.Contains(e.Location))
-                    {
-                        //MessageBox.Show(key);
-                        if (key == "close")
-                        {
-                            this.Close();
-                        }
-                        if (key == "maximize")
-                        {
-                            if (WindowState == FormWindowState.Normal)
-                            {
-                                this.WindowState = FormWindowState.Maximized;
-                            }
-                            else
-                            {
-                                this.WindowState = FormWindowState.Normal;
-                            }
-                        }
-                        if (key == "minimize")
-                        {
-                            this.WindowState = FormWindowState.Minimized;
-                        }
-                    }
+                    this.Close();
                 }
+                else if (icons["maximize"].rect.Contains(e.Location))
+                {
+                    this.MaximizeOrRestore();
+                }
+                else if (icons["minimize"].rect.Contains(e.Location))
+                {
+                    this.WindowState = FormWindowState.Minimized;
+                }
+                else if (e.Clicks == 1 && e.Button == MouseButtons.Left)
+                {
+                    Win32ApiFunction.ReleaseCapture();
+                    Win32ApiFunction.SendMessage(Handle, Win32ApiConstants.WM_NCLBUTTONDOWN, Win32ApiConstants.HT_CAPTION, 0);
+                }
+                else if (e.Clicks == 2)
+                {
+                    this.MaximizeOrRestore();
+                }
+            }
+        }
+        private void MaximizeOrRestore()
+        {
+            if (WindowState == FormWindowState.Normal)
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Normal;
             }
         }
     }
 }
+
