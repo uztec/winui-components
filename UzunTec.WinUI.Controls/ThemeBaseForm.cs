@@ -90,7 +90,6 @@ namespace UzunTec.WinUI.Controls
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
-            base.Text = "";
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
 
             SizeChanged += (s, e) => { this.UpdateRects(); this.Invalidate(); };
