@@ -537,6 +537,7 @@
         HTNOWHERE = 0,
         HTCLIENT = 1,
         HTLEFT = 10,
+        HTRIGHT = 11,
         HTBOTTOM = 15,
         HTBOTTOMLEFT = 16,
         HTBOTTOMRIGHT = 17,

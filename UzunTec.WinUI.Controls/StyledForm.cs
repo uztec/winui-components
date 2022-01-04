@@ -78,8 +78,8 @@ namespace UzunTec.WinUI.Controls
         private Padding _padding;
 
 
-        private RectangleF textHeaderRect, headerRect, borderRect;
         private bool hasHeaderText;
+        private RectangleF textHeaderRect, headerRect, borderRect, utilRect;
         private readonly Dictionary<string, SideIconData> icons;
         private Brush borderBrushLight, borderBrushDark, headerBrush, headerTextBrush;
         private Pen borderPenLight, borderPenDark;
@@ -111,12 +111,41 @@ namespace UzunTec.WinUI.Controls
             base.Text = "";
             base.ControlBox = false;
             base.ShowIcon = false;
+            base.FormBorderStyle = FormBorderStyle.None;
+            this.DoubleBuffered = true;
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
             UpdateRects();
             SizeChanged += (e, s) => { UpdateRects(); };
         }
 
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == Win32ApiConstants.WM_NCHITTEST)
+            {
+                Point pos = new Point(m.LParam.ToInt32());
+                pos = this.PointToClient(pos);
 
+                if (!this.utilRect.Contains(pos))
+                {
+                    if (pos.X > this.utilRect.Right)
+                    {
+                        m.Result = (IntPtr)((pos.Y > this.utilRect.Bottom) ? Win32ApiConstants.HTBOTTOMRIGHT : Win32ApiConstants.HTRIGHT);
+                        return;
+                    }
+                    else if (pos.X < this.utilRect.Left)
+                    {
+                        m.Result = (IntPtr)((pos.Y > this.utilRect.Bottom) ? Win32ApiConstants.HTBOTTOMLEFT : Win32ApiConstants.HTLEFT);
+                        return;
+                    }
+                    else if (pos.Y > this.utilRect.Bottom)
+                    {
+                        m.Result = (IntPtr) Win32ApiConstants.HTBOTTOM;
+                        return;
+                    }
+                }
+            }
+            base.WndProc(ref m);
+        }
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
@@ -130,6 +159,7 @@ namespace UzunTec.WinUI.Controls
             this.headerRect = new RectangleF(0, 0, this.ClientRectangle.Width, HEADER_HEIGHT);
             this.borderRect = new RectangleF(_borderWidth / 2, HEADER_HEIGHT - (_borderWidth / 2), this.ClientRectangle.Width - (_borderWidth), this.ClientRectangle.Height - HEADER_HEIGHT);
             this.borderRect = this.borderRect.ApplyPadding(_borderWidth / 4);
+            this.utilRect = this.borderRect.ApplyPadding(1);
 
             float buttonOffset = BUTTON_MARGIN_RIGHT;
             foreach (SideIconData iconData in this.icons.Values)
