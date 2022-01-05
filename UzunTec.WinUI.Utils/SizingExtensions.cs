@@ -89,5 +89,16 @@ namespace UzunTec.WinUI.Utils
             }
             return rect;
         }
+
+        public static PointF GetCenterPoint(this RectangleF rect)
+        {
+            return new PointF(rect.X + rect.Width / 2f, rect.Y + rect.Height / 2f);
+        }
+
+        public static Point GetCenterPoint(this Rectangle rect)
+        {
+            return new Point(rect.X + ((int)(rect.Width / 2f)), rect.Y + ((int)(rect.Height / 2f)));
+        }
+
     }
 }

@@ -18,6 +18,10 @@ namespace UzunTec.WinUI.Controls
         private const int HEADER_HEIGHT = 25;
         private const int LEFT_TEXT_PADDING = 10;
 
+        [Browsable(false), ReadOnly(true)]
+        public new FormBorderStyle FormBorderStyle { get; }
+
+
         [Category("Z-Custom"), DefaultValue(typeof(Color), "DarkGray")]
         public Color BorderColorDark { get => _borderColorDark; set { _borderColorDark = value; this.UpdateRects(); this.Invalidate(); } }
         private Color _borderColorDark;
