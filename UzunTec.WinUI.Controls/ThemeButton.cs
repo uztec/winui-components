@@ -176,6 +176,7 @@ namespace UzunTec.WinUI.Controls
             GotFocus += (sender, args) => { this.UpdateRects(); this.Invalidate(); };
             MouseEnter += (sender, args) => { MouseHovered = true; this.UpdateRects(); this.Invalidate(); };
             MouseLeave += (sender, args) => { MouseHovered = false; this.UpdateRects(); this.Invalidate(); };
+            Click += (sender, args) => { this.UpdateRects(); this.Invalidate(); };
             this.UpdateRects();
 
         }
