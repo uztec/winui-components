@@ -28,40 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(12, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(859, 294);
+            this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.ClientSize = new System.Drawing.Size(713, 287);
             this.DoubleBuffered = true;
-            this.HeaderPanelHeight = 120;
-            this.HeaderTextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.Location = new System.Drawing.Point(0, 0);
-            this.LogoImage = global::UzunTec.WinUI.TestApp.Properties.Resources.logo_cren;
-            this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.Name = "Form1";
-            this.Text = "CREN - Prontuário Eletrônico";
-            this.Title = "Teste 2";
             this.ResumeLayout(false);
 
         }
 
-
         #endregion
 
-        private System.Windows.Forms.Button button1;
     }
 }
 

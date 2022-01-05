@@ -48,6 +48,9 @@
     <Compile Include="Postit.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="RoundedCornersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="StyledForm.cs">
       <SubType>Form</SubType>
     </Compile>
