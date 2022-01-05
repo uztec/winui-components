@@ -12,10 +12,10 @@ namespace UzunTec.WinUI.Controls
     public class ThemeLabel : Label, IThemeControlWithTextBackground
     {
         [Browsable(false), ReadOnly(true)]
-        public new Color BackColor { get => this.BackgroundColorDark; set => this.BackgroundColorDark = value; }
+        public new Color BackColor { get => this.BackgroundColorDark;  set { } }
 
         [Browsable(false), ReadOnly(true)]
-        public new Color ForeColor { get => this.TextColor; set => this.TextColor = value; }
+        public new Color ForeColor { get => this.TextColor; set { } }
 
         [Browsable(false), ReadOnly(true)]
         public ThemeScheme ThemeScheme => ThemeSchemeManager.Instance.GetTheme();
@@ -109,6 +109,8 @@ namespace UzunTec.WinUI.Controls
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
+            base.BackColor = Color.Transparent;
+
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
             MouseEnter += (sender, args) => { MouseHovered = true; this.Invalidate(); };
             MouseLeave += (sender, args) => { MouseHovered = false; this.Invalidate(); };
@@ -118,15 +120,25 @@ namespace UzunTec.WinUI.Controls
         {
         }
 
-        protected override void OnPaint(PaintEventArgs pevent)
+        protected override void OnPaintBackground(PaintEventArgs e)
         {
-            Graphics g = pevent.Graphics;
-            g.Clear(this.GetParentColor());
+            base.OnPaintBackground(e);
+            Graphics g = e.Graphics;
 
             if (!this.Transparent)
             {
                 g.FillBackground(this, false);
             }
+
+        }
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+
+            InvokePaintBackground(this, e);
+      
+
+       
             RectangleF textRect = ClientRectangle.ToRectF().ApplyPadding(this.InternalPadding);
             Brush textBrush = ThemeSchemeManager.Instance.GetTextBrush(this);
             g.DrawText(this.Text, this.Font, textBrush, textRect, this.TextAlign);

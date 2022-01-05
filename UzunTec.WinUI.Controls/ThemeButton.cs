@@ -14,10 +14,10 @@ namespace UzunTec.WinUI.Controls
     public class ThemeButton : Button, IThemeControlWithTextBackground
     {
         [Browsable(false), ReadOnly(true)]
-        public new Color BackColor { get => this.BackgroundColorDark; set => this.BackgroundColorDark = value; }
+        public new Color BackColor { get => this.BackgroundColorDark; set { } }
 
         [Browsable(false), ReadOnly(true)]
-        public new Color ForeColor { get => this.TextColor; set => this.TextColor = value; }
+        public new Color ForeColor { get => this.TextColor; set { } }
 
         [Browsable(false), ReadOnly(true)]
         public ThemeScheme ThemeScheme => ThemeSchemeManager.Instance.GetTheme();
@@ -171,7 +171,7 @@ namespace UzunTec.WinUI.Controls
         {
             base.OnCreateControl();
             this.SetStyle(ControlStyles.SupportsTransparentBackColor | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
-            this.BackColor = Color.Transparent;
+            base.BackColor = Color.Transparent;
             LostFocus += (sender, args) => { MouseHovered = false; this.UpdateRects(); this.Invalidate(); };
             GotFocus += (sender, args) => { this.UpdateRects(); this.Invalidate(); };
             MouseEnter += (sender, args) => { MouseHovered = true; this.UpdateRects(); this.Invalidate(); };
