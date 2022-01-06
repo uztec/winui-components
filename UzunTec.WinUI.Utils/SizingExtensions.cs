@@ -100,5 +100,11 @@ namespace UzunTec.WinUI.Utils
             return new Point(rect.X + ((int)(rect.Width / 2f)), rect.Y + ((int)(rect.Height / 2f)));
         }
 
+        public static Point CenterIn(this Rectangle rect, Rectangle parent)
+        {
+            Point center = parent.GetCenterPoint();
+            return new Point(center.X - (rect.Width / 2), center.Y - (rect.Height / 2));
+        }
+
     }
 }
