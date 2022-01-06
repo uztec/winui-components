@@ -149,33 +149,34 @@ namespace UzunTec.WinUI.Controls
         private void UpdateRects()
         {
             hasHeaderText = !string.IsNullOrEmpty(this.Text);
-
-            this.headerRect = new RectangleF(0, 0, this.ClientRectangle.Width, HEADER_HEIGHT);
-            this.borderRect = new RectangleF(_borderWidth / 2, HEADER_HEIGHT - (_borderWidth / 2), this.ClientRectangle.Width - (_borderWidth), this.ClientRectangle.Height - HEADER_HEIGHT);
-            this.borderRect = this.borderRect.ApplyPadding(_borderWidth / 4);
-            this.utilRect = this.borderRect.ApplyPadding(1);
-
-            float buttonOffset = BUTTON_MARGIN_RIGHT;
-            foreach (SideIconData iconData in this.icons.Values)
+            if (this.ClientRectangle.Width > 0 && this.ClientRectangle.Height > 0)
             {
-                iconData.rect = new RectangleF(this.headerRect.Right - BUTTON_WIDTH - buttonOffset, this.headerRect.Top, BUTTON_WIDTH, this.headerRect.Height);
-                iconData.rect = iconData.rect.ShrinkToSize(new SizeF(BUTTON_WIDTH, BUTTON_WIDTH), ContentAlignment.MiddleCenter);
-                buttonOffset += BUTTON_WIDTH + BUTTON_MARGIN;
+                this.headerRect = new RectangleF(0, 0, this.ClientRectangle.Width, HEADER_HEIGHT);
+                this.borderRect = new RectangleF(_borderWidth / 2, HEADER_HEIGHT - (_borderWidth / 2), this.ClientRectangle.Width - (_borderWidth), this.ClientRectangle.Height - HEADER_HEIGHT);
+                this.borderRect = this.borderRect.ApplyPadding(_borderWidth / 4);
+                this.utilRect = this.borderRect.ApplyPadding(1);
+
+                float buttonOffset = BUTTON_MARGIN_RIGHT;
+                foreach (SideIconData iconData in this.icons.Values)
+                {
+                    iconData.rect = new RectangleF(this.headerRect.Right - BUTTON_WIDTH - buttonOffset, this.headerRect.Top, BUTTON_WIDTH, this.headerRect.Height);
+                    iconData.rect = iconData.rect.ShrinkToSize(new SizeF(BUTTON_WIDTH, BUTTON_WIDTH), ContentAlignment.MiddleCenter);
+                    buttonOffset += BUTTON_WIDTH + BUTTON_MARGIN;
+                }
+
+                Graphics g = CreateGraphics();
+                SizeF headerTextSize = g.MeasureString(this.Text, this._textFont);
+
+                float rightOffet = ((int)(this._headerTextAlign & (ContentAlignment.TopCenter | ContentAlignment.MiddleCenter | ContentAlignment.BottomCenter)) != 0) ? 10 : 10 + buttonOffset;
+                this.textHeaderRect = headerRect.ApplyPadding(LEFT_TEXT_PADDING, 0, rightOffet, 0).ShrinkToSize(headerTextSize, this.HeaderTextAlign);
+
+                this.borderBrushLight = new SolidBrush(this._borderColorLight);
+                this.borderBrushDark = new SolidBrush(this._borderColorDark);
+                this.borderPenLight = new Pen(borderBrushLight, this._borderWidth / 2);
+                this.borderPenDark = new Pen(borderBrushDark, this._borderWidth / 2);
+                this.headerBrush = new LinearGradientBrush(headerRect, _headerColorDark, _headerColorLight, LinearGradientMode.Vertical);
+                this.headerTextBrush = new SolidBrush(this._headerTextColor);
             }
-
-            Graphics g = CreateGraphics();
-            SizeF headerTextSize = g.MeasureString(this.Text, this._textFont);
-
-            float rightOffet = ((int)(this._headerTextAlign & (ContentAlignment.TopCenter | ContentAlignment.MiddleCenter | ContentAlignment.BottomCenter)) != 0) ? 10 : 10 + buttonOffset;
-            this.textHeaderRect = headerRect.ApplyPadding(LEFT_TEXT_PADDING, 0, rightOffet, 0).ShrinkToSize(headerTextSize, this.HeaderTextAlign);
-
-            this.borderBrushLight = new SolidBrush(this._borderColorLight);
-            this.borderBrushDark = new SolidBrush(this._borderColorDark);
-            this.borderPenLight = new Pen(borderBrushLight, this._borderWidth / 2);
-            this.borderPenDark = new Pen(borderBrushDark, this._borderWidth / 2);
-            this.headerBrush = new LinearGradientBrush(headerRect, _headerColorDark, _headerColorLight, LinearGradientMode.Vertical);
-            this.headerTextBrush = new SolidBrush(this._headerTextColor);
-
         }
 
 
