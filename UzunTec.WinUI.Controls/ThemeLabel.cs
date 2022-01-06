@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using UzunTec.WinUI.Controls.Helpers;
@@ -78,7 +79,8 @@ namespace UzunTec.WinUI.Controls
 
         private readonly ThemeControlWithTextBackgroundProperties props;
         private readonly ThemeButtonProperties btnProps;
-
+        private PointF textLocation;
+        private Size preferredSize;
 
         public ThemeLabel()
         {
@@ -118,6 +120,12 @@ namespace UzunTec.WinUI.Controls
 
         public void UpdateRects()
         {
+            Graphics g = CreateGraphics();
+            SizeF textSize = g.MeasureString(this.Text, this.Font);
+
+            RectangleF fullRect = new RectangleF(0, 0, textSize.Width + this.InternalPadding.Horizontal, textSize.Height + this.InternalPadding.Vertical);
+            this.preferredSize = fullRect.Size.ToSize();
+            this.textLocation = fullRect.ApplyPadding(this.InternalPadding).ShrinkToSize(textSize, this.TextAlign).Location;
         }
 
         protected override void OnPaintBackground(PaintEventArgs e)
@@ -136,18 +144,22 @@ namespace UzunTec.WinUI.Controls
             Graphics g = e.Graphics;
 
             InvokePaintBackground(this, e);
-      
-
-       
-            RectangleF textRect = ClientRectangle.ToRectF().ApplyPadding(this.InternalPadding);
             Brush textBrush = ThemeSchemeManager.Instance.GetTextBrush(this);
-            g.DrawText(this.Text, this.Font, textBrush, textRect, this.TextAlign);
+            g.DrawString(this.Text, this.Font, textBrush, this.textLocation);
         }
 
         public override Size GetPreferredSize(Size proposedSize)
         {
-            Size s = base.GetPreferredSize(proposedSize);
-            return new Size(s.Width + this.InternalPadding.Horizontal + 1, s.Height + this.InternalPadding.Vertical + 1);
+            if (IsHandleCreated)
+            {
+                UpdateRects();
+                return this.preferredSize;
+            }
+            else
+            {
+                Size s = base.GetPreferredSize(proposedSize);
+                return new Size(s.Width + this.InternalPadding.Horizontal + 1, s.Height + this.InternalPadding.Vertical + 1);
+            }
         }
     }
 }
