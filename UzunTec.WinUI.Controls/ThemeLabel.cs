@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using UzunTec.WinUI.Controls.Helpers;
@@ -13,7 +12,7 @@ namespace UzunTec.WinUI.Controls
     public class ThemeLabel : Label, IThemeControlWithTextBackground
     {
         [Browsable(false), ReadOnly(true)]
-        public new Color BackColor { get => this.BackgroundColorDark;  set { } }
+        public new Color BackColor { get => this.BackgroundColorDark; set { } }
 
         [Browsable(false), ReadOnly(true)]
         public new Color ForeColor { get => this.TextColor; set { } }
@@ -122,8 +121,15 @@ namespace UzunTec.WinUI.Controls
         {
             Graphics g = CreateGraphics();
             SizeF textSize = g.MeasureString(this.Text, this.Font);
-
-            RectangleF fullRect = new RectangleF(0, 0, textSize.Width + this.InternalPadding.Horizontal, textSize.Height + this.InternalPadding.Vertical);
+            RectangleF fullRect;
+            if (this.AutoSize)
+            {
+                fullRect = new RectangleF(0, 0, textSize.Width + this.InternalPadding.Horizontal, textSize.Height + this.InternalPadding.Vertical);
+            }
+            else
+            {
+                fullRect = this.ClientRectangle.ToRectF();
+            }
             this.preferredSize = fullRect.Size.ToSize();
             this.textLocation = fullRect.ApplyPadding(this.InternalPadding).ShrinkToSize(textSize, this.TextAlign).Location;
         }
