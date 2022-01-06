@@ -56,6 +56,7 @@ namespace UzunTec.WinUI.Controls.InternalContracts
                 if (value && !this._useThemeColors)
                 {
                     this.DoUpdateStylesFromTheme();
+                this.control.UpdateRects();
                     this.control.Invalidate();
                 }
                 this._useThemeColors = value;

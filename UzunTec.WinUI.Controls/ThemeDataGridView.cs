@@ -32,6 +32,8 @@ namespace UzunTec.WinUI.Controls
             this.props = new ThemeControlProperties(this);
             InitializeComponent();
             UpdateStylesFromTheme();
+            this.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
         }
 
         public void UpdateStylesFromTheme()
@@ -66,7 +68,6 @@ namespace UzunTec.WinUI.Controls
             this.ReadOnly = true;
             this.RowHeadersVisible = false;
             this.AutoGenerateColumns = false;
-            this.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             this.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             this.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
