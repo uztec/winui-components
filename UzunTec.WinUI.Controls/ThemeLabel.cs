@@ -147,7 +147,7 @@ namespace UzunTec.WinUI.Controls
         public override Size GetPreferredSize(Size proposedSize)
         {
             Size s = base.GetPreferredSize(proposedSize);
-            return new Size(s.Width + this.InternalPadding.Horizontal, s.Height + this.InternalPadding.Vertical);
+            return new Size(s.Width + this.InternalPadding.Horizontal + 1, s.Height + this.InternalPadding.Vertical + 1);
         }
     }
 }
