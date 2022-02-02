@@ -3,7 +3,7 @@
     public enum ColorVariant
     {
         Dark = 'B',       // Black
-        Light = 'W',      // White
+        Light = 'L',      // White
         Primary = 'P',    // Blue / Purple
         Secondary = 'G',  // Grey Variant
         Success = 'S',    // Green
