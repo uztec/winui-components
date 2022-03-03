@@ -316,6 +316,15 @@ namespace UzunTec.WinUI.Controls
             //this.UpdateRects();
         }
 
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+            if (e.KeyData == Keys.Delete)
+            {
+                this.SelectedIndex = -1;
+            }
+        }
+
         public void UpdateRects()
         {
             if (this.IsHandleCreated)
