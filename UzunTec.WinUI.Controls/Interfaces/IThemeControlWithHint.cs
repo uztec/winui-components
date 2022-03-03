@@ -3,7 +3,7 @@ using UzunTec.WinUI.Controls.Themes;
 
 namespace UzunTec.WinUI.Controls.Interfaces
 {
-    internal interface IThemeControlWithHint : IThemeControlWithTextBackground
+    public interface IThemeControlWithHint : IThemeControlWithTextBackground
     {
         Color HintColor { get; }
         Font HintFont { get; }

@@ -39,6 +39,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IThemeOptionControl.cs" />
     <Compile Include="Interfaces\IThemeControlWithPrefixSuffix.cs" />
     <Compile Include="Interfaces\IThemeControlWithHintPlaceholder.cs" />
     <Compile Include="InternalContracts\ThemePostitProperties.cs" />
@@ -68,6 +69,12 @@
       <DependentUpon>ThemeDataGridView.cs</DependentUpon>
     </Compile>
     <Compile Include="ThemeDatePicker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ThemeCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ThemeRadioButton.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ThemeLabel.cs">

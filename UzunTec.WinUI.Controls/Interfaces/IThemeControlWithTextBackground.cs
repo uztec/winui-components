@@ -2,7 +2,7 @@
 
 namespace UzunTec.WinUI.Controls.Interfaces
 {
-    internal interface IThemeControlWithTextBackground : IThemeControl
+    public interface IThemeControlWithTextBackground : IThemeControl
     {
         Color TextColor { get; }
         Color TextColorDisabled { get; }

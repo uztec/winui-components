@@ -3,7 +3,7 @@ using UzunTec.WinUI.Controls.Themes;
 
 namespace UzunTec.WinUI.Controls.Interfaces
 {
-    internal interface IThemeControlWithPrefixSuffix : IThemeControl
+    public interface IThemeControlWithPrefixSuffix : IThemeControl
     {
         string PrefixText { get; }
         Color PrefixTextColor { get; }

@@ -40,6 +40,10 @@ namespace UzunTec.WinUI.Controls
         [Category("Z-Custom"), DefaultValue(typeof(int), "5")]
         public int BorderWidth { get => _borderWidth; set { _borderWidth = value; Invalidate(); } }
         private int _borderWidth;
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
 
         public ThemeModalBase()

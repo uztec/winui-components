@@ -5,8 +5,14 @@ using UzunTec.WinUI.Controls.Themes;
 
 namespace UzunTec.WinUI.Controls.Interfaces
 {
-    internal interface IThemeControl
+    public interface IThemeControl
     {
+        string Name { get; set; }
+        string Text { get; set; }
+        bool AutoSize { get; set; }
+        Size MaximumSize { get; set; }
+        Size MinimumSize { get; set; }
+
         ThemeScheme ThemeScheme { get; }
         bool MouseHovered { get; }
         bool UseThemeColors { get; }

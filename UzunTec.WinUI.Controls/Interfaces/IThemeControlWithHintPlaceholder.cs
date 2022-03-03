@@ -2,7 +2,7 @@
 
 namespace UzunTec.WinUI.Controls.Interfaces
 {
-    internal interface IThemeControlWithHintPlaceholder : IThemeControlWithHint
+    public interface IThemeControlWithHintPlaceholder : IThemeControlWithHint
     {
         Color PlaceholderColor { get; }
         Font PlaceholderFont { get; }
