@@ -34,6 +34,12 @@ namespace UzunTec.WinUI.Controls
 
         #region Theme Properties - Text and Background
 
+        [Category("Theme"), DefaultValue("")]
+        public override string Text { get => base.Text; set { base.Text = value; this.UpdateRects();  this.Invalidate(); } }
+        
+        [Category("Theme"), DefaultValue(typeof(ContentAlignment), "TopLeft")]
+        public override ContentAlignment TextAlign { get => base.TextAlign; set { base.TextAlign = value; this.UpdateRects(); this.Invalidate(); } }
+
         [Category("Theme"), DefaultValue(typeof(Color), "Black")]
         public Color TextColor { get => this.props.TextColor; set => this.props.TextColor = value; }
 
@@ -78,7 +84,7 @@ namespace UzunTec.WinUI.Controls
 
         private readonly ThemeControlWithTextBackgroundProperties props;
         private readonly ThemeButtonProperties btnProps;
-        private PointF textLocation;
+        private RectangleF textRect;
         private Size preferredSize;
 
         public ThemeLabel()
@@ -120,18 +126,20 @@ namespace UzunTec.WinUI.Controls
         public void UpdateRects()
         {
             Graphics g = CreateGraphics();
-            SizeF textSize = g.MeasureString(this.Text, this.Font);
             RectangleF fullRect;
+            SizeF textSize;
             if (this.AutoSize)
             {
+                textSize = g.MeasureString(this.Text, this.Font);
                 fullRect = new RectangleF(0, 0, textSize.Width + this.InternalPadding.Horizontal, textSize.Height + this.InternalPadding.Vertical);
+                this.preferredSize = fullRect.ToRect(true).Size;
             }
             else
             {
+                textSize = g.MeasureString(this.Text, this.Font, this.Width - this.InternalPadding.Horizontal);
                 fullRect = this.ClientRectangle.ToRectF();
             }
-            this.preferredSize = fullRect.Size.ToSize();
-            this.textLocation = fullRect.ApplyPadding(this.InternalPadding).ShrinkToSize(textSize, this.TextAlign).Location;
+            this.textRect = fullRect.ApplyPadding(this.InternalPadding).ShrinkToSize(textSize, this.TextAlign);
         }
 
         protected override void OnPaintBackground(PaintEventArgs e)
@@ -151,7 +159,7 @@ namespace UzunTec.WinUI.Controls
 
             InvokePaintBackground(this, e);
             Brush textBrush = ThemeSchemeManager.Instance.GetTextBrush(this);
-            g.DrawString(this.Text, this.Font, textBrush, this.textLocation);
+            g.DrawString(this.Text, this.Font, textBrush, this.textRect);
         }
 
         public override Size GetPreferredSize(Size proposedSize)
