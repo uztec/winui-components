@@ -121,6 +121,7 @@ namespace UzunTec.WinUI.Controls
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
             MouseEnter += (sender, args) => { MouseHovered = true; this.Invalidate(); };
             MouseLeave += (sender, args) => { MouseHovered = false; this.Invalidate(); };
+            SizeChanged+= (sender, args) => { this.UpdateRects(); this.Invalidate(); };
         }
 
         public void UpdateRects()
