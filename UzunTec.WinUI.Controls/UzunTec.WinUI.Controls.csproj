@@ -39,6 +39,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnhancedFlowLayoutPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GradientPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Interfaces\IThemeOptionControl.cs" />
     <Compile Include="Interfaces\IThemeControlWithPrefixSuffix.cs" />
     <Compile Include="Interfaces\IThemeControlWithHintPlaceholder.cs" />
@@ -54,6 +60,9 @@
     </Compile>
     <Compile Include="StyledForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ThemeAutoCompleteBox.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="ThemeBaseForm.cs">
       <SubType>Form</SubType>

@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using UzunTec.WinUI.Controls.Helpers;
 using UzunTec.WinUI.Controls.InternalContracts;
@@ -23,7 +24,7 @@ namespace UzunTec.WinUI.Controls
         private Color _titlePanelColorLight;
 
         [Category("Theme"), DefaultValue(typeof(Color), "Black")]
-        public Font TitleTextFont { get => _titleTextFont; set { _titleTextFont = value; this.UpdateRects();  this.Invalidate(); } }
+        public Font TitleTextFont { get => _titleTextFont; set { _titleTextFont = value; this.UpdateRects(); this.Invalidate(); } }
         private Font _titleTextFont;
 
         [Category("Theme"), DefaultValue(60)]
@@ -33,17 +34,21 @@ namespace UzunTec.WinUI.Controls
         #endregion
 
         [Category("Z-Custom"), DefaultValue(typeof(Color), "Control")]
-        public string Title { get => this._titleText; set { this._titleText = value; this.UpdateRects();  this.Invalidate(); } }
+        public string Title { get => this._titleText; set { this._titleText = value; this.UpdateRects(); this.Invalidate(); } }
         private string _titleText;
 
         [Category("Z-Custom"), DefaultValue(true)]
         public bool ShowTitlePanel { get => _showTitlePanel; set { _showTitlePanel = value; this.UpdateRects(); this.Invalidate(); } }
-        private bool _showTitlePanel;
+        private bool _showTitlePanel = true;
+
+        [Category("Z-Custom"), DefaultValue(true)]
+        public new bool ShowInTaskbar { get => _showInTaskBar; set { _showInTaskBar = value; base.ShowInTaskbar = value; } }
+        private bool _showInTaskBar = true;
 
         [Category("Z-Custom"), DefaultValue(typeof(Color), "Black")]
         public Color TitleTextColor { get => _titleTextColor; set { _titleTextColor = value; this.Invalidate(); } }
         private Color _titleTextColor;
-        
+
         [Category("Z-Custom"), DefaultValue(typeof(ContentAlignment), "MiddleLeft")]
         public ContentAlignment TitleTextAlign { get => this._titleTextAlign; set { this._titleTextAlign = value; this.UpdateRects(); this.Invalidate(); } }
         private ContentAlignment _titleTextAlign;
@@ -55,7 +60,7 @@ namespace UzunTec.WinUI.Controls
         [Category("Z-Custom"), DefaultValue(typeof(Image), "")]
         public Image LogoImage { get => this.logoImageData.image; set { this.logoImageData.image = value; this.UpdateRects(); this.Invalidate(); } }
 
- 
+
         [Category("Z-Custom"), DefaultValue(typeof(ContentAlignment), "MiddleRight")]
         public ContentAlignment LogoImageAlign { get => this._logoImageAlign; set { this._logoImageAlign = value; this.UpdateRects(); this.Invalidate(); } }
         private ContentAlignment _logoImageAlign;
@@ -84,7 +89,6 @@ namespace UzunTec.WinUI.Controls
             this.UpdateStylesFromTheme();
             this.UpdateRects();
             this.SetBasePadding(this._padding);
-
         }
 
         protected override void OnCreateControl()
@@ -96,6 +100,7 @@ namespace UzunTec.WinUI.Controls
 
             this.UpdateStylesFromTheme();
             this.UpdateRects();
+
         }
 
         private void UpdateStylesFromTheme()
@@ -139,7 +144,7 @@ namespace UzunTec.WinUI.Controls
         }
         protected override void OnPaint(PaintEventArgs e)
         {
-            base.OnPaint(e); 
+            base.OnPaint(e);
             Graphics g = e.Graphics;
 
             if (titleRect.Width > 0f && titleRect.Height > 0f && this._showTitlePanel)

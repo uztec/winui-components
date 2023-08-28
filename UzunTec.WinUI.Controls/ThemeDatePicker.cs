@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -95,7 +96,40 @@ namespace UzunTec.WinUI.Controls
         public ContentAlignment TextAlign { get => this._textAlign; set { this._textAlign = value; this.Invalidate(); } }
         private ContentAlignment _textAlign;
 
+        [Category("Z-Custom"), DefaultValue(typeof(string[]), "")]
+        public string DateSequence { get => GetDateSequence(); set => SetDateSequence(value); }
+        private string[] _dateSequence = new string[] { "D", "M", "Y" };
+        private const string VALID_DATE_PARTS = "DMY";
+
+        private string GetDateSequence()
+        {
+            return string.Join(", ", _dateSequence);
+        }
+
+        private void SetDateSequence(string value)
+        {
+            string[] values = value.Split(',');
+            
+            if (values.Length < 2)
+            {
+                throw new ArgumentException("Incorrect Date Sequence");
+            }
+
+            List<string> dateParts = new List<string>();
+            foreach (string v in values)
+            {
+                string dp = v.Trim().ToUpper();
+                if (dp.Length != 1 || !VALID_DATE_PARTS.Contains(dp) || dateParts.Contains(dp))
+                {
+                    throw new ArgumentException("Incorrect Date Sequence");
+                }
+                dateParts.Add(dp);
+            }
+            this._dateSequence = dateParts.ToArray();
+        }
+
         // Private
+        private int changingDatePart = 0;
         private bool droppedDown = false;
         private Image calendarIcon = Properties.Resources.calendarWhite;
         private RectangleF iconRect, textRect, hintRect;
@@ -147,7 +181,7 @@ namespace UzunTec.WinUI.Controls
             this.UpdateRects();
 
             LostFocus += (sender, args) => { MouseHovered = false; this.Invalidate(); };
-            GotFocus += (sender, args) => this.Invalidate();
+            GotFocus += (sender, args) => { this.changingDatePart = -1; this.Invalidate(); };
             MouseEnter += (sender, args) => { MouseHovered = true; this.Invalidate(); };
             MouseLeave += (sender, args) => { MouseHovered = false; this.Invalidate(); };
             SizeChanged += (sender, args) => { this.UpdateRects(); };
@@ -172,6 +206,21 @@ namespace UzunTec.WinUI.Controls
             }
             this.textRect = this.textRect.ApplyPadding(0, 0, 0, this.ClientRectangle.Height - this.GetBottomLineRect().Y);
         }
+
+        protected override void OnPreviewKeyDown(PreviewKeyDownEventArgs e)
+        {
+
+            if (e.KeyData == Keys.Tab)
+            {
+                if (this.changingDatePart != this._dateSequence.Length - 1)
+                {
+                    this.changingDatePart++;
+                    e.IsInputKey = true;
+                }
+            }
+            base.OnPreviewKeyDown(e);
+        }
+      
 
         protected override void OnPaint(PaintEventArgs e)
         {
