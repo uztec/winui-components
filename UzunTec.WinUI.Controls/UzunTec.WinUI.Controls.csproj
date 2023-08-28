@@ -4,6 +4,17 @@
         <UseWindowsForms>true</UseWindowsForms>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <PackageId>UzunTec.WinUI.Controls</PackageId>
+        <Version>0.1.0</Version>
+        <Authors>Uzun Technology</Authors>
+        <Company>Uzun Technology</Company>
+        <RepositoryUrl>https://github.com/uztec/winui-components.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Copyright>© 2023 Uzun Technology</Copyright>
+        <OutputType>Library</OutputType>
+        <PackageTags>Windows Forms Components</PackageTags>
+        <PackageIcon>winui-components-uztec.png</PackageIcon>
     </PropertyGroup>
     <ItemGroup>
       <Compile Remove="Themes\ThemeSchemeDarkBlue.cs" />
@@ -23,5 +34,11 @@
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       </EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="winui-components-uztec.png">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
     </ItemGroup>
 </Project>

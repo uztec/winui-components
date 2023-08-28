@@ -2,6 +2,24 @@
     <PropertyGroup>
         <TargetFramework>net6.0-windows7.0</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
+        <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <PackageId>UzunTec.WinUI.Utils</PackageId>
+        <Version>0.1.0</Version>
+        <Authors>Uzun Technology</Authors>
+        <Company>Uzun Technology</Company>
+        <RepositoryUrl>https://github.com/uztec/winui-components.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Copyright>© 2023 Uzun Technology</Copyright>
+        <OutputType>Library</OutputType>
+        <PackageTags>Windows Forms Utilities</PackageTags>
+        <PackageIcon>winui-components-uztec.png</PackageIcon>
     </PropertyGroup>
+    <ItemGroup>
+        <None Include="winui-components-uztec.png">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
+    </ItemGroup>
 </Project>
