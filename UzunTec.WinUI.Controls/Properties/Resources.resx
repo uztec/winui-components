@@ -119,9 +119,102 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="calendarDark" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\calendardark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\calendarDark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="calendarWhite" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\calendarwhite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\calendarWhite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="close-off-dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\close-off-dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="close-on" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\close-on.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="maximize-off-dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\maximize-off-dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="maximize-on" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\maximize-on.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="minimize-off-dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\minimize-off-dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="minimize-on" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\minimize-on.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Roboto-Black" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Roboto-Black.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Roboto-BlackItalic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Roboto-BlackItalic.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Roboto-Bold" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Roboto-Bold.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Roboto-BoldItalic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Roboto-BoldItalic.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Roboto-Italic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Roboto-Italic.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Roboto-Light" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Roboto-Light.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Roboto-LightItalic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Roboto-LightItalic.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Roboto-Medium" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Roboto-Medium.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Roboto-MediumItalic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Roboto-MediumItalic.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Roboto-Regular" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Roboto-Regular.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Roboto-Thin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Roboto-Thin.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Roboto-ThinItalic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Roboto-ThinItalic.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SegMDL2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SegMDL2.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="segoeui" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\segoeui.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="segoeuib" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\segoeuib.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="segoeuii" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\segoeuii.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="segoeuil" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\segoeuil.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="segoeuisl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\segoeuisl.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="segoeuiz" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\segoeuiz.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="seguibl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\seguibl.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="seguibli" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\seguibli.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="seguili" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\seguili.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="seguisb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\seguisb.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="seguisbi" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\seguisbi.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="seguisli" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\seguisli.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

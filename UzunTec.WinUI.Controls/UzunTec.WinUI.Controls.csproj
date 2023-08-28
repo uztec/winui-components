@@ -1,79 +1,44 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CC26CC08-781F-4036-AC02-521BFC3F0199}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UzunTec.WinUI.Controls</RootNamespace>
-    <AssemblyName>UzunTec.WinUI.Controls</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="DatePicker.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="DatePicker2.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="EnhancedFlowLayoutPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="IThemeControl.cs" />
-    <Compile Include="Postit.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="ThemeScheme.cs" />
-    <Compile Include="ThemeSchemeManager.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\UzunTec.WinUI.Utils\UzunTec.WinUI.Utils.csproj">
-      <Project>{4526f2d3-340f-4809-bd5c-1e3edb1053b2}</Project>
-      <Name>UzunTec.WinUI.Utils</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\calendarDark.png" />
-    <Content Include="Resources\calendarWhite.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net6.0-windows</TargetFramework>
+        <UseWindowsForms>true</UseWindowsForms>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <PackageId>UzunTec.WinUI.Controls</PackageId>
+        <Version>0.1.0</Version>
+        <Authors>Uzun Technology</Authors>
+        <Company>Uzun Technology</Company>
+        <RepositoryUrl>https://github.com/uztec/winui-components.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Copyright>© 2023 Uzun Technology</Copyright>
+        <OutputType>Library</OutputType>
+        <PackageTags>Windows Forms Components</PackageTags>
+        <PackageIcon>winui-components-uztec.png</PackageIcon>
+    </PropertyGroup>
+    <ItemGroup>
+      <Compile Remove="Themes\ThemeSchemeDarkBlue.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\UzunTec.WinUI.Utils\UzunTec.WinUI.Utils.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Update="Properties\Resources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Resources.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Update="Properties\Resources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="winui-components-uztec.png">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
+    </ItemGroup>
 </Project>
