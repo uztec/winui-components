@@ -19,7 +19,7 @@ namespace UzunTec.WinUI.Controls.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -85,7 +85,7 @@ namespace UzunTec.WinUI.Controls.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap close_off_dark {
             get {
-                object obj = ResourceManager.GetObject("close_off_dark", resourceCulture);
+                object obj = ResourceManager.GetObject("close-off-dark", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -95,7 +95,7 @@ namespace UzunTec.WinUI.Controls.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap close_on {
             get {
-                object obj = ResourceManager.GetObject("close_on", resourceCulture);
+                object obj = ResourceManager.GetObject("close-on", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -105,7 +105,7 @@ namespace UzunTec.WinUI.Controls.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap maximize_off_dark {
             get {
-                object obj = ResourceManager.GetObject("maximize_off_dark", resourceCulture);
+                object obj = ResourceManager.GetObject("maximize-off-dark", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -115,7 +115,7 @@ namespace UzunTec.WinUI.Controls.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap maximize_on {
             get {
-                object obj = ResourceManager.GetObject("maximize_on", resourceCulture);
+                object obj = ResourceManager.GetObject("maximize-on", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -125,7 +125,7 @@ namespace UzunTec.WinUI.Controls.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap minimize_off_dark {
             get {
-                object obj = ResourceManager.GetObject("minimize_off_dark", resourceCulture);
+                object obj = ResourceManager.GetObject("minimize-off-dark", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -135,7 +135,7 @@ namespace UzunTec.WinUI.Controls.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap minimize_on {
             get {
-                object obj = ResourceManager.GetObject("minimize_on", resourceCulture);
+                object obj = ResourceManager.GetObject("minimize-on", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -145,7 +145,7 @@ namespace UzunTec.WinUI.Controls.Properties {
         /// </summary>
         internal static byte[] Roboto_Black {
             get {
-                object obj = ResourceManager.GetObject("Roboto_Black", resourceCulture);
+                object obj = ResourceManager.GetObject("Roboto-Black", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -155,7 +155,7 @@ namespace UzunTec.WinUI.Controls.Properties {
         /// </summary>
         internal static byte[] Roboto_BlackItalic {
             get {
-                object obj = ResourceManager.GetObject("Roboto_BlackItalic", resourceCulture);
+                object obj = ResourceManager.GetObject("Roboto-BlackItalic", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -165,7 +165,7 @@ namespace UzunTec.WinUI.Controls.Properties {
         /// </summary>
         internal static byte[] Roboto_Bold {
             get {
-                object obj = ResourceManager.GetObject("Roboto_Bold", resourceCulture);
+                object obj = ResourceManager.GetObject("Roboto-Bold", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -175,7 +175,7 @@ namespace UzunTec.WinUI.Controls.Properties {
         /// </summary>
         internal static byte[] Roboto_BoldItalic {
             get {
-                object obj = ResourceManager.GetObject("Roboto_BoldItalic", resourceCulture);
+                object obj = ResourceManager.GetObject("Roboto-BoldItalic", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -185,7 +185,7 @@ namespace UzunTec.WinUI.Controls.Properties {
         /// </summary>
         internal static byte[] Roboto_Italic {
             get {
-                object obj = ResourceManager.GetObject("Roboto_Italic", resourceCulture);
+                object obj = ResourceManager.GetObject("Roboto-Italic", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -195,7 +195,7 @@ namespace UzunTec.WinUI.Controls.Properties {
         /// </summary>
         internal static byte[] Roboto_Light {
             get {
-                object obj = ResourceManager.GetObject("Roboto_Light", resourceCulture);
+                object obj = ResourceManager.GetObject("Roboto-Light", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -205,7 +205,7 @@ namespace UzunTec.WinUI.Controls.Properties {
         /// </summary>
         internal static byte[] Roboto_LightItalic {
             get {
-                object obj = ResourceManager.GetObject("Roboto_LightItalic", resourceCulture);
+                object obj = ResourceManager.GetObject("Roboto-LightItalic", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -215,7 +215,7 @@ namespace UzunTec.WinUI.Controls.Properties {
         /// </summary>
         internal static byte[] Roboto_Medium {
             get {
-                object obj = ResourceManager.GetObject("Roboto_Medium", resourceCulture);
+                object obj = ResourceManager.GetObject("Roboto-Medium", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -225,7 +225,7 @@ namespace UzunTec.WinUI.Controls.Properties {
         /// </summary>
         internal static byte[] Roboto_MediumItalic {
             get {
-                object obj = ResourceManager.GetObject("Roboto_MediumItalic", resourceCulture);
+                object obj = ResourceManager.GetObject("Roboto-MediumItalic", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -235,7 +235,7 @@ namespace UzunTec.WinUI.Controls.Properties {
         /// </summary>
         internal static byte[] Roboto_Regular {
             get {
-                object obj = ResourceManager.GetObject("Roboto_Regular", resourceCulture);
+                object obj = ResourceManager.GetObject("Roboto-Regular", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -245,7 +245,7 @@ namespace UzunTec.WinUI.Controls.Properties {
         /// </summary>
         internal static byte[] Roboto_Thin {
             get {
-                object obj = ResourceManager.GetObject("Roboto_Thin", resourceCulture);
+                object obj = ResourceManager.GetObject("Roboto-Thin", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -255,7 +255,7 @@ namespace UzunTec.WinUI.Controls.Properties {
         /// </summary>
         internal static byte[] Roboto_ThinItalic {
             get {
-                object obj = ResourceManager.GetObject("Roboto_ThinItalic", resourceCulture);
+                object obj = ResourceManager.GetObject("Roboto-ThinItalic", resourceCulture);
                 return ((byte[])(obj));
             }
         }

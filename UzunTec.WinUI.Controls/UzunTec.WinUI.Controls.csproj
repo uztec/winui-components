@@ -1,180 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CC26CC08-781F-4036-AC02-521BFC3F0199}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UzunTec.WinUI.Controls</RootNamespace>
-    <AssemblyName>UzunTec.WinUI.Controls</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="UzunTec.Utils.Common, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\CREN.Eletronic.Records\packages\UzunTec.Utils.Common.0.1.1\lib\netstandard2.0\UzunTec.Utils.Common.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="EnhancedFlowLayoutPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GradientPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Interfaces\IThemeOptionControl.cs" />
-    <Compile Include="Interfaces\IThemeControlWithPrefixSuffix.cs" />
-    <Compile Include="Interfaces\IThemeControlWithHintPlaceholder.cs" />
-    <Compile Include="InternalContracts\ThemePostitProperties.cs" />
-    <Compile Include="InternalContracts\ThemeControlWithHintPlaceHolderProperties.cs" />
-    <Compile Include="InternalContracts\ThemeButtonProperties.cs" />
-    <Compile Include="InternalContracts\ThemeControlWithPrefixSuffixProperties.cs" />
-    <Compile Include="Postit.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="RoundedCornersForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="StyledForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ThemeAutoCompleteBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ThemeBaseForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ThemeComboBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ThemeConstants.cs" />
-    <Compile Include="ThemeDataGridView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ThemeDataGridView.Designer.cs">
-      <DependentUpon>ThemeDataGridView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ThemeDatePicker.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ThemeCheckBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ThemeRadioButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ThemeLabel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ThemeModalBase.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ThemeNumericTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Themes\FontFamilyManager.cs" />
-    <Compile Include="InternalContracts\SideIconData.cs" />
-    <Compile Include="InternalContracts\ThemeControlProperties.cs" />
-    <Compile Include="InternalContracts\ThemeControlWithTextBackgroundProperties.cs" />
-    <Compile Include="InternalContracts\ThemeControlWithHintProperties.cs" />
-    <Compile Include="ThemeButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Helpers\DrawingHelper.cs" />
-    <Compile Include="Interfaces\IThemeControl.cs" />
-    <Compile Include="Interfaces\IThemeControlWithTextBackground.cs" />
-    <Compile Include="Interfaces\IThemeControlWithHint.cs" />
-    <Compile Include="Themes\ColorVariant.cs" />
-    <Compile Include="Themes\FontClass.cs" />
-    <Compile Include="Themes\Palette.cs" />
-    <Compile Include="Themes\Palettes.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Themes\ThemeScheme.cs" />
-    <Compile Include="Themes\ThemeSchemeLightBlue.cs" />
-    <Compile Include="Themes\ThemeSchemeManager.cs" />
-    <Compile Include="ThemeTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\minimize-on.png" />
-    <None Include="Resources\minimize-off-dark.png" />
-    <None Include="Resources\maximize-on.png" />
-    <None Include="Resources\maximize-off-dark.png" />
-    <None Include="Resources\close-on.png" />
-    <None Include="Resources\close-off-dark.png" />
-    <Content Include="Resources\calendarDark.png" />
-    <Content Include="Resources\calendarWhite.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ThemeModalBase.resx">
-      <DependentUpon>ThemeModalBase.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\UzunTec.WinUI.Utils\UzunTec.WinUI.Utils.csproj">
-      <Project>{4526f2d3-340f-4809-bd5c-1e3edb1053b2}</Project>
-      <Name>UzunTec.WinUI.Utils</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Roboto-Black.ttf" />
-    <None Include="Resources\Roboto-BlackItalic.ttf" />
-    <None Include="Resources\Roboto-Bold.ttf" />
-    <None Include="Resources\Roboto-BoldItalic.ttf" />
-    <None Include="Resources\Roboto-Italic.ttf" />
-    <None Include="Resources\Roboto-Light.ttf" />
-    <None Include="Resources\Roboto-LightItalic.ttf" />
-    <None Include="Resources\Roboto-Medium.ttf" />
-    <None Include="Resources\Roboto-MediumItalic.ttf" />
-    <None Include="Resources\Roboto-Regular.ttf" />
-    <None Include="Resources\Roboto-Thin.ttf" />
-    <None Include="Resources\Roboto-ThinItalic.ttf" />
-    <None Include="Resources\SegMDL2.ttf" />
-    <None Include="Resources\segoeui.ttf" />
-    <None Include="Resources\segoeuib.ttf" />
-    <None Include="Resources\segoeuii.ttf" />
-    <None Include="Resources\segoeuil.ttf" />
-    <None Include="Resources\segoeuisl.ttf" />
-    <None Include="Resources\segoeuiz.ttf" />
-    <None Include="Resources\seguibl.ttf" />
-    <None Include="Resources\seguibli.ttf" />
-    <None Include="Resources\seguili.ttf" />
-    <None Include="Resources\seguisb.ttf" />
-    <None Include="Resources\seguisbi.ttf" />
-    <None Include="Resources\seguisli.ttf" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net6.0-windows</TargetFramework>
+        <UseWindowsForms>true</UseWindowsForms>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+    <ItemGroup>
+      <Compile Remove="Themes\ThemeSchemeDarkBlue.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\UzunTec.WinUI.Utils\UzunTec.WinUI.Utils.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Update="Properties\Resources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Resources.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Update="Properties\Resources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
 </Project>
