@@ -1,6 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace UzunTec.WinUI.Utils
 {
@@ -44,5 +42,8 @@ namespace UzunTec.WinUI.Utils
         public RECT(RectangleF r) : this(r.ToRect(true))
         {
         }
+
+        public int GetWidth() => Right - Left;
+        public int GetHeight() => Top - Bottom;
     }
 }

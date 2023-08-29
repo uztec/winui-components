@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UzunTec.WinUI.Utils
+﻿namespace UzunTec.WinUI.Utils
 {
     public static class Win32ApiExtensions
     {

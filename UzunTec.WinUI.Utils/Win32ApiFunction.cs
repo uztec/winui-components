@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace UzunTec.WinUI.Utils
 {
@@ -31,6 +30,9 @@ namespace UzunTec.WinUI.Utils
 
         [DllImport("User32.dll")]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+        
+        [DllImport("User32.dll")]
+        public static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect);
 
         [DllImport("User32.dll")]
         public static extern IntPtr GetWindowDC(IntPtr hWnd);
@@ -45,7 +47,7 @@ namespace UzunTec.WinUI.Utils
         public static extern int DwmExtendFrameIntoClientArea(IntPtr hWnd, ref MARGINS pMargins);
 
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-        public static extern IntPtr CreateRoundRectRgn 
+        public static extern IntPtr CreateRoundRectRgn
                 (
                     int nLeftRect,     // x-coordinate of upper-left corner
                     int nTopRect,      // y-coordinate of upper-left corner
