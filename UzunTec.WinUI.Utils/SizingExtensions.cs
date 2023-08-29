@@ -1,7 +1,4 @@
-﻿using System.Drawing;
-using System.Windows.Forms;
-
-namespace UzunTec.WinUI.Utils
+﻿namespace UzunTec.WinUI.Utils
 {
     public static class SizingExtensions
     {

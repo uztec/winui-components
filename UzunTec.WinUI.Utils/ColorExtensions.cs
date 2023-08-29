@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace UzunTec.WinUI.Utils
+﻿namespace UzunTec.WinUI.Utils
 {
     public static class ColorExtensions
     {
