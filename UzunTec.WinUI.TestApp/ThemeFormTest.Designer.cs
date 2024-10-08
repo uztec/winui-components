@@ -1,6 +1,6 @@
 ﻿namespace UzunTec.WinUI.TestApp
 {
-    partial class Form2
+    partial class ThemeFormTest
     {
         /// <summary>
         /// Required designer variable.
@@ -30,14 +30,14 @@
         {
             SuspendLayout();
             // 
-            // Form2
+            // ThemeFormTest
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(395, 327);
+            ClientSize = new Size(904, 454);
             DoubleBuffered = true;
             Location = new Point(0, 0);
-            Name = "Form2";
+            Name = "ThemeFormTest";
             Text = "Uzun Technology ";
             Title = "WinUI Components";
             Load += Form2_Load;

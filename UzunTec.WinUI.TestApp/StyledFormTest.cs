@@ -2,9 +2,9 @@
 
 namespace UzunTec.WinUI.TestApp
 {
-    public partial class Form1 : RoundedCornersForm
+    public partial class StyledFormTest : StyledForm
     {
-        public Form1()
+        public StyledFormTest()
         {
             InitializeComponent();
         }

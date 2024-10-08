@@ -1,6 +1,6 @@
 ﻿namespace UzunTec.WinUI.TestApp
 {
-    partial class Form1
+    partial class RoundedCornerFormTest
     {
         /// <summary>
         /// Required designer variable.

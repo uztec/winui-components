@@ -7,19 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UzunTec.WinUI.Controls;
 
 namespace UzunTec.WinUI.TestApp
 {
-    public partial class Form2 : Controls.ThemeBaseForm
+    public partial class SimpleThemeFormTest : SimpleThemeBaseForm
     {
-        public Form2()
+        public SimpleThemeFormTest()
         {
             InitializeComponent();
-        }
-
-        private void Form2_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
