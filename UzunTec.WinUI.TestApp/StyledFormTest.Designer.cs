@@ -28,13 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
+            MainPanel = new Panel();
             SuspendLayout();
+            // 
+            // MainPanel
+            // 
+            MainPanel.BackColor = Color.Yellow;
+            MainPanel.Dock = DockStyle.Fill;
+            MainPanel.Location = new Point(0, 0);
+            MainPanel.Name = "MainPanel";
+            MainPanel.Size = new Size(800, 450);
+            MainPanel.TabIndex = 0;
             // 
             // StyledFormTest
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(MainPanel);
             DoubleBuffered = true;
             Location = new Point(0, 0);
             Name = "StyledFormTest";
@@ -43,5 +54,7 @@
         }
 
         #endregion
+
+        private Panel MainPanel;
     }
 }

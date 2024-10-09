@@ -29,22 +29,35 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SimpleThemeFormTest));
+            MainPanel = new Panel();
             SuspendLayout();
+            // 
+            // MainPanel
+            // 
+            MainPanel.BackColor = Color.Yellow;
+            MainPanel.Dock = DockStyle.Fill;
+            MainPanel.Location = new Point(0, 0);
+            MainPanel.Name = "MainPanel";
+            MainPanel.Size = new Size(800, 450);
+            MainPanel.TabIndex = 1;
             // 
             // SimpleThemeFormTest
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(MainPanel);
             DoubleBuffered = true;
             HeaderHeight = 65;
             Location = new Point(0, 0);
             LogoImage = (Image)resources.GetObject("$this.LogoImage");
             Name = "SimpleThemeFormTest";
-            Text = "Test Form - Simple Theme";
+            Text = "   Test Form - Simple Theme";
             ResumeLayout(false);
         }
 
         #endregion
+
+        private Panel MainPanel;
     }
 }
