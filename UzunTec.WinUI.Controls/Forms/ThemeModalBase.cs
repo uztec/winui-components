@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using UzunTec.WinUI.Controls.Themes;
 using UzunTec.WinUI.Utils;
 
-namespace UzunTec.WinUI.Controls
+namespace UzunTec.WinUI.Controls.Forms
 {
     public partial class ThemeModalBase : Form
     {
@@ -43,7 +43,7 @@ namespace UzunTec.WinUI.Controls
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
 
         public ThemeModalBase()
@@ -76,22 +76,22 @@ namespace UzunTec.WinUI.Controls
                 Graphics g = e.Graphics;
                 Brush borderBrush = new LinearGradientBrush(ClientRectangle, _borderColorDark, _borderColorLight, LinearGradientMode.ForwardDiagonal);
 
-                Region borderRegion = new Region(this.ClientRectangle);
-                borderRegion.Exclude(this.ClientRectangle.ToRectF().ApplyPadding(new Padding(this.BorderWidth)));
+                Region borderRegion = new Region(ClientRectangle);
+                borderRegion.Exclude(ClientRectangle.ToRectF().ApplyPadding(new Padding(BorderWidth)));
                 g.FillRegion(borderBrush, borderRegion);
             }
         }
 
         private void InitializeComponent()
         {
-            this.SuspendLayout();
+            SuspendLayout();
             // 
             // ThemeModalBase
             // 
-            this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Name = "ThemeModalBase";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.ResumeLayout(false);
+            ClientSize = new Size(284, 261);
+            Name = "ThemeModalBase";
+            StartPosition = FormStartPosition.CenterScreen;
+            ResumeLayout(false);
 
         }
     }
