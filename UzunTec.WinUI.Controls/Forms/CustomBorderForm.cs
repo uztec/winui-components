@@ -29,10 +29,23 @@ namespace UzunTec.WinUI.Controls.Forms
         public bool Sizable { get => _sizable; set { _sizable = value; Invalidate(); } }
         private bool _sizable;
 
+        // To yse a custom Header
+        protected bool borderOnTop;
+
+        // Internal private fields
+        private RectangleF _utilRect;
+        private Region _borderRegion;
 
         private void SetBasePadding(Padding value)
         {
-            base.Padding = value.AddPadding(new Padding((int)this._borderWidth));
+            if (borderOnTop)
+            {
+                base.Padding = value.AddPadding(new Padding((int)this._borderWidth));
+            }
+            else
+            {
+                base.Padding = value.AddPadding(new Padding((int)this._borderWidth, 0, (int)this._borderWidth, (int)this._borderWidth));
+            }
         }
 
         public CustomBorderForm()
@@ -40,6 +53,7 @@ namespace UzunTec.WinUI.Controls.Forms
             this.ControlBox = false;
             this.Padding = new Padding(0);
             this._sizable = true;
+            this.borderOnTop = true;
             UpdateRects();
             SizeChanged += (s, e) => { UpdateRects(); Invalidate(); };
         }
@@ -59,14 +73,21 @@ namespace UzunTec.WinUI.Controls.Forms
             Win32ApiFunction.SetWindowTheme(Handle, string.Empty, string.Empty);
         }
 
-        RectangleF _utilRect;
-
-
         private void UpdateRects()
         {
             if (ClientRectangle.Width > 0 && ClientRectangle.Height > 0)
             {
-                _utilRect = this.ClientRectangle.ToRectF().ApplyPadding(this._borderWidth);
+                if (this.borderOnTop)
+                {
+                    _utilRect = this.ClientRectangle.ToRectF().ApplyPadding(this._borderWidth);
+                }
+                else
+                {
+                    _utilRect = this.ClientRectangle.ToRectF().ApplyPadding(this._borderWidth, 0, this._borderWidth, this._borderWidth);
+                }
+
+                _borderRegion = new Region(this.ClientRectangle);
+                _borderRegion.Exclude(_utilRect);
             }
         }
 
@@ -88,9 +109,7 @@ namespace UzunTec.WinUI.Controls.Forms
                         borderBrush.SurroundColors = new[] { this._borderColorDark };
                         borderBrush.FocusScales = new PointF(1f - (_borderWidth) / (this.ClientRectangle.Width / 2f), 1f - (_borderWidth) / (this.ClientRectangle.Height / 2f));
 
-                        Region borderRegion = new Region(this.ClientRectangle);
-                        borderRegion.Exclude(this.ClientRectangle.ToRectF().ApplyPadding(new Padding(_borderWidth)));
-                        g.FillRegion(borderBrush, borderRegion);
+                        g.FillRegion(borderBrush, _borderRegion);
 
                     }
                 }
