@@ -73,15 +73,15 @@
             switch (alignment)
             {
                 case ContentAlignment.TopLeft: return rect.ApplyPadding(0, 0, offsetX, offsetY);     // Default
-                case ContentAlignment.TopCenter: return rect.ApplyPadding(offsetX / 2, 0);
-                case ContentAlignment.TopRight: return rect.ApplyPadding(offsetX, 0, 0, 0);
+                case ContentAlignment.TopCenter: return rect.ApplyPadding(offsetX / 2, 0, offsetX / 2, offsetY);
+                case ContentAlignment.TopRight: return rect.ApplyPadding(offsetX, 0, 0, offsetY);
 
-                case ContentAlignment.MiddleLeft: return rect.ApplyPadding(0, offsetY / 2);
+                case ContentAlignment.MiddleLeft: return rect.ApplyPadding(0, offsetY / 2, offsetX, offsetY / 2);
                 case ContentAlignment.MiddleCenter: return rect.ApplyPadding(offsetX / 2, offsetY / 2);
                 case ContentAlignment.MiddleRight: return rect.ApplyPadding(offsetX, offsetY / 2, 0, offsetY / 2);
 
                 case ContentAlignment.BottomLeft: return rect.ApplyPadding(0, offsetY, offsetX, 0);
-                case ContentAlignment.BottomCenter: return rect.ApplyPadding(offsetX / 2, offsetY, 0, 0);
+                case ContentAlignment.BottomCenter: return rect.ApplyPadding(offsetX / 2, offsetY, offsetX / 2, 0);
                 case ContentAlignment.BottomRight: return rect.ApplyPadding(offsetX, offsetY, 0, 0);
             }
             return rect;
