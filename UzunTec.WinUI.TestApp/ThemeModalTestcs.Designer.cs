@@ -1,6 +1,6 @@
 ﻿namespace UzunTec.WinUI.TestApp
 {
-    partial class SimpleThemeFormTest
+    partial class ThemeModalTest
     {
         /// <summary>
         /// Required designer variable.
@@ -28,36 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SimpleThemeFormTest));
-            MainPanel = new Panel();
             SuspendLayout();
             // 
-            // MainPanel
-            // 
-            MainPanel.BackColor = Color.Yellow;
-            MainPanel.Dock = DockStyle.Fill;
-            MainPanel.Location = new Point(0, 65);
-            MainPanel.Name = "MainPanel";
-            MainPanel.Size = new Size(800, 385);
-            MainPanel.TabIndex = 1;
-            // 
-            // SimpleThemeFormTest
+            // ThemeModalTestcs
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(MainPanel);
+            BorderColorDark = Color.FromArgb(34, 166, 179);
+            BorderColorLight = Color.FromArgb(126, 214, 223);
+            BorderColorVariant = WinUI.Controls.Themes.ColorVariant.Info;
+            BorderWidth = 9;
+            ClientSize = new Size(933, 363);
             DoubleBuffered = true;
-            HeaderHeight = 65;
-            Location = new Point(0, 0);
-            LogoImage = (Image)resources.GetObject("$this.LogoImage");
-            Name = "SimpleThemeFormTest";
-            Text = "   Test Form - Simple Theme";
+            Name = "ThemeModalTestcs";
+            Text = "ThemeModalTestcs";
             ResumeLayout(false);
         }
 
         #endregion
-
-        private Panel MainPanel;
     }
 }

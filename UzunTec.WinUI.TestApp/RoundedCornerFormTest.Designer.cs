@@ -28,16 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
+            SuspendLayout();
             // 
-            // Form1
+            // RoundedCornerFormTest
             // 
-            this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(713, 287);
-            this.DoubleBuffered = true;
-            this.Name = "Form1";
-            this.ResumeLayout(false);
-
+            BackColor = SystemColors.ControlDarkDark;
+            ClientSize = new Size(713, 287);
+            DoubleBuffered = true;
+            Name = "RoundedCornerFormTest";
+            ResumeLayout(false);
         }
 
         #endregion

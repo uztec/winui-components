@@ -28,20 +28,40 @@
         /// </summary>
         private void InitializeComponent()
         {
+            MainPanel = new Panel();
             SuspendLayout();
+            // 
+            // MainPanel
+            // 
+            MainPanel.BackColor = Color.Yellow;
+            MainPanel.Dock = DockStyle.Fill;
+            MainPanel.Location = new Point(10, 25);
+            MainPanel.Name = "MainPanel";
+            MainPanel.Size = new Size(882, 395);
+            MainPanel.TabIndex = 0;
             // 
             // StyledFormTest
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            BackColor = Color.Red;
+            BorderColorDark = Color.DarkBlue;
+            BorderColorLight = Color.RoyalBlue;
+            BorderWidth = 10;
+            ClientSize = new Size(902, 430);
+            ControlBoxAlign = ContentAlignment.MiddleRight;
+            Controls.Add(MainPanel);
             DoubleBuffered = true;
+            HeaderColorDark = Color.DimGray;
+            HeaderColorLight = Color.Black;
             Location = new Point(0, 0);
             Name = "StyledFormTest";
-            Text = "Form1";
+            Text = "Uzun Technology Styled Form";
             ResumeLayout(false);
         }
 
         #endregion
+
+        private Panel MainPanel;
     }
 }

@@ -28,13 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
+            MainPanel = new Panel();
             SuspendLayout();
+            // 
+            // MainPanel
+            // 
+            MainPanel.BackColor = Color.Yellow;
+            MainPanel.Dock = DockStyle.Fill;
+            MainPanel.Location = new Point(5, 85);
+            MainPanel.Name = "MainPanel";
+            MainPanel.Size = new Size(894, 364);
+            MainPanel.TabIndex = 1;
             // 
             // ThemeFormTest
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(904, 454);
+            Controls.Add(MainPanel);
             DoubleBuffered = true;
             Location = new Point(0, 0);
             Name = "ThemeFormTest";
@@ -45,5 +56,7 @@
         }
 
         #endregion
+
+        private Panel MainPanel;
     }
 }

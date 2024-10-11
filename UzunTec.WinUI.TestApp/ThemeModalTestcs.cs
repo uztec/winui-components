@@ -2,9 +2,9 @@
 
 namespace UzunTec.WinUI.TestApp
 {
-    public partial class StyledFormTest : StyledForm
+    public partial class ThemeModalTest : ThemeModalBase
     {
-        public StyledFormTest()
+        public ThemeModalTest()
         {
             InitializeComponent();
         }
