@@ -7,10 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UzunTec.WinUI.Controls.Forms;
 
 namespace UzunTec.WinUI.TestApp
 {
-    public partial class ThemeFormTest : Controls.ThemeBaseForm
+    public partial class ThemeFormTest : ThemeBaseForm
     {
         public ThemeFormTest()
         {

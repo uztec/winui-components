@@ -1,6 +1,6 @@
 ﻿namespace UzunTec.WinUI.TestApp
 {
-    partial class ThemeModalTestcs
+    partial class ThemeModalTest
     {
         /// <summary>
         /// Required designer variable.

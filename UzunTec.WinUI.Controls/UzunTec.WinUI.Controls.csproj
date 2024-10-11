@@ -5,7 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <PackageId>UzunTec.WinUI.Controls</PackageId>
-        <Version>0.1.0</Version>
+        <Version>0.1.4</Version>
         <Authors>Uzun Technology</Authors>
         <Company>Uzun Technology</Company>
         <RepositoryUrl>https://github.com/uztec/winui-components.git</RepositoryUrl>
@@ -23,6 +23,9 @@
       <ProjectReference Include="..\UzunTec.WinUI.Utils\UzunTec.WinUI.Utils.csproj" />
     </ItemGroup>
     <ItemGroup>
+      <Compile Update="Forms\CustomBorderForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
       <Compile Update="Properties\Resources.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>

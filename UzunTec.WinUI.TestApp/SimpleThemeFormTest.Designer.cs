@@ -36,9 +36,9 @@
             // 
             MainPanel.BackColor = Color.Yellow;
             MainPanel.Dock = DockStyle.Fill;
-            MainPanel.Location = new Point(0, 0);
+            MainPanel.Location = new Point(0, 65);
             MainPanel.Name = "MainPanel";
-            MainPanel.Size = new Size(800, 450);
+            MainPanel.Size = new Size(800, 385);
             MainPanel.TabIndex = 1;
             // 
             // SimpleThemeFormTest
