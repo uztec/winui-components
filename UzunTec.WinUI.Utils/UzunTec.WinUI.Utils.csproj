@@ -5,7 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <PackageId>UzunTec.WinUI.Utils</PackageId>
-        <Version>0.1.2</Version>
+        <Version>0.2.0</Version>
         <Authors>Uzun Technology</Authors>
         <Company>Uzun Technology</Company>
         <RepositoryUrl>https://github.com/uztec/winui-components.git</RepositoryUrl>
